@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#b5121b" name="theme-color"/><title>Commission / Scan Calculator - XC Staff App</title>
+<link href="manifest.json" rel="manifest"/>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f3f3f3;color:#222}
+.header{background:#b5121b;color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px}.header img{width:145px;height:32px;object-fit:contain}.title{font-weight:800;font-size:19px;margin-left:auto}
+main{max-width:650px;margin:auto;padding:14px}.main-menu{display:block;text-decoration:none;text-align:center;background:#fff;color:#b5121b;border:1px solid #b5121b;border-radius:10px;padding:11px 14px;font-weight:800;margin-bottom:12px}
+.card{background:#fff;border-radius:14px;padding:17px;margin-bottom:14px;box-shadow:0 2px 8px #0001}.field{margin-bottom:13px}.field:last-child{margin-bottom:0}
+label{display:block;font-weight:800;font-size:14px;margin-bottom:6px}input{width:100%;padding:13px;border:1px solid #ccc;border-radius:9px;font:inherit;font-size:16px}
+.results{display:grid;gap:10px}.result{display:flex;justify-content:space-between;gap:12px;padding:13px;background:#f7f7f7;border-radius:9px;font-weight:700}.total{font-size:20px;background:#f8e9ec;border:1px solid #b5121b}.hint{font-size:13px;color:#666;line-height:1.45}
+</style><style id="xc-safe-area">
+html{background:#b5121b}
+body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
+</style><style id="xc-main-menu-style">
+.xc-main-menu{display:block;width:100%;box-sizing:border-box;text-align:center;text-decoration:none;background:#b5121b;color:#fff;border-radius:10px;padding:11px 14px;margin:0 0 12px;font-weight:800;border:0}
+.xc-main-menu:hover,.xc-main-menu:active{background:#8f0f16;color:#fff}
+</style><style id="xc-header-logo">
+.xc-page-header-logo{width:86px;height:24px;object-fit:contain;display:block;flex:0 0 auto}
+</style><style id="xc-uniform-inputs">
+/* XC uniform form controls */
+input[type="text"],input[type="number"],input[type="date"],input[type="time"],
+input[type="email"],input[type="tel"],input[type="search"],input[type="url"],
+input:not([type]),select,textarea{
+  width:100%;
+  min-height:44px;
+  height:44px;
+  box-sizing:border-box;
+  padding:10px 11px;
+  border:1px solid #bbb;
+  border-radius:9px;
+  font:inherit;
+  line-height:1.25;
+  background:#fff;
+}
+textarea{
+  height:120px;
+  min-height:120px;
+  resize:vertical;
+}
+</style><link href="xc.css" rel="stylesheet"/></head><body>
+<header class="header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/><div class="title">Commission / Scan Calculator</div></header>
+<main><a class="xc-main-menu" href="index.html">← Main menu</a>
+<div class="card">
+<div class="field"><label for="sales">Ticket Sales (£)</label><input id="sales" inputmode="decimal" min="0" placeholder="e.g. 67.45" step="0.01" type="number"/></div>
+<div class="field"><label for="scans">Scans</label><input id="scans" inputmode="numeric" min="0" placeholder="Number of scans" step="1" type="number"/></div>
+</div>
+<div class="card"><div class="results">
+<div class="result"><span>6% of ticket sales</span><span id="salesCalc">£0.00</span></div>
+<div class="result"><span>£0.02 per scan</span><span id="scanCalc">£0.00</span></div>
+<div class="result total"><span>Total</span><span id="totalCalc">£0.00</span></div>
+</div></div>
+<div class="card hint">Enter the ticket sales value and number of scans. The calculation updates automatically.</div>
+</main>
+<script>
+const sales=document.getElementById("sales"), scans=document.getElementById("scans");
+function money(v){return "£"+v.toFixed(2);}
+function calculate(){
+ const s=Math.max(0,parseFloat(sales.value)||0);
+ const n=Math.max(0,parseInt(scans.value,10)||0);
+ const commission=s*0.06, scanValue=n*0.02;
+ document.getElementById("salesCalc").textContent=money(commission);
+ document.getElementById("scanCalc").textContent=money(scanValue);
+ document.getElementById("totalCalc").textContent=money(commission+scanValue);
+}
+sales.addEventListener("input",calculate);scans.addEventListener("input",calculate);calculate();
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script><script id="xc-button-safety">
+document.addEventListener("click",function(e){
+ const b=e.target.closest("button[data-action]");
+ if(!b)return;
+ const fn=b.dataset.action;
+ if(typeof window[fn]==="function")window[fn](e);
+});
+</script>
+<script id="xc-standard-actions-v104">
+(function(){
+ function callFirst(names, evt){
+   for(const n of names){
+     if(typeof window[n]==="function"){ try{ window[n](evt); return true; }catch(e){ console.error(e); } }
+   }
+   return false;
+ }
+ document.addEventListener("click",function(e){
+   const b=e.target.closest("button");
+   if(!b)return;
+   const id=(b.id||"").toLowerCase();
+   const text=(b.textContent||"").trim().toLowerCase();
+   if(id==="copy"||id==="copybtn"||text==="copy"||text.includes("copy")){
+     if(callFirst(["copyReport","copyData","copyCounts","copyAll","copyToClipboard","copyForm"],e)) return;
+   }
+   if(id==="email"||id==="emailbtn"||text.includes("email")){
+     if(callFirst(["emailReport","emailData","emailCounts","emailAll","sendEmail","emailForm"],e)) return;
+   }
+   if(id==="pdf"||id==="pdfbtn"||text.includes("generate pdf")||text.includes("export pdf")||text.includes("save pdf")){
+     if(callFirst(["generateIncidentPDF","generatePDF","exportPDF","savePDF","generatePdf","exportPdf"],e)) return;
+   }
+   if(id==="clear"||id==="clearbtn"||text==="clear"||text.includes("clear all")){
+     if(callFirst(["clearForm","clearAll","clearNotes","clearData","clearCounts","resetForm"],e)) return;
+   }
+ });
+})();
+</script><script id="xc-button-repair-v118">
+document.addEventListener("click",function(e){
+ const b=e.target.closest("button[data-action]");
+ if(!b)return;
+ const fn=b.dataset.action;
+ if(typeof window[fn]==="function"){e.preventDefault();window[fn](e);}
+});
+</script><script src="xc-common.js"></script></body></html>

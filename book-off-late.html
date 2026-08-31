@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="#b5121b" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="XC Staff App" name="apple-mobile-web-app-title"/><link href="manifest.json" rel="manifest"/><link href="crosscountry-logo-white.png" rel="icon"/><title>⏰ ⏰ Book Off Late (Late Running)</title><style>
+:root{--red:#b5121b;--gold:#f5c242;--bg:#f4f4f4;--text:#222;--muted:#666;--border:#d8d8d8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:var(--red);color:#fff;padding:14px 16px;border-bottom:5px solid var(--gold)}
+.top{display:flex;align-items:center;gap:12px}.logo{background:#fff;border-radius:8px;padding:4px 7px;width:145px;height:36px;object-fit:contain}
+.back{color:#fff;text-decoration:none;font-weight:800;font-size:14px}.heading{margin-top:10px;font-size:24px;font-weight:850}
+main{max-width:650px;margin:auto;padding:18px 16px 35px}.card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 6px #00000010}
+label{display:block;font-size:14px;font-weight:800;margin:0 0 7px}input,select,textarea{width:100%;border:1px solid #bbb;border-radius:10px;padding:12px;font:inherit;background:#fff}textarea{min-height:130px;resize:vertical}
+.field{margin-bottom:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hint{font-size:13px;color:var(--muted);line-height:1.45}
+button{width:100%;border:0;border-radius:11px;padding:14px;font:inherit;font-weight:800;cursor:pointer}.primary{background:var(--red);color:#fff}.secondary{background:#eee;color:#222}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.status{text-align:center;color:#666;font-size:13px;margin-top:10px;min-height:18px}
+table{width:100%;border-collapse:collapse}th,td{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left}th{font-size:12px}
+@media(max-width:480px){.grid,.actions{grid-template-columns:1fr}}
+.main-menu-wrap{max-width:700px;margin:12px auto 0;padding:0 14px}.main-menu-btn{display:block;text-align:center;text-decoration:none;background:#fff;color:#b5121b;border:1px solid #b5121b;border-radius:10px;padding:11px 14px;font-weight:800;font-size:15px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:500px){.actions{grid-template-columns:1fr}}.status{font-size:13px;text-align:center;margin-top:10px}<style>.pdf-action{margin:10px 0}.pdf-action button{width:100%;background:#222;color:#fff;border:0;border-radius:10px;padding:12px;font-weight:800}</style><style id="xc-safe-area">
+html{background:#b5121b}
+body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
+</style><style id="xc-main-menu-style">
+.xc-main-menu{display:block;width:100%;box-sizing:border-box;text-align:center;text-decoration:none;background:#b5121b;color:#fff;border-radius:10px;padding:11px 14px;margin:0 0 12px;font-weight:800;border:0}
+.xc-main-menu:hover,.xc-main-menu:active{background:#8f0f16;color:#fff}
+</style><style id="xc-header-logo">
+.xc-page-header-logo{width:86px;height:24px;object-fit:contain;display:block;flex:0 0 auto}
+</style><style id="xc-uniform-inputs">
+/* XC uniform form controls */
+input[type="text"],input[type="number"],input[type="date"],input[type="time"],
+input[type="email"],input[type="tel"],input[type="search"],input[type="url"],
+input:not([type]),select,textarea{
+  width:100%;
+  min-height:44px;
+  height:44px;
+  box-sizing:border-box;
+  padding:10px 11px;
+  border:1px solid #bbb;
+  border-radius:9px;
+  font:inherit;
+  line-height:1.25;
+  background:#fff;
+}
+textarea{
+  height:120px;
+  min-height:120px;
+  resize:vertical;
+}
+</style><link href="xc.css" rel="stylesheet"/></head><body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header>
+<header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">⏰ ⏰ Book Off Late (Late Running)</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a><div class="card">
+<div class="grid">
+<div class="field"><label>Date</label><input data-report-label="Date of incident" id="date" type="date"/></div><div class="field"><label>Job Number</label><input id="job" placeholder="Job number"/></div>
+<div class="field"><label>Headcode</label><input id="head" placeholder="e.g. 1V50"/></div>
+<div class="field"><label>Original Book Of Time</label><input id="orig" type="time"/></div><div class="field"><label>Delay Minutes</label><input id="mins" inputmode="numeric" min="0" placeholder="Minutes" type="number"/></div>
+</div></div>
+<div class="card">
+<label>Reason</label>
+<select id="cause">
+<option>Other</option>
+<option>Passenger-related</option>
+<option>Train crew / staffing</option>
+<option>Train fault / technical</option>
+<option>Signalling</option>
+<option>Points / route setting</option>
+<option>Infrastructure</option>
+<option>External / trespass</option>
+<option>Weather</option>
+<option>Congestion / regulation</option>
+</select>
+<div class="field" style="margin-top:12px">
+<input id="other" placeholder="If Other, enter reason"/>
+</div>
+</div>
+<div class="card">
+<label>Any other information</label>
+<textarea data-report-label="Any additional notes or information" id="notes" placeholder="Optional notes"></textarea>
+</div>
+<div class="card">
+<div class="actions"><button class="primary" onclick="copyMessage()" type="button">📋 Copy</button><button class="primary" onclick="emailMsg()" type="button">✉️ Generate Message</button></div>
+<div class="status" id="status"></div>
+</div></main><script>
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+
+const $=id=>document.getElementById(id);
+$("date").value=new Date().toISOString().slice(0,10);
+
+function toggleOther(){
+  const isOther=$("cause").value==="Other - Please Specify";
+  $("otherWrap").style.display=isOther?"block":"none";
+  if(!isOther) $("other").value="";
+}
+
+function reasonText(){
+  return $("cause").value==="Other - Please Specify"
+    ? $("other").value.trim()
+    : $("cause").value;
+}
+
+function getDate(){
+  const v=$("date").value;
+  if(!v) return "";
+  const [y,m,d]=v.split("-");
+  return d+" "+m+" "+y;
+}
+
+function newBookOffTime(){
+  const original=$("orig").value;
+  const delay=parseInt($("mins").value,10);
+  if(!original || Number.isNaN(delay)) return "";
+  const [h,m]=original.split(":").map(Number);
+  let total=h*60+m+Math.max(0,delay);
+  total=((total%1440)+1440)%1440;
+  return String(Math.floor(total/60)).padStart(2,"0")+":"+String(total%60).padStart(2,"0");
+}
+
+function buildMessage(){
+  const date=getDate();
+  const job=$("job").value.trim();
+  const head=$("head").value.trim();
+  const delay=Math.max(0,parseInt($("mins").value,10)||0);
+  const reason=reasonText();
+  const newTime=newBookOffTime();
+  const comments=$("notes").value.trim();
+
+  const subject="Late book off "+head+" "+delay+" MINS - "+job+" "+date;
+  const body="hello please book me off "+job+" late today, "+head+
+    " was late by "+delay+" MINUTES, this was due to "+reason+"."+
+    (comments?"\n\n"+comments:"")+
+    "\n\nmy new book of time is "+newTime+" please amend my hours to reflect this";
+
+  return {subject,body};
+}
+
+function validate(){
+  const checks=[
+    ["date","Date"],["job","Job Number"],["head","Headcode"],["orig","Original Book Off Time"]
+  ];
+  for(const [id,label] of checks){
+    if(!$(""+id) || !$(id).value){
+      $("status").textContent="Please complete "+label+".";
+      return false;
+    }
+  }
+  if($("mins").value===""){
+    $("status").textContent="Please enter Delay in Minutes.";
+    return false;
+  }
+  if($("cause").value==="Other - Please Specify" && !$("other").value.trim()){
+    $("status").textContent="Please specify the reason.";
+    return false;
+  }
+  return true;
+}
+
+async function copyMessage(){
+  if(!validate()) return;
+  const m=buildMessage();
+  const text="Subject: "+m.subject+"\n\n"+m.body;
+  try{
+    await navigator.clipboard.writeText(text);
+  }catch(e){
+    const ta=document.createElement("textarea");
+    ta.value=text;ta.style.position="fixed";ta.style.opacity="0";
+    document.body.appendChild(ta);ta.focus();ta.select();
+    try{document.execCommand("copy");}catch(err){
+      $("status").textContent="Unable to copy. Please use Generate Message.";
+      ta.remove();return;
+    }
+    ta.remove();
+  }
+  $("status").textContent="Message copied to clipboard.";
+}
+
+function emailMsg(){
+  if(!validate()) return;
+  const m=buildMessage();
+  window.location.href="mailto:?subject="+encodeURIComponent(m.subject)+"&body="+encodeURIComponent(m.body);
+}
+
+toggleOther();
+</script><script>
+function xcGeneratePDF(title){
+ const lines=[title,"","XC STAFF APP",""];
+ document.querySelectorAll("input,select,textarea").forEach(el=>{
+  if(el.value){const l=el.closest(".field")?.querySelector("label")?.innerText||el.name||el.id||"Entry";lines.push(l+": "+el.value)}
+ });
+ const esc=v=>String(v).replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)").replace(/\r?\n/g," ");
+ const W=595,H=842,m=42,lead=14,pages=[[]];let y=H-m;
+ lines.forEach(x=>{if(y<55){pages.push([]);y=H-m}pages.at(-1).push(x);y-=lead});
+ let o=[],add=x=>(o.push(x),o.length),po=add(""),fo=add("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"),refs=[];
+ pages.forEach(ls=>{let c="BT /F1 10 Tf "+m+" "+(H-m)+" Td ";ls.forEach((x,i)=>{if(i)c+=" 0 -14 Td ";c+="("+esc(x)+") Tj "});c+=" ET";let st=add("<< /Length "+c.length+" >>\nstream\n"+c+"\nendstream");refs.push(add("<< /Type /Page /Parent "+po+" 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /Font << /F1 "+fo+" 0 R >> >> /Contents "+st+" 0 R >>"))});
+ o[po-1]="<< /Type /Pages /Count "+refs.length+" /Kids ["+refs.map(x=>x+" 0 R").join(" ")+"] >>";
+ let cat=add("<< /Type /Catalog /Pages "+po+" 0 R >>"),pdf="%PDF-1.4\n",off=[0];
+ o.forEach((x,i)=>{off.push(pdf.length);pdf+=(i+1)+" 0 obj\n"+x+"\nendobj\n"});
+ let xr=pdf.length;pdf+="xref\n0 "+(o.length+1)+"\n0000000000 65535 f \n";for(let i=1;i<off.length;i++)pdf+=String(off[i]).padStart(10,"0")+" 00000 n \n";
+ pdf+="trailer\n<< /Size "+(o.length+1)+" /Root "+cat+" 0 R >>\nstartxref\n"+xr+"\n%%EOF";
+ let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([pdf],{type:"application/pdf"}));a.download=title.replace(/[^a-z0-9]+/gi,"-")+".pdf";a.click();
+}
+</script><script id="xc-button-safety">
+document.addEventListener("click",function(e){
+ const b=e.target.closest("button[data-action]");
+ if(!b)return;
+ const fn=b.dataset.action;
+ if(typeof window[fn]==="function")window[fn](e);
+});
+</script>
+<script id="xc-standard-actions-v104">
+(function(){
+ function callFirst(names, evt){
+   for(const n of names){
+     if(typeof window[n]==="function"){ try{ window[n](evt); return true; }catch(e){ console.error(e); } }
+   }
+   return false;
+ }
+ document.addEventListener("click",function(e){
+   const b=e.target.closest("button");
+   if(!b)return;
+   const id=(b.id||"").toLowerCase();
+   const text=(b.textContent||"").trim().toLowerCase();
+   if(id==="copy"||id==="copybtn"||text==="copy"||text.includes("copy")){
+     if(callFirst(["copyReport","copyData","copyCounts","copyAll","copyToClipboard","copyForm"],e)) return;
+   }
+   if(id==="email"||id==="emailbtn"||text.includes("email")){
+     if(callFirst(["emailReport","emailData","emailCounts","emailAll","sendEmail","emailForm"],e)) return;
+   }
+   if(id==="pdf"||id==="pdfbtn"||text.includes("generate pdf")||text.includes("export pdf")||text.includes("save pdf")){
+     if(callFirst(["generateIncidentPDF","generatePDF","exportPDF","savePDF","generatePdf","exportPdf"],e)) return;
+   }
+   if(id==="clear"||id==="clearbtn"||text==="clear"||text.includes("clear all")){
+     if(callFirst(["clearForm","clearAll","clearNotes","clearData","clearCounts","resetForm"],e)) return;
+   }
+ });
+})();
+</script><script id="xc-button-repair-v118">
+document.addEventListener("click",function(e){
+ const b=e.target.closest("button[data-action]");
+ if(!b)return;
+ const fn=b.dataset.action;
+ if(typeof window[fn]==="function"){e.preventDefault();window[fn](e);}
+});
+</script><script src="xc-common.js"></script></body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="#b5121b" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="XC Staff App" name="apple-mobile-web-app-title"/><link href="manifest.json" rel="manifest"/><link href="crosscountry-logo-white.png" rel="icon"/><title>🚔 BTP 61016 Message Builder</title><style>
+:root{--red:#b5121b;--gold:#f5c242;--bg:#f4f4f4;--text:#222;--muted:#666;--border:#d8d8d8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:var(--red);color:#fff;padding:14px 16px;border-bottom:5px solid var(--gold)}
+.top{display:flex;align-items:center;gap:12px}.logo{background:#fff;border-radius:8px;padding:4px 7px;width:145px;height:36px;object-fit:contain}
+.back{color:#fff;text-decoration:none;font-weight:800;font-size:14px}.heading{margin-top:10px;font-size:24px;font-weight:850}
+main{max-width:650px;margin:auto;padding:18px 16px 35px}.card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 6px #00000010}
+label{display:block;font-size:14px;font-weight:800;margin:0 0 7px}input,select,textarea{width:100%;border:1px solid #bbb;border-radius:10px;padding:12px;font:inherit;background:#fff}textarea{min-height:130px;resize:vertical}
+.field{margin-bottom:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hint{font-size:13px;color:var(--muted);line-height:1.45}
+button{width:100%;border:0;border-radius:11px;padding:14px;font:inherit;font-weight:800;cursor:pointer}.primary{background:var(--red);color:#fff}.secondary{background:#eee;color:#222}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.status{text-align:center;color:#666;font-size:13px;margin-top:10px;min-height:18px}
+table{width:100%;border-collapse:collapse}th,td{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left}th{font-size:12px}
+@media(max-width:480px){.grid,.actions{grid-template-columns:1fr}}
+.btp-header-icon{width:42px;height:48px;object-fit:contain;vertical-align:middle;margin-right:7px;background:#fff;border-radius:6px}.main-menu-wrap{max-width:700px;margin:12px auto 0;padding:0 14px}.main-menu-btn{display:block;text-align:center;text-decoration:none;background:#fff;color:#b5121b;border:1px solid #b5121b;border-radius:10px;padding:11px 14px;font-weight:800;font-size:15px}<style>.pdf-action{margin:10px 0}.pdf-action button{width:100%;background:#222;color:#fff;border:0;border-radius:10px;padding:12px;font-weight:800}</style><style id="xc-safe-area">
+html{background:#b5121b}
+body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
+</style><style id="xc-main-menu-style">
+.xc-main-menu{display:block;width:100%;box-sizing:border-box;text-align:center;text-decoration:none;background:#b5121b;color:#fff;border-radius:10px;padding:11px 14px;margin:0 0 12px;font-weight:800;border:0}
+.xc-main-menu:hover,.xc-main-menu:active{background:#8f0f16;color:#fff}
+</style><style id="xc-header-logo">
+.xc-page-header-logo{width:86px;height:24px;object-fit:contain;display:block;flex:0 0 auto}
+</style><style id="xc-uniform-inputs">
+/* XC uniform form controls */
+input[type="text"],input[type="number"],input[type="date"],input[type="time"],
+input[type="email"],input[type="tel"],input[type="search"],input[type="url"],
+input:not([type]),select,textarea{
+  width:100%;
+  min-height:44px;
+  height:44px;
+  box-sizing:border-box;
+  padding:10px 11px;
+  border:1px solid #bbb;
+  border-radius:9px;
+  font:inherit;
+  line-height:1.25;
+  background:#fff;
+}
+textarea{
+  height:120px;
+  min-height:120px;
+  resize:vertical;
+}
+</style><link href="xc.css" rel="stylesheet"/></head><body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header>
+<header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading"><img alt="BTP" class="btp-header-icon" src="btp-logo.png"/> BTP 61016 Message Builder</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a><div class="card"><div class="grid"><div class="field"><label>HEADCODE</label><input data-report-label="Headcode" id="headcode" placeholder="e.g. 1V50"/></div><div class="field"><label>TRAIN TIME</label><input id="trainTime" type="time"/></div><div class="field"><label>FROM</label><input id="from"/></div><div class="field"><label>TO</label><input id="to"/></div><div class="field"><label>NEXT STOP</label><input id="nextStop"/></div><div class="field"><label>AT (HH:MM)</label><input id="at" type="time"/></div></div></div><div class="card"><label>INCIDENT DETAILS</label><textarea id="details"></textarea><details class="hint" style="margin-top:10px"><summary style="cursor:pointer;font-weight:800;color:#333">💡 Description reminder</summary><div style="padding-top:9px">Use where known/relevant:<br/>• Name<br/>• Age<br/>• Gender<br/>• Ethnicity<br/>• Build<br/>• Clothing<br/>• Distinguishing features<br/>• Direction of travel<br/>• Intoxicated?<br/>• Weapons?<br/>• Companions?</div></details></div><div class="card"><div style="font-weight:800;text-align:center">Whole SMS Character Count: <span id="charCount">0</span><br/>SMS Messages Required: <span id="smsCount">1</span></div></div><div class="card"><div class="actions"><button class="secondary" onclick="copyMsg()" type="button">📋 Copy Message</button><button class="primary" onclick="text61016()" type="button">💬 Text 61016</button></div><div class="status" id="status"></div></div></main><script>if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});function buildMessage(){let a=["BTP 61016 INCIDENT REPORT"];if(headcode.value)a.push("Headcode: "+headcode.value);if(trainTime.value)a.push("Train time: "+trainTime.value);if(from.value)a.push("From: "+from.value);if(to.value)a.push("To: "+to.value);if(nextStop.value)a.push("Next stop: "+nextStop.value);if(at.value)a.push("Time at next station: "+at.value);if(details.value.trim())a.push("Incident details: "+details.value.trim());return a.join("\n")}function update(){let m=buildMessage();charCount.textContent=m.length;smsCount.textContent=Math.max(1,Math.ceil(m.length/160))}["headcode","trainTime","from","to","nextStop","at","details"].forEach(x=>document.getElementById(x).addEventListener("input",update));async function copyMsg(){await navigator.clipboard.writeText(buildMessage());status.textContent="Message copied to clipboard."}function text61016(){location.href="sms:61016?&body="+encodeURIComponent(buildMessage())}update();</script><script>
+function xcGeneratePDF(title){
+ const lines=[title,"","XC STAFF APP",""];
+ document.querySelectorAll("input,select,textarea").forEach(el=>{
+  if(el.value){const l=el.closest(".field")?.querySelector("label")?.innerText||el.name||el.id||"Entry";lines.push(l+": "+el.value)}
+ });
+ const esc=v=>String(v).replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)").replace(/\r?\n/g," ");
+ const W=595,H=842,m=42,lead=14,pages=[[]];let y=H-m;
+ lines.forEach(x=>{if(y<55){pages.push([]);y=H-m}pages.at(-1).push(x);y-=lead});
+ let o=[],add=x=>(o.push(x),o.length),po=add(""),fo=add("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"),refs=[];
+ pages.forEach(ls=>{let c="BT /F1 10 Tf "+m+" "+(H-m)+" Td ";ls.forEach((x,i)=>{if(i)c+=" 0 -14 Td ";c+="("+esc(x)+") Tj "});c+=" ET";let st=add("<< /Length "+c.length+" >>\nstream\n"+c+"\nendstream");refs.push(add("<< /Type /Page /Parent "+po+" 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /Font << /F1 "+fo+" 0 R >> >> /Contents "+st+" 0 R >>"))});
+ o[po-1]="<< /Type /Pages /Count "+refs.length+" /Kids ["+refs.map(x=>x+" 0 R").join(" ")+"] >>";
+ let cat=add("<< /Type /Catalog /Pages "+po+" 0 R >>"),pdf="%PDF-1.4\n",off=[0];
+ o.forEach((x,i)=>{off.push(pdf.length);pdf+=(i+1)+" 0 obj\n"+x+"\nendobj\n"});
+ let xr=pdf.length;pdf+="xref\n0 "+(o.length+1)+"\n0000000000 65535 f \n";for(let i=1;i<off.length;i++)pdf+=String(off[i]).padStart(10,"0")+" 00000 n \n";
+ pdf+="trailer\n<< /Size "+(o.length+1)+" /Root "+cat+" 0 R >>\nstartxref\n"+xr+"\n%%EOF";
+ let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([pdf],{type:"application/pdf"}));a.download=title.replace(/[^a-z0-9]+/gi,"-")+".pdf";a.click();
+}
+</script><script id="xc-button-safety">
+document.addEventListener("click",function(e){
+ const b=e.target.closest("button[data-action]");
+ if(!b)return;
+ const fn=b.dataset.action;
+ if(typeof window[fn]==="function")window[fn](e);
+});
+</script>
+<script id="xc-standard-actions-v104">
+(function(){
+ function callFirst(names, evt){
+   for(const n of names){
+     if(typeof window[n]==="function"){ try{ window[n](evt); return true; }catch(e){ console.error(e); } }
+   }
+   return false;
+ }
+ document.addEventListener("click",function(e){
+   const b=e.target.closest("button");
+   if(!b)return;
+   const id=(b.id||"").toLowerCase();
+   const text=(b.textContent||"").trim().toLowerCase();
+   if(id==="copy"||id==="copybtn"||text==="copy"||text.includes("copy")){
+     if(callFirst(["copyReport","copyData","copyCounts","copyAll","copyToClipboard","copyForm"],e)) return;
+   }
+   if(id==="email"||id==="emailbtn"||text.includes("email")){
+     if(callFirst(["emailReport","emailData","emailCounts","emailAll","sendEmail","emailForm"],e)) return;
+   }
+   if(id==="pdf"||id==="pdfbtn"||text.includes("generate pdf")||text.includes("export pdf")||text.includes("save pdf")){
+     if(callFirst(["generateIncidentPDF","generatePDF","exportPDF","savePDF","generatePdf","exportPdf"],e)) return;
+   }
+   if(id==="clear"||id==="clearbtn"||text==="clear"||text.includes("clear all")){
+     if(callFirst(["clearForm","clearAll","clearNotes","clearData","clearCounts","resetForm"],e)) return;
+   }
+ });
+})();
+</script><script id="xc-button-repair-v118">
+document.addEventListener("click",function(e){
+ const b=e.target.closest("button[data-action]");
+ if(!b)return;
+ const fn=b.dataset.action;
+ if(typeof window[fn]==="function"){e.preventDefault();window[fn](e);}
+});
+</script><script src="xc-common.js"></script></body></html>

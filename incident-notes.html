@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#b5121b" name="theme-color"/>
+<title>Incident Report Notes - XC Train Manager App</title>
+<style>
+*{box-sizing:border-box}
+html{background:#b5121b}
+body{margin:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f3f3f3;color:#222}
+header{background:#b5121b;color:#fff;border-bottom:4px solid #f5c242;padding:12px 16px}
+.top{display:flex;align-items:center;gap:12px}.logo{width:86px;height:24px;object-fit:contain}.heading{font-weight:900;font-size:20px;margin-left:auto}
+main{max-width:720px;margin:auto;padding:12px 14px 35px}
+.menu{display:block;text-align:center;text-decoration:none;background:#b5121b;color:#fff;border-radius:10px;padding:12px;font-weight:800;margin-bottom:12px}
+.card{background:#fff;border-radius:14px;border:1px solid #ddd;box-shadow:0 2px 7px #0001;padding:15px;margin-bottom:12px}
+.card h2{font-size:17px;color:#b5121b;margin:0 0 6px}.hint{font-size:13px;color:#666;margin-bottom:12px;line-height:1.4}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.full{grid-column:1/-1}
+.field label{display:block;font-size:13px;font-weight:800;margin-bottom:5px}
+input,select,textarea{width:100%;min-height:44px;padding:10px 11px;border:1px solid #bbb;border-radius:9px;font:inherit;line-height:1.25;background:#fff}
+textarea{height:120px;min-height:120px;resize:vertical}
+.yesno{display:grid;grid-template-columns:1fr 1fr;gap:8px}.yn{border:1px solid #bbb;background:#fff;border-radius:9px;padding:11px;font:inherit;font-weight:800;cursor:pointer}.yn.selected{background:#b5121b;color:#fff;border-color:#b5121b}
+.detail{display:none;margin-top:10px}.detail.show{display:block}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.actions button{padding:13px;border:0;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer}
+.copy{background:#fff;color:#b5121b;border:1px solid #b5121b!important}.email{background:#b5121b;color:#fff}.pdf{background:#222;color:#fff}.clear{background:#eee;color:#222}
+.status{text-align:center;min-height:20px;color:#666;font-size:13px;margin:9px}
+.note{font-size:12px;color:#666;text-align:center;line-height:1.4}.print-footer{display:none}
+@media(max-width:520px){.grid,.actions{grid-template-columns:1fr}}
+@media print{
+ body{background:#fff;color:#111}
+ header{background:#b5121b!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ .menu,.actions,.status{display:none!important}
+ main{max-width:none;padding:0}
+ .card{box-shadow:none;border:1px solid #bbb;break-inside:avoid}
+ .yesno{display:none}
+ .detail.show{display:block}
+ .print-footer{display:block;position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:9px;color:#555;border-top:1px solid #bbb;padding:5px;background:#fff}
+ @page{size:A4;margin:13mm 12mm 17mm}
+}
+</style>
+<style id="xc-pdf-print-style">
+@media print{
+  body{background:#fff!important;color:#111!important}
+  .no-print,.actions,button,a.menu{display:none!important}
+  header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  main{max-width:none!important;margin:0!important;padding:0!important}
+  .card{box-shadow:none!important;break-inside:avoid}
+  input,select,textarea{border:0!important;background:#fff!important;padding:2px 0!important}
+  @page{size:A4;margin:14mm}
+}
+</style><style id="xc-shared-pdf-engine-v115">
+@media print{
+ body{background:#fff!important;color:#111!important}
+ .no-print,.actions,button,a.menu{display:none!important}
+ header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ main{max-width:none!important;margin:0!important;padding:0!important}
+ .card{box-shadow:none!important;break-inside:avoid}
+ @page{size:A4;margin:14mm}
+}
+</style><link href="xc.css" rel="stylesheet"/></head>
+<body>
+<header><div class="top"><img alt="XC" class="logo" src="crosscountry-logo-white.png"/><div class="heading">Incident Report Notes</div></div></header>
+<main>
+<a class="menu" href="index.html">← Main menu</a>
+<div class="card">
+<h2>Quick Incident Questions</h2>
+<div class="hint">Complete the questions below. Selecting <strong>Yes</strong> opens the relevant details box.</div>
+<div class="field">
+<label>Event/fixture related incident?</label>
+<div class="yesno">
+<button class="yn" data-target="eventDetails" data-value="Yes" type="button">Yes</button>
+<button class="yn" data-target="eventDetails" data-value="No" type="button">No</button>
+</div>
+<div class="detail" id="eventDetails">
+<label>Event / fixture details</label>
+<textarea id="eventText" placeholder="Football (name teams), Festival, Racing, other events, any impact factors such as alcohol or drugs, or due to delay / disruption?"></textarea>
+</div>
+</div>
+<div class="field" style="margin-top:15px">
+<label>Were staff assaulted (verbal or physical)?</label>
+<div class="yesno">
+<button class="yn" data-target="staffDetails" data-value="Yes" type="button">Yes</button>
+<button class="yn" data-target="staffDetails" data-value="No" type="button">No</button>
+</div>
+<div class="detail" id="staffDetails">
+<label>Staff assault details</label>
+<textarea id="staffText" placeholder="Enter details of the verbal or physical assault."></textarea>
+</div>
+</div>
+<div class="field" style="margin-top:15px">
+<label>Were passengers / others assaulted (verbal or physical)?</label>
+<div class="yesno">
+<button class="yn" data-target="passengerDetails" data-value="Yes" type="button">Yes</button>
+<button class="yn" data-target="passengerDetails" data-value="No" type="button">No</button>
+</div>
+<div class="detail" id="passengerDetails">
+<label>Passenger / other assault details</label>
+<textarea id="passengerText" placeholder="Enter details of the verbal or physical assault."></textarea>
+</div>
+</div>
+</div>
+<div class="card">
+<h2>Incident Details</h2>
+<div class="grid">
+<div class="field"><label>Date</label><input id="date" type="date"/></div>
+<div class="field"><label>Time</label><input id="time" type="time"/></div>
+<div class="field"><label>Headcode</label><input id="headcode" placeholder="e.g. 1E23"/></div>
+<div class="field"><label>Unit</label><input id="unit" inputmode="numeric" maxlength="6" placeholder="Unit number"/></div>
+<div class="field full"><label>Location of incident</label><input id="location"/></div>
+<div class="field full"><label>What happened?</label><textarea id="description" placeholder="Record what happened, in chronological order where possible."></textarea></div>
+</div>
+</div>
+<div class="card">
+<h2>Operational / Response Information</h2>
+<div class="grid">
+<div class="field"><label>Time Control informed</label><input id="controlTime" type="time"/></div>
+<div class="field">
+<label>Police / BTP called?</label>
+<select id="police"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>
+<div class="detail" id="btpDetail">
+<label>Log / incident / crime number</label>
+<input id="btpNumber" placeholder="Enter reference number"/>
+</div>
+</div>
+<div class="field">
+<label>Damage to train?</label>
+<select id="damage"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>
+<div class="detail" id="damageDetail">
+<label>Damage details</label>
+<textarea id="damageText" placeholder="Describe the damage to the train."></textarea>
+</div>
+</div>
+<div class="field full">
+<label>Nature of damage / other relevant information</label>
+<textarea id="nature"></textarea>
+</div>
+</div>
+</div>
+<div class="card">
+<h2>Any additional notes or information</h2>
+<div class="field"><label>Any additional notes or information</label><textarea id="notes"></textarea></div>
+</div>
+<div class="card">
+<h2>Witnesses</h2>
+<div class="field"><label>Witnesses</label><textarea id="witnessesText" placeholder="Enter witness names and any relevant witness information."></textarea></div>
+</div>
+<div class="card note">
+<strong>These are contemporaneous notes taken at the time of an incident so it is recorded.</strong>
+</div>
+<div class="actions">
+<button class="copy" id="incidentCopy" type="button">📋 Copy</button>
+<button class="email" id="incidentEmail" type="button">📧 Email</button>
+<button button="" class="pdf" generate="" id="generatePDF" pdf<="" type="button" 📄="">
+<button class="clear" id="incidentClear" type="button">🗑 Clear</button>
+</button></div>
+<div class="status" id="status"></div>
+<div class="print-footer">These are contemporaneous notes taken at the time of an incident so it is recorded.</div>
+</main>
+<script>
+(function(){
+"use strict";
+
+const $=id=>document.getElementById(id);
+const formFields=[
+ ["Date","date"],["Time","time"],["Headcode","headcode"],["Unit","unit"],
+ ["Location of incident","location"],["What happened","description"],
+ ["Time Control informed","controlTime"],["Police / BTP called?","police"],
+ ["Log / incident / crime number","btpNumber"],["Damage to train?","damage"],
+ ["Damage details","damageText"],["Nature of damage / other relevant information","nature"],
+ ["Any additional notes or information","notes"],["Witnesses","witnessesText"],
+ ["Event / fixture details","eventText"],["Staff assault details","staffText"],
+ ["Passenger / other assault details","passengerText"]
+];
+
+function setStatus(text){
+ const el=$("status"); if(!el)return;
+ el.textContent=text;
+ setTimeout(()=>{if(el.textContent===text)el.textContent=""},2500);
+}
+
+function bindYN(){
+ document.querySelectorAll(".yn").forEach(btn=>{
+  btn.addEventListener("click",function(){
+   const target=$(this.dataset.target);
+   document.querySelectorAll('[data-target="'+this.dataset.target+'"]').forEach(b=>b.classList.remove("selected"));
+   this.classList.add("selected");
+   if(target){
+    const yes=this.dataset.value==="Yes";
+    target.classList.toggle("show",yes);
+    if(!yes)target.querySelectorAll("input,textarea").forEach(x=>x.value="");
+   }
+  });
+ });
+}
+
+function bindConditionalSelect(selectId,detailId,inputIds){
+ const sel=$(selectId), box=$(detailId);
+ if(!sel||!box)return;
+ function update(){
+  const yes=sel.value==="Yes";
+  box.classList.toggle("show",yes);
+  if(!yes)inputIds.forEach(id=>{const x=$(id);if(x)x.value=""});
+ }
+ sel.addEventListener("change",update);
+ update();
+}
+
+function answer(target,label){
+ const selected=document.querySelector('[data-target="'+target+'"].selected');
+ return selected ? selected.dataset.value : "";
+}
+
+function collect(includeBlank){
+ const out=[];
+ formFields.forEach(([label,id])=>{
+  const el=$(id);
+  if(!el)return;
+  const value=(el.value||"").trim();
+  if(includeBlank || value)out.push([label,value||"Not answered / applicable"]);
+ });
+ out.push(["Event/fixture related incident?",answer("eventDetails","")||"Not answered / applicable"]);
+ out.push(["Were staff assaulted (verbal or physical)?",answer("staffDetails","")||"Not answered / applicable"]);
+ out.push(["Were passengers / others assaulted (verbal or physical)?",answer("passengerDetails","")||"Not answered / applicable"]);
+ return out;
+}
+
+function reportText(){
+ const rows=collect(false);
+ return "XC STAFF APP — INCIDENT REPORT NOTES\\n\\n"+
+ rows.map(([l,v])=>l+": "+v).join("\\n")+
+ "\\n\\nThese are contemporaneous notes taken at the time of an incident so it is recorded.";
+}
+
+async function copyReport(){
+ const text=reportText();
+ try{await navigator.clipboard.writeText(text)}
+ catch(e){
+  const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);
+  ta.select();document.execCommand("copy");ta.remove();
+ }
+ setStatus("Copied to clipboard.");
+}
+
+function emailReport(){
+ const hc=$("headcode")?.value.trim()||"";
+ location.href="mailto:?subject="+encodeURIComponent("XC Incident Report"+(hc?" - "+hc:""))+
+ "&body="+encodeURIComponent(reportText());
+}
+
+function generatePDF(){
+ window.print();
+}
+
+function clearForm(){
+ if(!confirm("Are you sure? This will clear the incident report."))return;
+ document.querySelectorAll("input,textarea").forEach(el=>el.value="");
+ document.querySelectorAll("select").forEach(el=>el.selectedIndex=0);
+ document.querySelectorAll(".yn").forEach(el=>el.classList.remove("selected"));
+ document.querySelectorAll(".detail").forEach(el=>el.classList.remove("show"));
+ const d=new Date();
+ $("date").value=d.toISOString().slice(0,10);
+ $("time").value=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+ setStatus("Incident report cleared.");
+}
+
+bindYN();
+bindConditionalSelect("police","btpDetail",["btpNumber"]);
+bindConditionalSelect("damage","damageDetail",["damageText"]);
+
+const now=new Date();
+$("date").value=now.toISOString().slice(0,10);
+$("time").value=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+
+$("incidentCopy").addEventListener("click",copyReport);
+$("incidentEmail").addEventListener("click",emailReport);
+$("incidentPDF").addEventListener("click",generatePDF);
+$("incidentClear").addEventListener("click",clearForm);
+})();
+</script>
+<script id="xc-pdf-print-script">
+function generatePDF(){
+  window.print();
+}
+document.getElementById("generatePDF")?.addEventListener("click",generatePDF);</script><script id="xc-button-repair-v118">
+document.addEventListener("click",function(e){
+ const b=e.target.closest("button[data-action]");
+ if(!b)return;
+ const fn=b.dataset.action;
+ if(typeof window[fn]==="function"){e.preventDefault();window[fn](e);}
+});
+</script><script src="xc-common.js"></script></body>
+</html>
