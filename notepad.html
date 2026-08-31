@@ -157,7 +157,7 @@ function render(){
     '<div class="note-body">'+
     '<div class="time">Created '+esc(n.time)+'</div>'+
     '<textarea id="text-'+i+'" placeholder="Note" '+(n.editing?"":"disabled")+'>'+esc(n.text)+'</textarea>'+
-    '<div class="note-actions"><button type="button" class="pdf" id="generatePDF"generatePDF"📄 Generate PDF</button>'+
+    '<div class="note-actions">'+
     (n.editing?'<button type="button" class="save" data-action="save" data-i="'+i+'">💾 Save &amp; close</button>':
                  '<button type="button" class="edit" data-action="edit" data-i="'+i+'">✏️ Edit note</button>')+
     '<button type="button" class="delete" data-action="delete" data-i="'+i+'">🗑 Delete</button>'+
@@ -195,67 +195,8 @@ function clearAll(){
  notes=[];localStorage.removeItem(KEY);render();show("All notes cleared.");
 }
 
-/* Minimal valid PDF writer. It creates an A4, XC-styled text report without
-   relying on external libraries, so Export All Notes works offline. */
-function pdfEscape(v){
- return String(v||"").replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)").replace(/\r?\n/g," ");
-}
-function wrap(text,max){
- const words=String(text||"").split(/\s+/),out=[];let line="";
- words.forEach(function(w){
-   if(!line){line=w;}
-   else if((line+" "+w).length<=max){line+=" "+w;}
-   else{out.push(line);line=w;}
- });
- if(line)out.push(line);
- return out.length?out:[""];
-}
-function makePdf(){
- saveAll();
- const usable=notes.filter(function(n){return n.title.trim()||n.text.trim();});
- if(!usable.length){show("There are no notes to export.");return;}
- const d=new Date(),ts=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+" on "+String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear();
- const perPage=48,pages=[[]];
- usable.forEach(function(n,idx){
-   const lines=[];
-   lines.push("NOTE "+(idx+1)+(n.title?" - "+n.title:""));
-   lines.push("Created: "+n.time);
-   wrap(n.text||"[No text entered]",88).forEach(function(x){lines.push(x);});
-   lines.push("");
-   lines.forEach(function(x){if(pages[pages.length-1].length>=perPage)pages.push([]);pages[pages.length-1].push(x);});
- });
- const objs=["","<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"],pageRefs=[];
- pages.forEach(function(lines,pi){
-   let c="BT ";
-   c+="/F1 20 Tf 0.64 0.02 0.20 rg 42 795 Td (XC STAFF APP) Tj ";
-   c+="/F1 13 Tf 0.12 0.12 0.12 rg 0 -27 Td (ON THE DAY NOTES) Tj ";
-   c+="/F1 8 Tf 0.35 0.35 0.35 rg 0 -15 Td ("+pdfEscape("Report generated at "+ts)+") Tj ";
-   c+="/F1 10 Tf 0.12 0.12 0.12 rg 0 -25 Td ";
-   lines.forEach(function(line,j){if(j)c+=" 0 -13 Td ";c+="("+pdfEscape(line)+") Tj ";});
-   c+=" ET 0.64 0.02 0.20 RG 1 w 42 50 m 553 50 l S ";
-   c+="BT /F1 8 Tf 0.35 0.35 0.35 rg 42 32 Td (XC STAFF APP) Tj 400 0 Td ("+pdfEscape("Page "+(pi+1)+" of "+pages.length)+") Tj ET";
-   const stream=objs.push("<< /Length "+c.length+" >>\nstream\n"+c+"\nendstream");
-   pageRefs.push(objs.push("<< /Type /Page /Parent 1 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 2 0 R >> >> /Contents "+stream+" 0 R >>"));
- });
- objs[0]="<< /Type /Pages /Count "+pageRefs.length+" /Kids ["+pageRefs.map(function(x){return x+" 0 R";}).join(" ")+"] >>";
- const catalog=objs.push("<< /Type /Catalog /Pages 1 0 R >>");
- let pdf="%PDF-1.4\n",offsets=[0];
- objs.forEach(function(o,i){offsets.push(pdf.length);pdf+=(i+1)+" 0 obj\n"+o+"\nendobj\n";});
- const xref=pdf.length;
- pdf+="xref\n0 "+(objs.length+1)+"\n0000000000 65535 f \n";
- for(let i=1;i<offsets.length;i++)pdf+=String(offsets[i]).padStart(10,"0")+" 00000 n \n";
- pdf+="trailer\n<< /Size "+(objs.length+1)+" /Root "+catalog+" 0 R >>\nstartxref\n"+xref+"\n%%EOF";
- const a=document.createElement("a");
- const url=URL.createObjectURL(new Blob([pdf],{type:"application/pdf"}));
- a.href=url;a.download="XC-On-The-Day-Notes-"+String(d.getDate()).padStart(2,"0")+String(d.getMonth()+1).padStart(2,"0")+d.getFullYear()+".pdf";
- document.body.appendChild(a);a.click();a.remove();
- setTimeout(function(){URL.revokeObjectURL(url);},2000);
- show("PDF exported.");
-}
-
 document.getElementById("addBtn").addEventListener("click",addNote);
 document.getElementById("saveBtn").addEventListener("click",saveAll);
-document.getElementById("pdfBtn").addEventListener("click",makePdf);
 document.getElementById("clearBtn").addEventListener("click",clearAll);
 document.getElementById("notes").addEventListener("click",function(e){
  const b=e.target.closest("button[data-action]");if(!b)return;
@@ -300,18 +241,12 @@ document.addEventListener("click",function(e){
    if(id==="email"||id==="emailbtn"||text.includes("email")){
      if(callFirst(["emailReport","emailData","emailCounts","emailAll","sendEmail","emailForm"],e)) return;
    }
-   if(id==="pdf"||id==="pdfbtn"||text.includes("generate pdf")||text.includes("export pdf")||text.includes("save pdf")){
-     if(callFirst(["generateIncidentPDF","generatePDF","exportPDF","savePDF","generatePdf","exportPdf"],e)) return;
-   }
    if(id==="clear"||id==="clearbtn"||text==="clear"||text.includes("clear all")){
      if(callFirst(["clearForm","clearAll","clearNotes","clearData","clearCounts","resetForm"],e)) return;
    }
  });
 })();
-</script><script>function printPDF(){window.print();}</script><script id="xc-shared-pdf-engine-v115">function generatePDF(){
- window.print();
-}
-document.getElementById("generatePDF")?.addEventListener("click",generatePDF);</script><script id="xc-button-repair-v118">
+</script><script id="xc-button-repair-v118">
 document.addEventListener("click",function(e){
  const b=e.target.closest("button[data-action]");
  if(!b)return;
