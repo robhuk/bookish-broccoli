@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#d10a4b"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="XC Staff App">
-<link rel="manifest" href="manifest.json"><link rel="icon" href="crosscountry-logo-white.png">
+<link rel="manifest" href="manifest.json"><link rel="icon" href="xc-staff-app-icon.jpg"><link rel="apple-touch-icon" href="xc-staff-app-icon.jpg">
 <link rel="stylesheet" href="xc.css">
 <title>XC Train Manager App</title>
 <style>
@@ -20,9 +20,11 @@
 .xc-home-label{line-height:1.2}
 .xc-home-footer{text-align:center;color:#777;font-size:11px;padding:5px 14px 30px}
 @media(max-width:600px){.xc-home-navigation{grid-template-columns:1fr}.xc-home-title{font-size:22px}}
+.app-splash{position:fixed;inset:0;z-index:9999;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:1;visibility:visible}.app-splash img{width:100%;height:100%;object-fit:cover;display:block}.app-splash.hide{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease}
 </style>
 </head>
 <body class="xc-home">
+<div class="app-splash" id="appSplash" aria-label="XC Staff App"><img src="xc-staff-app-splash.jpg" alt=""></div>
 <header class="xc-home-header">
   <img src="crosscountry-logo-white.png" alt="CrossCountry">
   <div class="xc-home-kicker">TRAIN MANAGER TOOLS</div>
@@ -43,5 +45,6 @@
 <a class="xc-home-button" href="help.html"><span class="xc-home-icon">❓</span><span class="xc-home-label">Help / Guide</span></a>
 </section>
 <div class="xc-home-footer">XC Staff App · CrossCountry Train Manager tools</div>
+<script>window.addEventListener("load",()=>setTimeout(()=>document.getElementById("appSplash")?.classList.add("hide"),450));</script>
 <script src="xc-common.js"></script>
 </body></html>

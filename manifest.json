@@ -1,11 +1,11 @@
 {
   "name": "XC Staff App",
-  "short_name": "XC Staff",
+  "short_name": "XC Staff App",
   "start_url": "index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#d10a4b",
+  "theme_color": "#b5121b",
   "background_color": "#f4f4f6",
   "icons": [
     {

@@ -73,6 +73,18 @@ function setStatus(msg){
   var el=document.querySelector(".xc-action-status"); if(el) el.textContent=msg;
 }
 function addActions(){
+  var noStandardActions = ["btp-61016.html","commission-calculator.html","delay-repay.html","help.html"];
+  var currentPage = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+  if(noStandardActions.indexOf(currentPage) !== -1){
+    // These utility pages do not support PDF/print output. Remove any
+    // legacy/generated PDF controls left behind by older page scripts.
+    document.querySelectorAll('.pdf-action, #generatePDF, #pdf, #pdfbtn, button.pdf, button[data-action="pdf"]').forEach(function(el){el.remove();});
+    document.querySelectorAll('button, a').forEach(function(el){
+      var txt=(el.innerText||el.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();
+      if(/generate\s+pdf|print\s*\/\s*save\s+pdf|save\s+pdf|export\s+pdf/.test(txt)) el.remove();
+    });
+    return;
+  }
   if(location.pathname.endsWith("index.html") || document.body.classList.contains("xc-home")) return;
   if(document.querySelector(".xc-actions")) return;
   var bar=document.createElement("div");bar.className="xc-actions";bar.setAttribute("data-xc-actions","true");

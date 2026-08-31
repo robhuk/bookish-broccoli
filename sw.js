@@ -1,4 +1,4 @@
-const CACHE="xc_train_manager_app_v119";const ASSETS=[
+const CACHE="xc_train_manager_app_v121_1";const ASSETS=[
 "./","./index.html","./tir-builder.html","./commission-calculator.html","./notepad.html","./delay-repay.html",
 "./delay-repay-qr.png","./report-defects.html","./help.html","./help-guide.png","./report-defects.png","./btp-61016.png",
 "./reservations.png","./incident-notes.png","./passenger-counts.png","./book-off-late.png","./delay.png","./delay-report.html",
