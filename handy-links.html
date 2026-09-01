@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#d10a4b"><link rel="icon" href="xc-staff-app-icon.jpg"><link rel="stylesheet" href="xc.css"><title>Handy Links</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#d10a4b"><link rel="icon" href="xc-staff-app-icon.jpg"><link rel="stylesheet" href="xc.css"><title>Handy Links | CrossCountry Crew Toolkit</title><style>
 body{margin:0;background:#f5f5f5;font-family:Arial,sans-serif;color:#333}.top{background:#d10a4b;color:white;padding:18px 16px;text-align:center;border-bottom:4px solid #666;position:sticky;top:0;z-index:5}.top h1{margin:0;font-size:20px}.wrap{max-width:760px;margin:auto;padding:18px 14px 32px}.section{margin:18px 0}.section h2{font-size:16px;color:#d10a4b;margin:0 0 10px}.linkbtn{width:100%;text-align:left;background:#fff;border:1px solid #ddd;border-left:6px solid #d10a4b;border-radius:12px;padding:16px;margin:9px 0;font-size:16px;font-weight:700;color:#222;box-shadow:0 2px 7px rgba(0,0,0,.06);cursor:pointer}.linkbtn:active{background:#fff0f5}.viewer{display:none;position:fixed;inset:0;background:#fff;z-index:50}.viewerbar{height:58px;background:#d10a4b;display:flex;align-items:center;justify-content:space-between;padding:0 12px;color:#fff;font-weight:800}.close{background:#fff;color:#d10a4b;border:0;border-radius:9px;padding:9px 15px;font-weight:800;font-size:15px;cursor:pointer}.viewer iframe{border:0;width:100%;height:calc(100vh - 58px)}.back{display:inline-block;color:white;text-decoration:none;position:absolute;left:14px;top:19px;font-weight:800}.footer{text-align:center;font-size:9px;color:#777;padding-top:14px}
 </style>
 <style>
@@ -26,6 +26,41 @@ body{margin:0;background:#f5f5f5;font-family:Arial,sans-serif;color:#333}.top{ba
 }
 @media print{.print-hide,.action-row{display:none!important}}
 </style>
+
+<style id="xc-uniform-theme">
+:root{
+  --xc-magenta:#b0004f;
+  --xc-magenta-dark:#85003b;
+  --xc-grey:#f3f3f3;
+  --xc-text:#222;
+}
+body{background:var(--xc-grey)!important;color:var(--xc-text)!important;font-family:Arial,Helvetica,sans-serif!important;margin:0!important;}
+header,.app-header,.page-header{
+  background:linear-gradient(135deg,var(--xc-magenta),var(--xc-magenta-dark))!important;
+  color:#fff!important;
+  padding:16px 18px!important;
+  box-shadow:0 2px 8px rgba(0,0,0,.16)!important;
+}
+header h1,.app-header h1,.page-header h1,
+header h2,.app-header h2,.page-header h2{color:#fff!important;margin:0!important;font-size:1.05rem!important;}
+main,.container,.content{max-width:920px;margin:0 auto;padding:18px!important;box-sizing:border-box;}
+.card,.section,.note-card,.link-card,.note-item{
+  background:#fff!important;border:1px solid #ddd!important;border-radius:14px!important;
+  box-shadow:0 2px 7px rgba(0,0,0,.08)!important;
+}
+h2,h3{color:var(--xc-magenta-dark)!important;}
+button,.button,.btn{
+  background:var(--xc-magenta)!important;color:#fff!important;border:0!important;
+  border-radius:10px!important;padding:12px 16px!important;font-weight:700!important;
+}
+button:hover,.button:hover,.btn:hover{background:var(--xc-magenta-dark)!important;}
+input,textarea,select{
+  border:1px solid #c8c8c8!important;border-radius:9px!important;
+  background:#fff!important;color:#222!important;
+}
+textarea:focus,input:focus,select:focus{outline:2px solid rgba(176,0,79,.25)!important;border-color:var(--xc-magenta)!important;}
+footer{font-size:.72rem!important;text-align:center!important;color:#777!important;padding:18px!important;}
+</style>
 </head><body><header class="top"><a class="back" href="index.html">‹ Home</a><h1>🔗 Handy Links</h1></header><main class="wrap"><div class="links-notice"><strong>Notice</strong> — These links will open in your default browser.</div>
 <section class="section"><h2>🚦 Operational</h2>
 <button class="linkbtn" data-url="http://www.realtimetrains.co.uk/">Realtime Trains — Live Times</button>
@@ -42,11 +77,21 @@ body{margin:0;background:#f5f5f5;font-family:Arial,sans-serif;color:#333}.top{ba
 <div class="footer">CrossCountry Train Crew Toolkit © RH</div></main>
 <div class="viewer" id="viewer"><div class="viewerbar"><span id="vtitle">Handy Link</span><button class="close" id="close">✕ Close</button></div><iframe id="frame" title="Opened link"></iframe></div>
 <script>const v=document.getElementById('viewer'),f=document.getElementById('frame'),t=document.getElementById('vtitle');document.querySelectorAll('.linkbtn').forEach(b=>b.onclick=()=>{t.textContent=b.textContent;f.src=b.dataset.url;v.style.display='block'});document.getElementById('close').onclick=()=>{f.src='about:blank';v.style.display='none'};</script><div class="links-disclaimer"><strong>Disclaimer</strong> — all links were correct at time of publication, no guarantee can be made of content of external links, all links visited at users own risk.</div>
+
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('a[href^="http://"], a[href^="https://"]').forEach(function (link) {
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('a[href^="http://"], a[href^="https://"]').forEach(a => {
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.dataset.nativeBrowser = 'true';
+  });
+  document.querySelectorAll('[data-url],[data-href]').forEach(el => {
+    const url = el.dataset.url || el.dataset.href;
+    if (url && /^https?:\/\//i.test(url)) {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', () => window.open(url, '_blank', 'noopener,noreferrer'));
+    }
   });
 });
 </script>
