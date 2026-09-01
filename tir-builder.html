@@ -113,6 +113,13 @@ textarea{
 }
 @media print{.print-hide,.action-row{display:none!important}}
 </style>
+
+<style id="tir-remove-bottom-print-txt">
+#saveTxtBtn,#printBtn,.save-txt-button,.print-button,
+button[onclick*="saveTxt"],button[onclick*="window.print"]{
+  display:none!important;
+}
+</style>
 </head>
 <body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header><a class="xc-main-menu" href="index.html">← Main menu</a>
 <div class="hdr">TIR Builder</div>
@@ -174,7 +181,7 @@ textarea{
 <div class="actions"><button button="" class="pdf" generate="" generatepdf"📄="" id="generatePDF" pdf<="" type="button">
 
 
-<button class="btn" onclick="saveTxt()" type="button">💾 Save TXT</button>
+
 </button></div>
 </div>
 <div class="card"><h3>Generated Report</h3><div id="report"></div></div>

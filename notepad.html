@@ -64,8 +64,14 @@ input,textarea,select{
 textarea:focus,input:focus,select:focus{outline:2px solid rgba(176,0,79,.25)!important;border-color:var(--xc-magenta)!important;}
 footer{font-size:.72rem!important;text-align:center!important;color:#777!important;padding:18px!important;}
 </style>
+
+<style id="notes-remove-global-actions">
+.floating-actions,.global-actions,.page-actions,.header-actions,.top-actions,.toolbar-actions,.action-row{
+  display:none!important;
+}
+</style>
 </head><body><div class="app"><div class="nav"><a class="back" href="index.html">‹ Menu</a><h1>📝 Notes</h1><button class="add" onclick="newNote()">✎</button></div><div class="search">⌕ <input id="search" placeholder="Search" oninput="render()"></div><div id="list" class="list"></div><button class="floating" onclick="newNote()">✎</button></div>
-<div id="composer" class="composer"><div class="editor-nav"><button class="back" onclick="closeEditor()">‹ Notes</button><button class="delete" onclick="deleteCurrent()">🗑</button><button class="done" onclick="saveCurrent()">Done</button></div><div id="created" class="created"></div><input id="title" class="title" placeholder="Title"><textarea id="body" class="body" placeholder="Start writing..."></textarea></div>
+<div id="composer" class="composer"><div class="editor-nav"><button class="back" onclick="closeEditor()">‹ Notes</button><button class="done" onclick="saveCurrent()">Done</button></div><div id="created" class="created"></div><input id="title" class="title" placeholder="Title"><textarea id="body" class="body" placeholder="Start writing..."></textarea></div>
 <script>
 const KEY='xc_native_notes_v1';let notes=JSON.parse(localStorage.getItem(KEY)||'[]'),current=null;
 const fmt=t=>new Date(t).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
@@ -87,7 +93,7 @@ render();
   function clear(){if(!confirm('Are you sure you want to clear all data on this page?'))return;fields().forEach(e=>{if(e.type==='checkbox'||e.type==='radio')e.checked=false;else if(e.type!=='hidden')e.value='';e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});localStorage.removeItem(key);}
   function restore(){try{const data=JSON.parse(localStorage.getItem(key)||'{}');fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i),d=data[k];if(!d)return;if(e.type==='checkbox')e.checked=!!d.v;else e.value=d.v;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});}catch(_){}}
   document.addEventListener('DOMContentLoaded',()=>{
-    const bar=document.createElement('div');bar.className='global-page-data-controls';bar.innerHTML='<button type="button" aria-label="Save data" title="Save data">💾</button><button type="button" aria-label="Clear data" title="Clear data">🗑️</button>';document.body.appendChild(bar);
+    const bar=document.createElement('div');bar.className='global-page-data-controls';bar.innerHTML='';document.body.appendChild(bar);
     bar.children[0].addEventListener('click',save);bar.children[1].addEventListener('click',clear);restore();
   });
 })();
