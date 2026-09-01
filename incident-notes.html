@@ -429,5 +429,52 @@ document.addEventListener("click",function(e){
   });
 })();
 </script>
+
+<script id="xc-share-email-original-v161">
+(function(){
+  function clean(s){return String(s||"").replace(/\r/g,"").replace(/\n{3,}/g,"\n\n").trim();}
+  function outputText(){
+    for(const e of document.querySelectorAll("#generatedEmail,#emailPreview,#emailBody,#generatedReport,#output,.email-preview,.report-output")){
+      const t=clean(("value" in e && e.value)?e.value:(e.innerText||e.textContent));
+      if(t) return t;
+    } return "";
+  }
+  function subjectText(){
+    for(const e of document.querySelectorAll("#emailSubject,#subject,[data-output='subject'],.email-subject")){
+      const t=clean(("value" in e && e.value)?e.value:(e.innerText||e.textContent));
+      if(t) return t;
+    } return "";
+  }
+  window.xcShareOriginalEmailV161=function(){
+    let subject=subjectText(), body=outputText();
+    if(typeof window.formatStaffDelayEmailV158==="function"){
+      const r=window.formatStaffDelayEmailV158(); subject=r.subject; body=r.body;
+    } else if(typeof window.formatBookOffLateEmailV159==="function"){
+      const r=window.formatBookOffLateEmailV159(); subject=r.subject; body=r.body;
+    } else if(typeof window.formatReservationsEmailV160==="function"){
+      const r=window.formatReservationsEmailV160(); subject=r.subject; body=r.body;
+    } else if(typeof window.formatReservationEmailV155==="function"){
+      const r=window.formatReservationEmailV155(); subject=r.subject; body=r.body;
+    } else if(document.title.toLowerCase().includes("incident") && typeof window.reportText==="function"){
+      const hc=(document.getElementById("headcode")||{}).value||"HEADCODE";
+      const dv=(document.getElementById("date")||{}).value||"DATE";
+      subject="Incident initial report for "+hc+" on "+dv;
+      body=window.reportText();
+    }
+    location.href="mailto:?subject="+encodeURIComponent(clean(subject))+"&body="+encodeURIComponent(clean(body));
+  };
+  document.addEventListener("DOMContentLoaded",function(){
+    document.querySelectorAll("button,a,[role='button']").forEach(function(el){
+      const t=((el.textContent||"")+" "+(el.getAttribute("aria-label")||"")+" "+(el.title||"")).toLowerCase();
+      if(/share\s*(via)?\s*email|email\s*share|share.*email/.test(t)){
+        el.addEventListener("click",function(e){
+          e.preventDefault(); e.stopImmediatePropagation();
+          window.xcShareOriginalEmailV161();
+        },true);
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>
