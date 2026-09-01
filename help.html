@@ -57,6 +57,16 @@ textarea{
 }
 @media print{.print-hide,.action-row{display:none!important}}
 </style>
+
+<style id="help-save-clear-note-style">
+.help-save-clear-note{
+  margin:22px auto;padding:16px 18px;max-width:900px;
+  background:#fff;border:1px solid #ddd;border-radius:12px;
+  box-shadow:0 2px 7px rgba(0,0,0,.08);
+}
+.help-save-clear-note h3{margin-top:0;color:#85003b;}
+.help-save-clear-note ul{margin-bottom:0;padding-left:22px;}
+</style>
 </head><body>
 <header class="header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/><div class="title">Help / Guide</div></header>
 <div style="max-width:700px;margin:12px auto 0;padding:0 14px"></div>
@@ -86,6 +96,15 @@ textarea{
 <div class="card"><h2>💷 Delay Repay</h2><p>Use this page to show customers the Delay Repay QR code and information.</p><p>Customers whose CrossCountry train is delayed by <strong>30 minutes or more</strong> to the destination shown on their ticket may be entitled to compensation, subject to the applicable terms and conditions.</p></div>
 <div class="card"><h2>📋 TIR Builder</h2><p>The TIR Builder helps capture information and prepare a structured report.</p><p>Enter the relevant train information, irregularity, passenger details, answers and operational notes. Use the available Copy, Email and Print / Save PDF options to produce the completed report.</p></div>
 <div class="card"><h2>Remember</h2><ul><li>Check every entry before copying, emailing, printing or submitting a report.</li><li>Use the correct company mailbox, reporting system and operational procedure.</li><li>This app provides templates and prompts; it does not replace company procedures, formal reporting systems or emergency arrangements.</li><li>For emergencies or safety-critical matters, follow the appropriate operational process immediately.</li></ul></div>
+
+<div class="help-save-clear-note">
+  <h3>💾 Save and 🗑️ Delete / Clear buttons</h3>
+  <p>On most pages, the floating buttons at the top of the screen allow you to save or clear the information currently entered on that page.</p>
+  <ul>
+    <li><strong>💾 Save</strong> — saves the current page data to the app's memory so it can be restored later.</li>
+    <li><strong>🗑️ Delete / Clear</strong> — clears the information currently entered on the screen. You will be asked to confirm before the data is cleared.</li>
+  </ul>
+</div>
 </main><script id="xc-button-safety">
 document.addEventListener("click",function(e){
  const b=e.target.closest("button[data-action]");

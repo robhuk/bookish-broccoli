@@ -106,7 +106,21 @@ header h1,.app-header h1,.page-header h1{
   background:var(--xc-magenta-dark,#85003b);
 }
 </style>
-</head><body><header class="top"><h1>🔗 Handy Links</h1></header><main class="wrap"><div class="links-notice"><strong>Notice</strong> — These links will open in your default browser.</div>
+
+<style id="handy-links-menu-top-v157">
+.main-menu-top{
+  padding:14px 18px 6px!important;
+  margin:0!important;
+}
+.main-menu-top .main-menu-button{
+  min-width:160px!important;
+}
+</style>
+</head><body><header class="top"><h1>🔗 Handy Links</h1></header>
+<div class="main-menu-wrap main-menu-top">
+  <a href="index.html" class="main-menu-button">☰ Main Menu</a>
+</div>
+<main class="wrap"><div class="links-notice"><strong>Notice</strong> — These links will open in your default browser.</div>
 <section class="section"><h2>🚦 Operational</h2>
 <button class="linkbtn" data-url="http://www.realtimetrains.co.uk/">Realtime Trains — Live Times</button>
 <button class="linkbtn" data-url="https://traksy.uk/">Traksy — Live Maps</button>
@@ -140,6 +154,4 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-
-<div class="main-menu-wrap"><a href="index.html" class="main-menu-button">☰ Main Menu</a></div>
 </body></html>

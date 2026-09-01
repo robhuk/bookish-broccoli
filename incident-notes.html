@@ -81,6 +81,14 @@ textarea{height:120px;min-height:120px;resize:vertical}
 }
 @media print{.print-hide,.action-row{display:none!important}}
 </style>
+
+<style id="incident-header-no-save-v153">
+header #saveBtn, header #clearBtn,
+header .save-btn, header .clear-btn,
+header .page-actions, header .header-actions,
+header .top-actions, header .toolbar-actions,
+header .action-row { display:none!important; }
+</style>
 </head>
 <body>
 <header><div class="top"><img alt="XC" class="logo" src="crosscountry-logo-white.png"/><div class="heading">Incident Report Notes</div></div></header>
@@ -249,10 +257,81 @@ function collect(includeBlank){
 }
 
 function reportText(){
- const rows=collect(false);
- return "XC STAFF APP — INCIDENT REPORT NOTES\\n\\n"+
- rows.map(([l,v])=>l+": "+v).join("\\n")+
- "\\n\\nThese are contemporaneous notes taken at the time of an incident so it is recorded.";
+ const get=id => ($(id)?.value||"").trim();
+ const dateRaw=get("date");
+ const date=dateRaw ? dateRaw.split("-").reverse().map((v,i)=>i===2?v.slice(-2):v).join("/") : "";
+ const time=get("time");
+ const headcode=get("headcode");
+ const unit=get("unit");
+ const location=get("location");
+ const description=get("description");
+ const controlTime=get("controlTime");
+ const police=get("police");
+ const btpNumber=get("btpNumber");
+ const damage=get("damage");
+ const damageText=get("damageText");
+ const nature=get("nature");
+ const notes=get("notes");
+ const witnesses=get("witnessesText");
+ const event=answer("eventDetails")||"";
+ const eventText=get("eventText");
+ const staffAssault=answer("staffDetails")||"";
+ const staffText=get("staffText");
+ const passengerAssault=answer("passengerDetails")||"";
+ const passengerText=get("passengerText");
+
+ const lines=[];
+ lines.push("Hello,");
+ lines.push("");
+
+ let opening="Please find below an initial report of an incident";
+ if(headcode) opening+=" on service "+headcode;
+ if(date) opening+=" on "+date;
+ if(time) opening+=" at "+time;
+ if(location) opening+=" at "+location;
+ opening+=".";
+ lines.push(opening);
+
+ if(unit) lines.push("The unit involved was "+unit+".");
+ if(description) lines.push(description);
+
+ if(event==="Yes") lines.push("The incident was event or fixture related. "+eventText);
+ else if(event==="No") lines.push("The incident was not event or fixture related.");
+
+ if(staffAssault==="Yes") lines.push("Staff were assaulted. "+staffText);
+ else if(staffAssault==="No") lines.push("No staff assault was reported.");
+
+ if(passengerAssault==="Yes") lines.push("Passengers or other persons were assaulted. "+passengerText);
+ else if(passengerAssault==="No") lines.push("No passenger or other person assault was reported.");
+
+ if(controlTime) lines.push("Control was informed at "+controlTime+".");
+
+ if(police==="Yes"){
+   let t="Police / BTP were called.";
+   if(btpNumber) t+=" Reference number: "+btpNumber+".";
+   lines.push(t);
+ } else if(police==="No") {
+   lines.push("Police / BTP were not called.");
+ }
+
+ if(damage==="Yes"){
+   let t="Damage to the train was reported.";
+   if(damageText) t+=" "+damageText;
+   lines.push(t);
+ } else if(damage==="No") {
+   lines.push("No damage to the train was reported.");
+ }
+
+ if(nature) lines.push(nature);
+ if(witnesses) lines.push("Witness information: "+witnesses);
+ if(notes) lines.push(notes);
+
+ lines.push("");
+ lines.push("These are contemporaneous notes taken at the time of the incident.");
+
+ return lines.filter(Boolean).join("
+
+");
 }
 
 async function copyReport(){
@@ -266,9 +345,10 @@ async function copyReport(){
 }
 
 function emailReport(){
- const hc=$("headcode")?.value.trim()||"";
- const dv=$("date")?.value||new Date().toISOString().slice(0,10); const ds=dv?dv.split("-").reverse().map((v,i)=>i===2?v.slice(-2):v).join("/"):"";
- location.href="mailto:?subject="+encodeURIComponent("Incident Initial Report for "+hc+" on "+ds)+
+ const hc=$("headcode")?.value.trim()||"HEADCODE";
+ const dv=$("date")?.value||new Date().toISOString().slice(0,10);
+ const ds=dv?dv.split("-").reverse().map((v,i)=>i===2?v.slice(-2):v).join("/"):"DATE";
+ location.href="mailto:?subject="+encodeURIComponent("Incident initial report for "+hc+" on "+ds)+
  "&body="+encodeURIComponent(reportText());
 }
 

@@ -178,4 +178,57 @@ document.addEventListener("click",function(e){
   });
 })();
 </script>
+
+<script id="reservation-email-format-v155">
+(function(){
+  function val(ids){
+    for(const id of ids){
+      const el=document.getElementById(id) || document.querySelector('[name="'+id+'"]');
+      if(el && String(el.value||'').trim()) return String(el.value).trim();
+    }
+    return '';
+  }
+  function findByLabel(words){
+    const inputs=[...document.querySelectorAll('input,textarea,select')];
+    for(const el of inputs){
+      const hay=(el.id+' '+el.name+' '+el.placeholder+' '+(el.getAttribute('aria-label')||'')).toLowerCase();
+      if(words.some(w=>hay.includes(w))) {
+        const v=String(el.value||'').trim();
+        if(v) return v;
+      }
+    }
+    return '';
+  }
+  window.formatReservationEmailV155=function(){
+    const headcode=val(['headcode','headCode']) || findByLabel(['headcode']);
+    const date=val(['date','reportDate','serviceDate']) || findByLabel(['date']);
+    const report=val(['report','reportText','action','reportType']) || findByLabel(['report']);
+    const departure=val(['departureTime','originalDeparture','originalTime','depTime']) || findByLabel(['original','departure']);
+    const from=val(['from','origin']) || findByLabel(['from','origin']);
+    const to=val(['to','destination']) || findByLabel(['to','destination']);
+    const details=val(['details','additionalDetails','notes','otherInfo']) || findByLabel(['detail','additional','note','information']);
+
+    const subject=`REPORT - ${headcode || 'HEADCODE'} - ${date || 'DATE'}`;
+    let body=`Hello,\n\nPlease ${report || '[REPORT]'} on ${headcode || 'HEADCODE'} (${departure || 'ORIGINAL DEPARTURE TIME'}, ${from || 'FROM'} - ${to || 'TO'})`;
+    if(details) body += `\n\n${details}`;
+    return {subject, body};
+  };
+
+  // Patch the page's generated output immediately before preview/copy/email actions.
+  function applyFormat(){
+    const r=window.formatReservationEmailV155();
+    const subjectEls=document.querySelectorAll('#emailSubject,#subject, [data-output="subject"], .email-subject');
+    subjectEls.forEach(el=>{ if('value' in el) el.value=r.subject; else el.textContent=r.subject; });
+    const bodyEls=document.querySelectorAll('#generatedEmail,#emailBody,#output,#emailPreview,[data-output="body"],.email-preview,.report-output');
+    bodyEls.forEach(el=>{ if('value' in el) el.value=r.body; else el.textContent=r.body; });
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('button').forEach(btn=>{
+      const t=(btn.textContent||'').toLowerCase();
+      if(/generate|email|copy|share/.test(t)) btn.addEventListener('click',()=>setTimeout(applyFormat,0));
+    });
+  });
+  window.addEventListener('beforeprint',applyFormat);
+})();
+</script>
 </body></html>

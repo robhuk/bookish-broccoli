@@ -137,9 +137,16 @@ input[type="number"]{
   text-align:center;
 }
 </style>
+
+<style id="passenger-remove-bottom-local-actions-v154">
+#saveDataBtn,#clearDataBtn,#saveLocalBtn,#clearLocalBtn,
+.save-data-locally,.clear-data,.local-data-actions,.storage-actions{
+  display:none!important;
+}
+</style>
 </head><body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header>
 <header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">👥 Manual Passenger Counts</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a>
-<div class="passenger-actions"><button onclick="saveCounts()" type="button">💾 Save Locally</button><button onclick="clearAll()" type="button">🗑️ Clear Data</button></div><section class="train-block"><label>Reason / Notes <span style="font-weight:normal">(optional — any information or why STAR Mobile was not used)</span></label><textarea id="reasonNotes" oninput="reasonNotes=this.value"></textarea></section>
+<div class="passenger-actions"><button onclick="saveCounts()" type="button">💾 Save Locally</button></div><section class="train-block"><label>Reason / Notes <span style="font-weight:normal">(optional — any information or why STAR Mobile was not used)</span></label><textarea id="reasonNotes" oninput="reasonNotes=this.value"></textarea></section>
 <div id="trains"></div>
 <div class="passenger-actions"><button onclick="addTrain()" type="button">＋ Add Additional Train</button></div>
 <div id="status"></div></main><script>
