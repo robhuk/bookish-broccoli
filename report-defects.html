@@ -88,12 +88,16 @@ textarea{
 <div class="card">
 <p class="hint">Use this form to email non-safety defects that are not listed on the app or when the app is unavailable.</p>
 </div>
+<div class="card">
+  <div class="field"><label>Unit (six digits)</label><input id="shared-unit" type="text" inputmode="numeric" maxlength="6" placeholder="Unit" value="" oninput="updateSharedUnit(this.value)"></div>
+  <div class="hint">This Unit number will be used for all entered defects.</div>
+</div>
 <div id="defects"></div>
 <div class="card">
 <button class="primary" onclick="addDefect()" type="button">＋ Add Defect</button>
 </div>
 <div class="card actions">
-<button class="primary" onclick="copyDefects()" type="button">📋 Copy</button>
+
 <button class="primary" onclick="emailDefects()" type="button">✉️ Generate Message</button>
 <div class="status" id="status"></div>
 </div>
@@ -102,9 +106,10 @@ textarea{
 <script>
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 let defects=[];
+let sharedUnit="";
 
 function addDefect(){
-  defects.push({pvn:"",unit:"",defect:""});
+  defects.push({pvn:"",defect:""});
   renderDefects();
   setTimeout(()=>{
     const cards=document.querySelectorAll(".defect-entry");
@@ -113,6 +118,7 @@ function addDefect(){
 }
 
 function updateDefect(i,key,value){defects[i][key]=value}
+function updateSharedUnit(value){sharedUnit=value;}
 
 function renderDefects(){
   const box=document.getElementById("defects");
@@ -120,7 +126,6 @@ function renderDefects(){
     <div class="card defect-entry">
       <h3>Defect ${i+1}</h3>
       <div class="field"><label>PVN (six digits)</label><input class="pvn" type="text" inputmode="numeric" maxlength="6" placeholder="PVN" value="${esc(d.pvn)}" oninput="updateDefect(${i},'pvn',this.value)"></div>
-      <div class="field"><label>Unit (six digits)</label><input type="text" inputmode="numeric" maxlength="6" placeholder="Unit" value="${esc(d.unit)}" oninput="updateDefect(${i},'unit',this.value)"></div>
       <div class="field"><label>Defect</label><textarea placeholder="Describe the defect" oninput="updateDefect(${i},'defect',this.value)">${esc(d.defect)}</textarea></div>
     </div>`).join("");
 }
@@ -134,14 +139,14 @@ function validate(){
     status.textContent="Please add a defect.";
     return false;
   }
+  if(!/^\d{6}$/.test(sharedUnit.trim())){
+    status.textContent="Please enter one six-digit Unit number for all defects.";
+    return false;
+  }
   for(let i=0;i<defects.length;i++){
     const d=defects[i];
     if(!/^\d{6}$/.test(d.pvn.trim())){
       status.textContent="Please enter a six-digit PVN for Defect "+(i+1)+".";
-      return false;
-    }
-    if(!/^\d{6}$/.test(d.unit.trim())){
-      status.textContent="Please enter a six-digit Unit number for Defect "+(i+1)+".";
       return false;
     }
     if(!d.defect.trim()){
@@ -156,7 +161,7 @@ function validate(){
 function buildMessage(){
   return defects.map((d,i)=>`Defect ${i+1}
 PVN: ${d.pvn.trim()}
-Unit: ${d.unit.trim()}
+Unit: ${sharedUnit.trim()}
 Defect: ${d.defect.trim()}`).join("\n\n");
 }
 
@@ -186,7 +191,7 @@ function generatePDFReport(){
   const lines=(() => {
       const out=["XC STAFF APP - DEFECT REPORT",""];
       if(typeof defects!=="undefined"){
-        defects.forEach((d,i)=>{out.push("Defect "+(i+1));out.push("PVN: "+d.pvn);out.push("Unit: "+d.unit);out.push("Defect: "+d.defect);out.push("");});
+        defects.forEach((d,i)=>{out.push("Defect "+(i+1));out.push("PVN: "+d.pvn);out.push("Unit: "+sharedUnit);out.push("Defect: "+d.defect);out.push("");});
       }
       return out;
     })();

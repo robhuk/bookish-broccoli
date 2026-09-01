@@ -165,3 +165,14 @@ h2{color:var(--xc-magenta)!important}
   .xc-print-sheet .xc-print-brand strong{font-size:20px;color:#555}
   .xc-print-sheet input,.xc-print-sheet textarea,.xc-print-sheet select{display:none!important}
 }
+
+
+/* Persistent page save / clear controls */
+header{position:relative!important}
+.xc-page-tools{position:absolute;right:14px;top:10px;display:flex;align-items:center;gap:8px;z-index:20}
+.xc-page-tools button{width:38px!important;height:38px!important;min-width:38px!important;padding:0!important;border-radius:50%!important;display:grid!important;place-items:center!important;font-size:18px!important;line-height:1!important;border:1px solid rgba(255,255,255,.65)!important;background:#fff!important;color:var(--xc-magenta)!important;box-shadow:0 2px 7px rgba(0,0,0,.18)!important}
+.xc-page-tools .xc-clear-page{color:var(--xc-grey)!important}
+.xc-page-tool-status{position:absolute;right:0;top:44px;white-space:nowrap;background:#fff;color:var(--xc-grey);font-size:12px;font-weight:700;border-radius:7px;padding:4px 7px;box-shadow:0 2px 7px rgba(0,0,0,.12);pointer-events:none}
+.xc-page-tool-status:empty{display:none}
+@media(max-width:480px){.xc-page-tools{right:10px;top:8px;gap:6px}.xc-page-tools button{width:34px!important;height:34px!important;min-width:34px!important;font-size:16px!important}}
+@media print{.xc-page-tools{display:none!important}}

@@ -72,6 +72,54 @@ function shareEmail(){emailText();}
 function setStatus(msg){
   var el=document.querySelector(".xc-action-status"); if(el) el.textContent=msg;
 }
+
+function storageKey(){return "xc-app-page-data:"+(location.pathname.split("/").pop()||"index.html").toLowerCase();}
+function formFields(){return Array.prototype.slice.call(document.querySelectorAll("main input, main select, main textarea"));}
+function fieldKey(el,i){return el.getAttribute("data-xc-save-key")||el.id||el.name||((el.type||el.tagName)+":"+i);}
+function savePageData(){
+  var data={};
+  formFields().forEach(function(el,i){
+    if(el.type==="file" || el.closest(".xc-actions") || el.closest(".xc-page-tools")) return;
+    var k=fieldKey(el,i);
+    data[k]=el.type==="checkbox"||el.type==="radio" ? !!el.checked : el.value;
+  });
+  try{localStorage.setItem(storageKey(),JSON.stringify(data));setPageToolStatus("Saved in this app.");}
+  catch(e){setPageToolStatus("Could not save this page.");}
+}
+function restorePageData(){
+  var raw;try{raw=localStorage.getItem(storageKey());}catch(e){return;}
+  if(!raw)return;
+  var data;try{data=JSON.parse(raw);}catch(e){return;}
+  formFields().forEach(function(el,i){
+    var k=fieldKey(el,i); if(!(k in data))return;
+    if(el.type==="checkbox"||el.type==="radio")el.checked=!!data[k]; else el.value=data[k];
+    el.dispatchEvent(new Event("input",{bubbles:true})); el.dispatchEvent(new Event("change",{bubbles:true}));
+  });
+}
+function clearPageData(){
+  if(!confirm("Are you sure you want to clear all saved data on this page?"))return;
+  try{localStorage.removeItem(storageKey());}catch(e){}
+  var forms=document.querySelectorAll("main form"); forms.forEach(function(f){try{f.reset();}catch(e){}});
+  formFields().forEach(function(el){
+    if(el.type==="checkbox"||el.type==="radio")el.checked=false;
+    else if(el.type!=="button"&&el.type!=="submit"&&el.type!=="file")el.value="";
+    el.dispatchEvent(new Event("input",{bubbles:true})); el.dispatchEvent(new Event("change",{bubbles:true}));
+  });
+  setPageToolStatus("Saved data cleared.");
+}
+function setPageToolStatus(msg){var e=document.querySelector(".xc-page-tool-status");if(e){e.textContent=msg;setTimeout(function(){if(e.textContent===msg)e.textContent="";},2200);}}
+function addSaveClearTools(){
+  var noTools=["index.html","commission-calculator.html","delay-repay.html","help.html"];
+  var current=(location.pathname.split("/").pop()||"index.html").toLowerCase();
+  if(noTools.indexOf(current)!==-1 || document.querySelector(".xc-page-tools"))return;
+  var tools=document.createElement("div");tools.className="xc-page-tools";tools.innerHTML='<button type="button" class="xc-save-page" aria-label="Save page data" title="Save page data">💾</button><button type="button" class="xc-clear-page" aria-label="Clear page data" title="Clear page data">🗑️</button><span class="xc-page-tool-status" aria-live="polite"></span>';
+  var header=document.querySelector("header");
+  if(header){header.appendChild(tools);}else{document.body.insertBefore(tools,document.body.firstChild);}
+  tools.querySelector(".xc-save-page").addEventListener("click",savePageData);
+  tools.querySelector(".xc-clear-page").addEventListener("click",clearPageData);
+  restorePageData();
+}
+
 function addActions(){
   var noStandardActions = ["btp-61016.html","commission-calculator.html","delay-repay.html","help.html"];
   var currentPage = (location.pathname.split("/").pop() || "index.html").toLowerCase();
@@ -104,6 +152,6 @@ function addFooter(){
   f.innerHTML='<strong>XC Staff App</strong> · CrossCountry Train Manager tools';
   document.body.appendChild(f);
 }
-document.addEventListener("DOMContentLoaded",function(){addActions();addFooter();});
-window.XCApp={pageTitle:pageTitle,textFromForm:textFromForm,copyText:copyText,emailText:emailText,printPdf:printPdf};
+document.addEventListener("DOMContentLoaded",function(){addSaveClearTools();addActions();addFooter();});
+window.XCApp={pageTitle:pageTitle,textFromForm:textFromForm,copyText:copyText,emailText:emailText,printPdf:printPdf,savePageData:savePageData,clearPageData:clearPageData};
 })();

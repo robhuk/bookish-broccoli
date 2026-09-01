@@ -74,7 +74,7 @@ textarea{
 <textarea data-report-label="Any additional notes or information" id="notes" placeholder="Optional notes"></textarea>
 </div>
 <div class="card">
-<div class="actions"><button class="primary" onclick="copyMessage()" type="button">📋 Copy</button><button class="primary" onclick="emailMsg()" type="button">✉️ Generate Message</button></div>
+<div class="actions"><button class="primary" onclick="emailMsg()" type="button">✉️ Generate Message</button></div>
 <div class="status" id="status"></div>
 </div></main><script>
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
