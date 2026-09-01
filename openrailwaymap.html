@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenRailwayMap | CrossCountry Crew Toolkit</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+ integrity="sha256-p4NxAoJBhIINfQmA9Z4T7fW3kM6Q0nY5u3R6T8JbZ6w=" crossorigin="">
+<style>
+:root{
+  --xc-purple:#5b1a6e;
+  --xc-dark:#3b1148;
+  --xc-red:#d71920;
+  --xc-white:#ffffff;
+  --xc-grey:#f3f3f5;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--xc-grey);
+  color:#222;
+}
+.app-header{
+  background:linear-gradient(135deg,var(--xc-purple),var(--xc-dark));
+  color:#fff;
+  padding:16px 18px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+}
+.app-header h1{
+  margin:0;
+  font-size:1.35rem;
+  font-weight:700;
+}
+.app-header p{
+  margin:5px 0 0;
+  font-size:.78rem;
+  opacity:.9;
+}
+.top-actions{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  padding:14px 12px 8px;
+  flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  text-decoration:none;
+  border:0;
+  border-radius:9px;
+  padding:11px 16px;
+  font-weight:700;
+  cursor:pointer;
+  background:var(--xc-purple);
+  color:#fff;
+}
+.btn.secondary{background:#fff;color:var(--xc-purple);border:1px solid #d5c7da}
+.btn.red{background:var(--xc-red)}
+.content{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 12px 18px;
+}
+.notice{
+  background:#fff;
+  border-left:5px solid var(--xc-red);
+  border-radius:8px;
+  padding:12px 14px;
+  margin:8px 0 12px;
+  font-size:.92rem;
+}
+#map{
+  height:calc(100vh - 255px);
+  min-height:480px;
+  width:100%;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 3px 12px rgba(0,0,0,.16);
+  border:1px solid #ddd;
+  background:#e8edf2;
+}
+.footer{
+  text-align:center;
+  color:#666;
+  font-size:.72rem;
+  padding:15px 10px 8px;
+}
+@media(max-width:600px){
+  #map{height:calc(100vh - 270px);min-height:430px}
+  .btn{flex:1;min-width:150px}
+}
+</style>
+</head>
+<body>
+<header class="app-header">
+  <h1>🗺️ OpenRailwayMap</h1>
+  <p>CrossCountry Crew Toolkit</p>
+</header>
+
+<div class="top-actions">
+  <a class="btn secondary" href="index.html">☰ Main Menu</a>
+  <button class="btn red" onclick="openExternalMap()">🌐 Open in Browser</button>
+</div>
+
+<main class="content">
+  <div class="notice">
+    <strong>Notice:</strong> This interactive railway map uses OpenRailwayMap data. If the map does not load in your app, use <strong>Open in Browser</strong>.
+  </div>
+  <div id="map"></div>
+</main>
+
+<div class="footer">Map data © OpenStreetMap contributors · Railway rendering © OpenRailwayMap</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+ integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+const mapUrl = "https://www.openrailwaymap.org/";
+function openExternalMap(){
+  try {
+    if (window.open) {
+      const w = window.open(mapUrl, "_blank");
+      if (w) return;
+    }
+  } catch(e) {}
+  window.location.href = mapUrl;
+}
+
+const map = L.map('map', {zoomControl:true}).setView([54.97, -1.62], 8);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom:19,
+  attribution:'© OpenStreetMap contributors'
+}).addTo(map);
+
+L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
+  maxZoom:19,
+  opacity:0.95,
+  attribution:'© OpenRailwayMap'
+}).addTo(map);
+
+L.control.scale({imperial:true, metric:true}).addTo(map);
+</script>
+</body>
+</html>
