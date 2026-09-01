@@ -39,7 +39,26 @@ textarea{
   min-height:120px;
   resize:vertical;
 }
-</style><link href="xc.css" rel="stylesheet"/></head><body>
+</style><link href="xc.css" rel="stylesheet"/>
+<style>
+.action-row{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  width:100%;
+  padding:12px 0 10px;
+  box-sizing:border-box;
+  clear:both;
+}
+.action-row .page-actions,.action-row .header-actions,.action-row .top-actions,.action-row .toolbar-actions{
+  position:static!important;
+  right:auto!important; left:auto!important; top:auto!important;
+  display:flex!important; justify-content:center!important; gap:14px!important;
+}
+@media print{.print-hide,.action-row{display:none!important}}
+</style>
+</head><body>
 <header class="header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/><div class="title">Commission / Scan Calculator</div></header>
 <main><a class="xc-main-menu" href="index.html">← Main menu</a>
 <div class="card">

@@ -83,6 +83,25 @@ textarea{
 <style id="globalPageDataControls">
 .global-page-data-controls{position:fixed;top:12px;right:12px;z-index:99999;display:flex;gap:8px}.global-page-data-controls button{width:42px;height:42px;border:0;border-radius:12px;background:#fff;color:#d10a4b;box-shadow:0 2px 10px rgba(0,0,0,.18);font-size:20px;cursor:pointer}.global-page-data-controls button:hover{transform:translateY(-1px)}@media print{.global-page-data-controls{display:none!important}}
 </style>
+
+<style>
+.action-row{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  width:100%;
+  padding:12px 0 10px;
+  box-sizing:border-box;
+  clear:both;
+}
+.action-row .page-actions,.action-row .header-actions,.action-row .top-actions,.action-row .toolbar-actions{
+  position:static!important;
+  right:auto!important; left:auto!important; top:auto!important;
+  display:flex!important; justify-content:center!important; gap:14px!important;
+}
+@media print{.print-hide,.action-row{display:none!important}}
+</style>
 </head>
 <body>
 <header class="header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/>

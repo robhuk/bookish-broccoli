@@ -48,6 +48,25 @@ textarea{
 <style id="globalPageDataControls">
 .global-page-data-controls{position:fixed;top:12px;right:12px;z-index:99999;display:flex;gap:8px}.global-page-data-controls button{width:42px;height:42px;border:0;border-radius:12px;background:#fff;color:#d10a4b;box-shadow:0 2px 10px rgba(0,0,0,.18);font-size:20px;cursor:pointer}.global-page-data-controls button:hover{transform:translateY(-1px)}@media print{.global-page-data-controls{display:none!important}}
 </style>
+
+<style>
+.action-row{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  width:100%;
+  padding:12px 0 10px;
+  box-sizing:border-box;
+  clear:both;
+}
+.action-row .page-actions,.action-row .header-actions,.action-row .top-actions,.action-row .toolbar-actions{
+  position:static!important;
+  right:auto!important; left:auto!important; top:auto!important;
+  display:flex!important; justify-content:center!important; gap:14px!important;
+}
+@media print{.print-hide,.action-row{display:none!important}}
+</style>
 </head><body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header>
 <header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading"><img alt="BTP" class="btp-header-icon" src="btp-logo.png"/> BTP 61016 Message Builder</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a><div class="card"><div class="grid"><div class="field"><label>HEADCODE</label><input data-report-label="Headcode" id="headcode" placeholder="e.g. 1V50"/></div><div class="field"><label>TRAIN TIME</label><input id="trainTime" type="time"/></div><div class="field"><label>FROM</label><input id="from"/></div><div class="field"><label>TO</label><input id="to"/></div><div class="field"><label>NEXT STOP</label><input id="nextStop"/></div><div class="field"><label>AT (HH:MM)</label><input id="at" type="time"/></div></div></div><div class="card"><label>INCIDENT DETAILS</label><textarea id="details"></textarea><details class="hint" style="margin-top:10px"><summary style="cursor:pointer;font-weight:800;color:#333">💡 Description reminder</summary><div style="padding-top:9px">Use where known/relevant:<br/>• Name<br/>• Age<br/>• Gender<br/>• Ethnicity<br/>• Build<br/>• Clothing<br/>• Distinguishing features<br/>• Direction of travel<br/>• Intoxicated?<br/>• Weapons?<br/>• Companions?</div></details></div><div class="card"><div style="font-weight:800;text-align:center">Whole SMS Character Count: <span id="charCount">0</span><br/>SMS Messages Required: <span id="smsCount">1</span></div></div><div class="card"><div class="actions"><button class="primary" onclick="text61016()" type="button">💬 Text 61016</button></div><div class="status" id="status"></div></div></main><script>if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});function buildMessage(){let a=["BTP 61016 INCIDENT REPORT"];if(headcode.value)a.push("Headcode: "+headcode.value);if(trainTime.value)a.push("Train time: "+trainTime.value);if(from.value)a.push("From: "+from.value);if(to.value)a.push("To: "+to.value);if(nextStop.value)a.push("Next stop: "+nextStop.value);if(at.value)a.push("Time at next station: "+at.value);if(details.value.trim())a.push("Incident details: "+details.value.trim());return a.join("\n")}function update(){let m=buildMessage();charCount.textContent=m.length;smsCount.textContent=Math.max(1,Math.ceil(m.length/160))}["headcode","trainTime","from","to","nextStop","at","details"].forEach(x=>document.getElementById(x).addEventListener("input",update));async function copyMsg(){await navigator.clipboard.writeText(buildMessage());status.textContent="Message copied to clipboard."}function text61016(){location.href="sms:61016?&body="+encodeURIComponent(buildMessage())}update();</script><script>
 function xcGeneratePDF(title){
