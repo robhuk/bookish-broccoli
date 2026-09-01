@@ -231,4 +231,60 @@ document.addEventListener("click",function(e){
   window.addEventListener('beforeprint',applyFormat);
 })();
 </script>
+
+<script id="reservations-full-email-v160">
+(function(){
+  function get(names){
+    for(const n of names){
+      const el=document.getElementById(n)||document.querySelector('[name="'+n+'"]');
+      if(el && String(el.value||"").trim()) return String(el.value).trim();
+    }
+    return "";
+  }
+  function find(words){
+    for(const el of document.querySelectorAll("input,textarea,select")){
+      const hay=((el.id||"")+" "+(el.name||"")+" "+(el.placeholder||"")+" "+(el.getAttribute("aria-label")||"")).toLowerCase();
+      if(words.some(w=>hay.includes(w))){
+        const v=String(el.value||"").trim();
+        if(v) return v;
+      }
+    }
+    return "";
+  }
+
+  window.formatReservationsEmailV160=function(){
+    const report=get(["report","reportType","action","request"])||find(["report","request","reservation","standing"]);
+    const headcode=get(["headcode","headCode"])||find(["headcode"]);
+    const date=get(["date","reportDate","serviceDate"])||find(["date"]);
+    const departure=get(["departureTime","originalDeparture","originalTime","depTime"])||find(["original","departure"]);
+    const from=get(["from","origin"])||find(["from","origin"]);
+    const to=get(["to","destination"])||find(["to","destination"]);
+    const details=get(["details","additionalDetails","notes","otherInfo","additionalInfo"])||find(["detail","additional","note","information"]);
+
+    const reportText=report||"REPORT";
+    const subject=`${reportText} - ${headcode||"HEADCODE"} - ${date||"DATE"}`;
+
+    let body=`Hello,\n\nPlease ${reportText.toLowerCase()} on ${headcode||"HEADCODE"} (${departure||"ORIGINAL DEPARTURE TIME"}, ${from||"FROM"} - ${to||"TO"}).`;
+    if(details) body+=`\n\n${details}`;
+    return {subject,body};
+  };
+
+  function apply(){
+    const r=window.formatReservationsEmailV160();
+    document.querySelectorAll("#emailSubject,#subject,[data-output='subject'],.email-subject").forEach(el=>{
+      if("value" in el) el.value=r.subject; else el.textContent=r.subject;
+    });
+    document.querySelectorAll("#generatedEmail,#emailBody,#output,#emailPreview,[data-output='body'],.email-preview,.report-output").forEach(el=>{
+      if("value" in el) el.value=r.body; else el.textContent=r.body;
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded",function(){
+    document.querySelectorAll("button").forEach(btn=>{
+      const t=(btn.textContent||"").toLowerCase();
+      if(/email|copy|share|generate|preview/.test(t)) btn.addEventListener("click",()=>setTimeout(apply,0));
+    });
+  });
+})();
+</script>
 </body></html>
