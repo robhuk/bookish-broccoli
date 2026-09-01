@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#d10a4b"><link rel="icon" href="xc-staff-app-icon.jpg"><link rel="stylesheet" href="xc.css"><title>Handy Links</title><style>
+body{margin:0;background:#f5f5f5;font-family:Arial,sans-serif;color:#333}.top{background:#d10a4b;color:white;padding:18px 16px;text-align:center;border-bottom:4px solid #666;position:sticky;top:0;z-index:5}.top h1{margin:0;font-size:20px}.wrap{max-width:760px;margin:auto;padding:18px 14px 32px}.section{margin:18px 0}.section h2{font-size:16px;color:#d10a4b;margin:0 0 10px}.linkbtn{width:100%;text-align:left;background:#fff;border:1px solid #ddd;border-left:6px solid #d10a4b;border-radius:12px;padding:16px;margin:9px 0;font-size:16px;font-weight:700;color:#222;box-shadow:0 2px 7px rgba(0,0,0,.06);cursor:pointer}.linkbtn:active{background:#fff0f5}.viewer{display:none;position:fixed;inset:0;background:#fff;z-index:50}.viewerbar{height:58px;background:#d10a4b;display:flex;align-items:center;justify-content:space-between;padding:0 12px;color:#fff;font-weight:800}.close{background:#fff;color:#d10a4b;border:0;border-radius:9px;padding:9px 15px;font-weight:800;font-size:15px;cursor:pointer}.viewer iframe{border:0;width:100%;height:calc(100vh - 58px)}.back{display:inline-block;color:white;text-decoration:none;position:absolute;left:14px;top:19px;font-weight:800}.footer{text-align:center;font-size:9px;color:#777;padding-top:14px}
+</style></head><body><header class="top"><a class="back" href="index.html">‹ Home</a><h1>🔗 Handy Links</h1></header><main class="wrap">
+<section class="section"><h2>🚦 Operational</h2>
+<button class="linkbtn" data-url="http://www.realtimetrains.co.uk/">Realtime Trains — Live Times</button>
+<button class="linkbtn" data-url="https://traksy.uk/">Traksy — Live Maps</button>
+<button class="linkbtn" data-url="https://trains.im/nationalmap/">trains.im — Live Performance Data</button>
+<button class="linkbtn" data-url="https://drivertools.co.uk/where_am_i.html">Where Am I — Railway Location Finder</button></section>
+<section class="section"><h2>❤️ CrossCountry Links</h2>
+<button class="linkbtn" data-url="https://www.crosscountrytrains.co.uk/help-support/delay-repay">Delay Repay</button>
+<button class="linkbtn" data-url="https://www.crosscountrytrains.co.uk/about-us/passenger-charter">Customer Charter</button>
+<button class="linkbtn" data-url="https://www.crosscountrytrains.co.uk/travel-information/on-board/luggage">Luggage Policy</button>
+<button class="linkbtn" data-url="https://www.crosscountrytrains.co.uk/travel-information/service-updates">Service Updates</button>
+<button class="linkbtn" data-url="https://www.crosscountrytrains.co.uk/help-support/contact-us">Customer Contact Info</button></section>
+<section class="section"><h2>🚆 National Rail</h2><button class="linkbtn" data-url="https://www.gov.uk/government/publications/railway-byelaws">National Rail Byelaws</button></section>
+<div class="footer">CrossCountry Train Crew Toolkit © RH</div></main>
+<div class="viewer" id="viewer"><div class="viewerbar"><span id="vtitle">Handy Link</span><button class="close" id="close">✕ Close</button></div><iframe id="frame" title="Opened link"></iframe></div>
+<script>const v=document.getElementById('viewer'),f=document.getElementById('frame'),t=document.getElementById('vtitle');document.querySelectorAll('.linkbtn').forEach(b=>b.onclick=()=>{t.textContent=b.textContent;f.src=b.dataset.url;v.style.display='block'});document.getElementById('close').onclick=()=>{f.src='about:blank';v.style.display='none'};</script></body></html>
