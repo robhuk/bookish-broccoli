@@ -70,6 +70,14 @@ footer{font-size:.72rem!important;text-align:center!important;color:#777!importa
   display:none!important;
 }
 </style>
+
+<style id="notepad-no-save-clear-icons">
+#saveBtn,#clearBtn,#pageSaveBtn,#pageClearBtn,
+.save-page,.clear-page,.global-save,.global-clear,
+.action-row,.page-actions,.header-actions,.top-actions,.toolbar-actions,.floating-actions,.global-actions{
+  display:none!important;
+}
+</style>
 </head><body><div class="app"><div class="nav"><a class="back" href="index.html">‹ Menu</a><h1>📝 Notes</h1><button class="add" onclick="newNote()">✎</button></div><div class="search">⌕ <input id="search" placeholder="Search" oninput="render()"></div><div id="list" class="list"></div><button class="floating" onclick="newNote()">✎</button></div>
 <div id="composer" class="composer"><div class="editor-nav"><button class="back" onclick="closeEditor()">‹ Notes</button><button class="done" onclick="saveCurrent()">Done</button></div><div id="created" class="created"></div><input id="title" class="title" placeholder="Title"><textarea id="body" class="body" placeholder="Start writing..."></textarea></div>
 <script>
