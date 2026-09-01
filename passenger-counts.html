@@ -102,17 +102,19 @@ textarea{
 }
 
 .count-black{color:#111!important}.count-green{color:#16803c!important;font-weight:600}.count-orange{color:#d66a00!important;font-weight:600}.count-red{color:#c82020!important;font-weight:600}.count-red-bold{color:#c82020!important;font-weight:800!important}
-</style><link href="xc.css" rel="stylesheet"/></head><body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header>
+</style><link href="xc.css" rel="stylesheet"/>
+<style id="globalPageDataControls">
+.global-page-data-controls{position:fixed;top:12px;right:12px;z-index:99999;display:flex;gap:8px}.global-page-data-controls button{width:42px;height:42px;border:0;border-radius:12px;background:#fff;color:#d10a4b;box-shadow:0 2px 10px rgba(0,0,0,.18);font-size:20px;cursor:pointer}.global-page-data-controls button:hover{transform:translateY(-1px)}@media print{.global-page-data-controls{display:none!important}}
+</style>
+</head><body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header>
 <header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">👥 Manual Passenger Counts</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a>
-<div class="passenger-actions">
-<button onclick="saveCounts()" type="button">💾 Save Locally</button>
-
-</div>
+<div class="passenger-actions"><button onclick="saveCounts()" type="button">💾 Save Locally</button><button onclick="clearAll()" type="button">🗑️ Clear Data</button></div><section class="train-block"><label>Reason / Notes <span style="font-weight:normal">(optional — any information or why STAR Mobile was not used)</span></label><textarea id="reasonNotes" oninput="reasonNotes=this.value"></textarea></section>
 <div id="trains"></div>
 <div class="passenger-actions"><button onclick="addTrain()" type="button">＋ Add Additional Train</button></div>
 <div id="status"></div></main><script>
 const KEY="xc_staff_app_passenger_counts_v3";
 let trains=[];
+let reasonNotes="";
 function blank(){return {date:new Date().toISOString().slice(0,10),headcode:"",rows:Array.from({length:10},()=>({station:"",first:"",standard:"",entered:false}))}}
 function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 function addTrain(){trains.push(blank());render()}
@@ -120,6 +122,7 @@ function update(t,k,v){trains[t][k]=v}
 function updateRow(t,r,k,v){trains[t].rows[r][k]=v}
 function countClass(type,v){const n=Number(v); if(v===""||Number.isNaN(n)) return ""; if(type==="standard"){return n<100?"count-black":n<=150?"count-green":n<=200?"count-orange":"count-red"} return n<=8?"count-black":n<=15?"count-green":n<=20?"count-orange":n<=25?"count-red":"count-red-bold"}
 function render(){
+ const notes=document.getElementById("reasonNotes"); if(notes && notes.value!==reasonNotes) notes.value=reasonNotes;
  document.getElementById("trains").innerHTML=trains.map((t,ti)=>`
  <section class="train-block">
  <h3>Train ${ti+1}</h3>
@@ -134,8 +137,8 @@ function render(){
  </tr>`).join("")}</tbody></table>
  </section>`).join("")
 }
-function saveCounts(){localStorage.setItem(KEY,JSON.stringify(trains));show("Passenger counts saved locally.")}
-function clearAll(){if(!confirm("Are you sure? This will clear the page and all saved passenger counts."))return;trains=[blank()];localStorage.removeItem(KEY);render();show("All passenger counts cleared.")}
+function saveCounts(){localStorage.setItem(KEY,JSON.stringify({trains,reasonNotes}));show("Passenger counts saved locally.")}
+function clearAll(){if(!confirm("Are you sure you want to clear all passenger count data?"))return;trains=[blank()];reasonNotes="";localStorage.removeItem(KEY);render();const n=document.getElementById("reasonNotes");if(n)n.value="";show("All passenger counts cleared.")}
 function show(x){document.getElementById("status").textContent=x;setTimeout(()=>document.getElementById("status").textContent="",2500)}
 function reportRows(){return trains.flatMap((t,i)=>t.rows.filter(r=>r.station||r.first||r.standard).map(r=>[r.station,r.first||"",r.standard||""]))}
 async function makePDF(){
@@ -175,22 +178,24 @@ async function emailCounts(){
  saveCounts();
  const primary=trains[0]||{};
  const emailDate=primary.date ? primary.date.split("-").reverse().map((v,i)=>i===2?v.slice(-2):v).join("/") : new Date().toLocaleDateString("en-GB",{day:"2-digit",month:"2-digit",year:"2-digit"});
- // Include every entered headcode in the email subject, in train order.
  const emailHeadcodes=trains.map(t=>(t.headcode||"").trim()).filter(Boolean);
- const subject=emailDate+(emailHeadcodes.length?" "+emailHeadcodes.map(h=>"["+h+"]").join(" "):"");
- let body="XC STAFF APP - PASSENGER COUNTS\n\n";
+ const subject="PaxCount for "+(emailHeadcodes.length?emailHeadcodes.join(" "):"HEADCODE(s)")+" on "+emailDate;
+ let body="Hello,\n\nDue to STAR Mobile not being available, please find counts for the following train(s):\n";
+ const notes=(document.getElementById("reasonNotes")?.value||reasonNotes||"").trim();
+ if(notes) body+="\nReason / Notes: "+notes+"\n";
+ body+="\nPASSENGER COUNTS\n\n";
  trains.forEach((t,i)=>{
-   body+="TRAIN "+(i+1)+" — "+(t.headcode||"")+"\n";
+   body+="TRAIN "+(i+1)+(t.headcode?" — "+t.headcode:"")+"\n";
    body+="DATE: "+(t.date?t.date.split("-").reverse().join("/"):"")+"\n";
-   body+="---------------------------------------------\n";
-   body+="STATION                         FIRST   STANDARD\n";
+   body+="Station | First Class | Standard | Count entered\n";
+   body+="-----------------------------------------------\n";
    t.rows.filter(r=>r.station||r.first||r.standard).forEach(r=>{
-     body+=String(r.station||"").padEnd(32).slice(0,32)+" "+String(r.first||"0").padStart(5)+" "+String(r.standard||"0").padStart(9)+"\n";
+     body+=(r.station||"")+" | "+(r.first||"0")+" | "+(r.standard||"0")+" | "+(r.entered?"Yes":"No")+"\n";
    });
    body+="\n";
  });
  location.href="mailto:?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
-}
+} 
 async function emailPDF(){ return emailCounts(); }
 
 try{trains=JSON.parse(localStorage.getItem(KEY)||"[]");if(!trains.length)trains=[blank()]}catch(e){trains=[blank()]}
@@ -260,4 +265,18 @@ document.addEventListener("click",function(e){
  const fn=b.dataset.action;
  if(typeof window[fn]==="function"){e.preventDefault();window[fn](e);}
 });
-</script><script src="xc-common.js"></script></body></html>
+</script><script src="xc-common.js"></script>
+<script>
+(function(){
+  const key='xc_page_data_'+location.pathname.split('/').pop();
+  function fields(){return [...document.querySelectorAll('input,textarea,select')].filter(e=>e.type!=='button'&&e.type!=='submit'&&e.type!=='reset');}
+  function save(){const data={};fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i);data[k]={v:e.type==='checkbox'?e.checked:e.value,t:e.type};});localStorage.setItem(key,JSON.stringify(data));alert('Data saved.');}
+  function clear(){if(!confirm('Are you sure you want to clear all data on this page?'))return;fields().forEach(e=>{if(e.type==='checkbox'||e.type==='radio')e.checked=false;else if(e.type!=='hidden')e.value='';e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});localStorage.removeItem(key);}
+  function restore(){try{const data=JSON.parse(localStorage.getItem(key)||'{}');fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i),d=data[k];if(!d)return;if(e.type==='checkbox')e.checked=!!d.v;else e.value=d.v;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});}catch(_){}}
+  document.addEventListener('DOMContentLoaded',()=>{
+    const bar=document.createElement('div');bar.className='global-page-data-controls';bar.innerHTML='<button type="button" aria-label="Save data" title="Save data">💾</button><button type="button" aria-label="Clear data" title="Clear data">🗑️</button>';document.body.appendChild(bar);
+    bar.children[0].addEventListener('click',save);bar.children[1].addEventListener('click',clear);restore();
+  });
+})();
+</script>
+</body></html>

@@ -44,26 +44,25 @@ textarea{
   min-height:120px;
   resize:vertical;
 }
-</style><link href="xc.css" rel="stylesheet"/></head><body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header>
-<header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">🚫 Reservations / Full &amp; Standing</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a><div class="card"><div class="grid"><div class="field"><label>Date</label><input data-report-label="Date of incident" id="date" type="date"/></div><div class="field"><label>Headcode</label><input id="head"/></div><div class="field"><label>Original Departure Time</label><input id="departure" type="time"/></div><div class="field"><label>From</label><input id="from"/></div><div class="field"><label>To</label><input id="to"/></div></div></div><div class="card"><label>Report</label><select id="report"><option>Close reservations</option><option>Full &amp; standing service</option><option>Close reservations and full &amp; standing</option></select></div><div class="card"><label>Details</label><textarea id="details"></textarea></div><div class="card"><button class="primary" onclick="emailMsg()" type="button">Generate Message</button></div></main><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});date.value=new Date().toISOString().slice(0,10);
+</style><link href="xc.css" rel="stylesheet"/>
+<style id="globalPageDataControls">
+.global-page-data-controls{position:fixed;top:12px;right:12px;z-index:99999;display:flex;gap:8px}.global-page-data-controls button{width:42px;height:42px;border:0;border-radius:12px;background:#fff;color:#d10a4b;box-shadow:0 2px 10px rgba(0,0,0,.18);font-size:20px;cursor:pointer}.global-page-data-controls button:hover{transform:translateY(-1px)}@media print{.global-page-data-controls{display:none!important}}
+</style>
+</head><body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header>
+<header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">🚫 Reservations / Full &amp; Standing</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a><div class="card"><div class="grid"><div class="field"><label>Date</label><input data-report-label="Date of incident" id="date" type="date"/></div><div class="field"><label>Headcode</label><input id="head"/></div><div class="field"><label>Original Departure Time</label><input id="departure" type="time"/></div><div class="field"><label>From</label><input id="from"/></div><div class="field"><label>To</label><input id="to"/></div></div></div><div class="card"><label>Report</label><select id="report"><option>Close reservations</option><option>Full &amp; standing service</option><option>Close reservations and full &amp; standing</option></select></div><div class="card"><label>Details</label><textarea id="details"></textarea></div><div class="card"></div></main><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});date.value=new Date().toISOString().slice(0,10);
 function msg(){
-  let d=date.value.split("-").reverse().join(" ");
-  let action="";
-  if(report.value==="Close reservations"){
-    action="close reservations";
-  }else if(report.value==="Full & standing service"){
-    action="show a full and standing service";
-  }else{
-    action="close reservations and show full and standing service";
-  }
-  return `Hello, could you please ${action} (as selected)
-On ${head.value} on ${d}
-This is the train ${from.value} to ${to.value}
-
-Details: ${details.value}`;
+ const d=date.value?date.value.split("-").reverse().map((v,i)=>i===2?v.slice(-2):v).join("/"):"";
+ let action=report.value;
+ if(action==="Close reservations") action="close reservations";
+ else if(action==="Full & standing service") action="report a full and standing service";
+ else action="close reservations and report a full and standing service";
+ let text=`Hello, Please ${action} on ${head.value} this is the ${departure.value} service, ${to.value} - ${from.value}`;
+ if(details.value.trim()) text+=`\n\n${details.value.trim()}`;
+ return text;
 }
 function emailMsg(){
-  location.href="mailto:?subject="+encodeURIComponent(report.value+" - "+head.value)+"&body="+encodeURIComponent(msg());
+ const d=date.value?date.value.split("-").reverse().map((v,i)=>i===2?v.slice(-2):v).join("/"):"";
+ location.href="mailto:?subject="+encodeURIComponent(report.value.toUpperCase()+" - "+head.value+" - "+d)+"&body="+encodeURIComponent(msg());
 }</script><script>
 function xcGeneratePDF(title){
  const lines=[title,"","XC STAFF APP",""];
@@ -124,4 +123,18 @@ document.addEventListener("click",function(e){
  const fn=b.dataset.action;
  if(typeof window[fn]==="function"){e.preventDefault();window[fn](e);}
 });
-</script><script src="xc-common.js"></script></body></html>
+</script><script src="xc-common.js"></script>
+<script>
+(function(){
+  const key='xc_page_data_'+location.pathname.split('/').pop();
+  function fields(){return [...document.querySelectorAll('input,textarea,select')].filter(e=>e.type!=='button'&&e.type!=='submit'&&e.type!=='reset');}
+  function save(){const data={};fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i);data[k]={v:e.type==='checkbox'?e.checked:e.value,t:e.type};});localStorage.setItem(key,JSON.stringify(data));alert('Data saved.');}
+  function clear(){if(!confirm('Are you sure you want to clear all data on this page?'))return;fields().forEach(e=>{if(e.type==='checkbox'||e.type==='radio')e.checked=false;else if(e.type!=='hidden')e.value='';e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});localStorage.removeItem(key);}
+  function restore(){try{const data=JSON.parse(localStorage.getItem(key)||'{}');fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i),d=data[k];if(!d)return;if(e.type==='checkbox')e.checked=!!d.v;else e.value=d.v;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});}catch(_){}}
+  document.addEventListener('DOMContentLoaded',()=>{
+    const bar=document.createElement('div');bar.className='global-page-data-controls';bar.innerHTML='<button type="button" aria-label="Save data" title="Save data">💾</button><button type="button" aria-label="Clear data" title="Clear data">🗑️</button>';document.body.appendChild(bar);
+    bar.children[0].addEventListener('click',save);bar.children[1].addEventListener('click',clear);restore();
+  });
+})();
+</script>
+</body></html>
