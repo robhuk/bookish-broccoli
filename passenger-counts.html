@@ -125,6 +125,18 @@ textarea{
 }
 @media print{.print-hide,.action-row{display:none!important}}
 </style>
+
+<style id="passenger-full-numbers-v150">
+input[type="number"]{
+  min-width:0!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  font-variant-numeric:tabular-nums;
+}
+.passenger-table input[type="number"],table input[type="number"]{
+  text-align:center;
+}
+</style>
 </head><body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header>
 <header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">👥 Manual Passenger Counts</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a>
 <div class="passenger-actions"><button onclick="saveCounts()" type="button">💾 Save Locally</button><button onclick="clearAll()" type="button">🗑️ Clear Data</button></div><section class="train-block"><label>Reason / Notes <span style="font-weight:normal">(optional — any information or why STAR Mobile was not used)</span></label><textarea id="reasonNotes" oninput="reasonNotes=this.value"></textarea></section>
@@ -150,8 +162,8 @@ function render(){
  <table><thead><tr><th>Station</th><th>First Class</th><th>Standard</th><th>Count entered</th></tr></thead>
  <tbody>${t.rows.map((r,ri)=>`<tr>
  <td><input value="${esc(r.station)}" oninput="updateRow(${ti},${ri},'station',this.value)"></td>
- <td><input class="${countClass('first',r.first)}" type="number" min="0" inputmode="numeric" value="${esc(r.first)}" oninput="updateRow(${ti},${ri},'first',this.value);render()"></td>
- <td><input class="${countClass('standard',r.standard)}" type="number" min="0" inputmode="numeric" value="${esc(r.standard)}" oninput="updateRow(${ti},${ri},'standard',this.value);render()"></td>
+ <td><input class="${countClass('first',r.first)}" type="number" inputmode="numeric" value="${esc(r.first)}" oninput="updateRow(${ti},${ri},'first',this.value);render()" min="0" max="999" step="1" inputmode="numeric"></td>
+ <td><input class="${countClass('standard',r.standard)}" type="number" inputmode="numeric" value="${esc(r.standard)}" oninput="updateRow(${ti},${ri},'standard',this.value);render()" min="0" max="999" step="1" inputmode="numeric"></td>
  <td style="text-align:center"><input type="checkbox" ${r.entered?"checked":""} onchange="updateRow(${ti},${ri},'entered',this.checked)"></td>
  </tr>`).join("")}</tbody></table>
  </section>`).join("")
@@ -295,6 +307,45 @@ document.addEventListener("click",function(e){
   document.addEventListener('DOMContentLoaded',()=>{
     const bar=document.createElement('div');bar.className='global-page-data-controls';bar.innerHTML='<button type="button" aria-label="Save data" title="Save data">💾</button><button type="button" aria-label="Clear data" title="Clear data">🗑️</button>';document.body.appendChild(bar);
     bar.children[0].addEventListener('click',save);bar.children[1].addEventListener('click',clear);restore();
+  });
+})();
+</script>
+
+<script id="passenger-count-validation-v151">
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('input[type="number"]').forEach(function (input) {
+    input.addEventListener('input', function () {
+      var digits = this.value.replace(/\D/g, '').slice(0, 3);
+      if (digits === '') { this.value = ''; return; }
+      var n = parseInt(digits, 10);
+      if (!Number.isFinite(n)) { this.value = ''; return; }
+      this.value = Math.min(999, Math.max(0, n));
+    });
+    input.addEventListener('keydown', function (e) {
+      if (['e','E','+','-','.'].includes(e.key)) e.preventDefault();
+    });
+  });
+});
+</script>
+
+<script id="humanReadableReportTextV152">
+(function(){
+  function tidyText(text){
+    return String(text||"")
+      .replace(/[ \t]+\n/g,"\n")
+      .replace(/\n{3,}/g,"\n\n")
+      .replace(/ +([,.;:!?])/g,"$1")
+      .replace(/\bhello,\s*/i,"Hello,\n\n")
+      .replace(/\bthanks\s*$/i,"Thanks")
+      .trim();
+  }
+  document.addEventListener("DOMContentLoaded",function(){
+    // Apply only to generated report/email previews, not user input fields.
+    document.querySelectorAll("#generatedReport,#generatedEmail,#output,#emailPreview,.generated-report,.email-preview,.report-output").forEach(function(el){
+      if(el.matches("textarea,input")) return;
+      var original=el.textContent;
+      if(original && original.trim()) el.textContent=tidyText(original);
+    });
   });
 })();
 </script>

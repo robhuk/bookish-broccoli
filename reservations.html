@@ -156,4 +156,26 @@ document.addEventListener("click",function(e){
   });
 })();
 </script>
+
+<script id="humanReadableReportTextV152">
+(function(){
+  function tidyText(text){
+    return String(text||"")
+      .replace(/[ \t]+\n/g,"\n")
+      .replace(/\n{3,}/g,"\n\n")
+      .replace(/ +([,.;:!?])/g,"$1")
+      .replace(/\bhello,\s*/i,"Hello,\n\n")
+      .replace(/\bthanks\s*$/i,"Thanks")
+      .trim();
+  }
+  document.addEventListener("DOMContentLoaded",function(){
+    // Apply only to generated report/email previews, not user input fields.
+    document.querySelectorAll("#generatedReport,#generatedEmail,#output,#emailPreview,.generated-report,.email-preview,.report-output").forEach(function(el){
+      if(el.matches("textarea,input")) return;
+      var original=el.textContent;
+      if(original && original.trim()) el.textContent=tidyText(original);
+    });
+  });
+})();
+</script>
 </body></html>
