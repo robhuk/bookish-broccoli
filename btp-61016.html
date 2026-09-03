@@ -142,4 +142,31 @@ document.addEventListener("click",function(e){
   });
 })();
 </script>
+
+<script id="xc-form-email-fields-v165">
+(function(){
+ function clean(v){return String(v==null?"":v).trim();}
+ function labelFor(el){
+   if(el.labels&&el.labels.length)return clean(el.labels[0].innerText).replace(/[:*]\s*$/,"");
+   if(el.id){const l=document.querySelector('label[for="'+el.id+'"]');if(l)return clean(l.innerText).replace(/[:*]\s*$/,"");}
+   const wrap=el.closest(".field,.form-group,.input-group,.row,div");
+   const l=wrap&&wrap.querySelector("label");
+   return clean(l?l.innerText:(el.getAttribute("aria-label")||el.placeholder||el.name||el.id||"Information")).replace(/[:*]\s*$/,"");
+ }
+ window.xcFormFieldDataV165=function(){
+   const out=[];
+   document.querySelectorAll("input,textarea,select").forEach(el=>{
+     if(el.disabled||el.type==="hidden"||/^(button|submit|reset)$/i.test(el.type))return;
+     if((el.type==="checkbox"||el.type==="radio")&&!el.checked)return;
+     let v=el.tagName==="SELECT"?clean(el.options[el.selectedIndex]?.text||el.value):clean(el.value);
+     if(el.type==="checkbox")v=el.checked?"Yes":"No";
+     if(v)out.push({label:labelFor(el),value:v});
+   });
+   return out;
+ };
+ window.xcFormFieldsAsTextV165=function(){
+   return window.xcFormFieldDataV165().map(x=>x.label+": "+x.value).join("\n");
+ };
+})();
+</script>
 </body></html>

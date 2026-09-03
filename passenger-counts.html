@@ -358,4 +358,93 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
+
+<script id="xc-form-email-fields-v165">
+(function(){
+ function clean(v){return String(v==null?"":v).trim();}
+ function labelFor(el){
+   if(el.labels&&el.labels.length)return clean(el.labels[0].innerText).replace(/[:*]\s*$/,"");
+   if(el.id){const l=document.querySelector('label[for="'+el.id+'"]');if(l)return clean(l.innerText).replace(/[:*]\s*$/,"");}
+   const wrap=el.closest(".field,.form-group,.input-group,.row,div");
+   const l=wrap&&wrap.querySelector("label");
+   return clean(l?l.innerText:(el.getAttribute("aria-label")||el.placeholder||el.name||el.id||"Information")).replace(/[:*]\s*$/,"");
+ }
+ window.xcFormFieldDataV165=function(){
+   const out=[];
+   document.querySelectorAll("input,textarea,select").forEach(el=>{
+     if(el.disabled||el.type==="hidden"||/^(button|submit|reset)$/i.test(el.type))return;
+     if((el.type==="checkbox"||el.type==="radio")&&!el.checked)return;
+     let v=el.tagName==="SELECT"?clean(el.options[el.selectedIndex]?.text||el.value):clean(el.value);
+     if(el.type==="checkbox")v=el.checked?"Yes":"No";
+     if(v)out.push({label:labelFor(el),value:v});
+   });
+   return out;
+ };
+ window.xcFormFieldsAsTextV165=function(){
+   return window.xcFormFieldDataV165().map(x=>x.label+": "+x.value).join("\n");
+ };
+})();
+</script>
+
+<script id="passenger-count-full-table-v167">
+(function(){
+  function clean(v){return String(v==null?"":v).trim();}
+  function findLabel(el){
+    if(el.labels&&el.labels.length) return clean(el.labels[0].innerText);
+    if(el.id){const l=document.querySelector('label[for="'+el.id+'"]');if(l)return clean(l.innerText);}
+    return "";
+  }
+  function tableText(){
+    const table=document.querySelector("table");
+    if(!table) return "";
+    const lines=[];
+    const rows=[...table.querySelectorAll("tr")];
+    rows.forEach((row,i)=>{
+      const cells=[...row.querySelectorAll("th,td")];
+      const vals=cells.map(cell=>{
+        const control=cell.querySelector("input,select,textarea");
+        if(control){
+          if(control.type==="checkbox") return control.checked ? "Yes" : "";
+          if(control.tagName==="SELECT") return clean(control.options[control.selectedIndex]?.text||control.value);
+          return clean(control.value);
+        }
+        return clean(cell.innerText);
+      });
+      if(vals.some(v=>v)) lines.push(vals.join(" | "));
+    });
+    return lines.join("\n");
+  }
+  window.buildPassengerCountExportV167=function(){
+    const date=(document.getElementById("date")||{}).value||"";
+    const headcodes=[...document.querySelectorAll('input[name*="head" i],input[id*="head" i]')]
+      .map(e=>clean(e.value)).filter(Boolean);
+    const reasonEl=[...document.querySelectorAll("textarea,input")].find(e=>{
+      const t=(e.id+" "+e.name+" "+e.placeholder+" "+findLabel(e)).toLowerCase();
+      return t.includes("reason")||t.includes("notes");
+    });
+    const reason=reasonEl?clean(reasonEl.value):"";
+    let body="Due to STAR Mobile not being available, please find counts for the following train(s):";
+    if(reason) body+="\n\nReason/Notes: "+reason;
+    body+="\n\nPassenger Counts:\n"+tableText().split("\n").map(line=>line.split("|").filter(cell=>clean(cell).toLowerCase()!=="count entered"&&clean(cell).toLowerCase()!=="yes"&&clean(cell).toLowerCase()!=="no").join("|").trim()).join("\n");
+    return {subject:`PaxCount for ${headcodes.length?headcodes.join(", "):"HEADCODE(s)"} on ${date||"DATE"}`,body};
+  };
+
+  document.addEventListener("DOMContentLoaded",function(){
+    document.querySelectorAll("button,a,[role='button']").forEach(function(el){
+      const t=((el.textContent||"")+" "+(el.getAttribute("aria-label")||"")+" "+(el.title||"")).toLowerCase();
+      if(/email|share/.test(t)){
+        el.addEventListener("click",function(){
+          const r=window.buildPassengerCountExportV167();
+          setTimeout(function(){
+            const subj=document.querySelector("#emailSubject,#subject,[data-output='subject'],.email-subject");
+            const body=document.querySelector("#generatedEmail,#emailBody,#output,#emailPreview,[data-output='body'],.email-preview,.report-output");
+            if(subj){if("value" in subj)subj.value=r.subject;else subj.textContent=r.subject;}
+            if(body){if("value" in body)body.value=r.body;else body.textContent=r.body;}
+          },0);
+        });
+      }
+    });
+  });
+})();
+</script>
 </body></html>
