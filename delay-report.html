@@ -269,4 +269,61 @@ document.addEventListener("click",function(e){
  };
 })();
 </script>
-</body></html>
+
+<script id="xc-human-email-v170">
+(function(){
+  function clean(v){return String(v==null?"":v).trim();}
+  function byWords(words){
+    const els=[...document.querySelectorAll("input,textarea,select")];
+    for(const e of els){
+      const meta=((e.id||"")+" "+(e.name||"")+" "+(e.placeholder||"")+" "+
+        (e.getAttribute("aria-label")||"")).toLowerCase();
+      if(words.some(w=>meta.includes(w))){
+        let v=e.tagName==="SELECT"?clean(e.options[e.selectedIndex]?.text||e.value):clean(e.value);
+        if(v)return v;
+      }
+    } return "";
+  }
+  function date(v){if(/^\d{4}-\d{2}-\d{2}$/.test(v)){const a=v.split("-");return a[2]+"/"+a[1]+"/"+a[0].slice(-2)}return v||"DATE";}
+  function writeEmail(r){
+    const s=document.querySelector("#emailSubject,#subject,[data-output='subject'],.email-subject");
+    const b=document.querySelector("#generatedEmail,#emailBody,#output,#emailPreview,[data-output='body'],.email-preview,.report-output");
+    if(s){if("value" in s)s.value=r.subject;else s.textContent=r.subject;}
+    if(b){if("value" in b)b.value=r.body;else b.textContent=r.body;}
+    return r;
+  }
+  window.XCEmail={clean,byWords,date,writeEmail};
+})();
+</script>
+
+<script id="xc-human-email-delay-v170">
+(function(){
+ window.buildHumanEmail=function(){
+   const h=XCEmail, hc=h.byWords(["headcode"])||"HEADCODE", d=h.date(h.byWords(["date"]));
+   const mins=h.byWords(["minute","delay"])||"XX", reason=h.byWords(["reason"])||"REASON";
+   const loc=h.byWords(["location"])||"";
+   const control=h.byWords(["control desk","control"])||"";
+   const other=h.byWords(["other information","additional information","additional notes","notes"])||"";
+   let body=`Hello, just for information ${hc} was delayed due to ${reason} for ${mins} minutes on ${d}${loc?" at "+loc:""}.`;
+   if(control && !/^no$/i.test(control)) body+=`\n\n${control} aware.`;
+   if(other) body+=`\n\n${other}`;
+   return {subject:`Delay to ${hc} on ${d} - ${mins} Minutes`,body};
+ };
+})();
+</script>
+
+<script id="xc-human-email-bridge-v170">
+document.addEventListener("DOMContentLoaded",function(){
+ document.querySelectorAll("button,a,[role='button']").forEach(function(el){
+  const t=((el.textContent||"")+" "+(el.getAttribute("aria-label")||"")+" "+(el.title||"")).toLowerCase();
+  if(/share.*email|email.*share|send email/.test(t)){
+   el.addEventListener("click",function(){
+    if(typeof window.buildHumanEmail==="function"){
+      const r=window.buildHumanEmail();
+      if(window.XCEmail) window.XCEmail.writeEmail(r);
+    }
+   },true);
+  }
+ });
+});
+</script></body></html>

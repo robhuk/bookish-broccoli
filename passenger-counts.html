@@ -447,4 +447,47 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 })();
 </script>
-</body></html>
+
+<script id="xc-human-email-passenger-v170">
+(function(){
+ function clean(v){return String(v==null?"":v).trim();}
+ function tableText(){
+   const t=document.querySelector("table"); if(!t)return "";
+   return [...t.querySelectorAll("tr")].map(r=>{
+     const vals=[...r.querySelectorAll("th,td")].map(c=>{
+       const txt=clean(c.innerText);
+       const input=c.querySelector("input,textarea,select");
+       if(input && input.type==="checkbox")return null;
+       if(/count entered/i.test(txt))return null;
+       if(input)return clean(input.tagName==="SELECT"?input.options[input.selectedIndex]?.text:input.value);
+       return txt;
+     }).filter(v=>v!==null);
+     return vals.some(Boolean)?vals.join(" | "):"";
+   }).filter(Boolean).join("\n");
+ }
+ window.buildHumanEmail=function(){
+   const inputs=[...document.querySelectorAll("input,textarea,select")];
+   const get=(words)=>{for(const e of inputs){const m=((e.id||"")+" "+(e.name||"")+" "+(e.placeholder||"")).toLowerCase();if(words.some(w=>m.includes(w))&&clean(e.value))return clean(e.value)}return ""};
+   const hc=get(["headcode"])||"HEADCODE(s)",d=get(["date"])||"DATE",reason=get(["reason","notes"]);
+   let body="Due to STAR Mobile not being available, please find counts for the following train(s):";
+   if(reason)body+=`\n\nReason/Notes: ${reason}`;
+   body+=`\n\nPassenger Counts:\n${tableText()}`;
+   return {subject:`PaxCount for ${hc} on ${d}`,body};
+ };
+})();
+</script>
+<script id="xc-human-email-bridge-v170">
+document.addEventListener("DOMContentLoaded",function(){
+ document.querySelectorAll("button,a,[role='button']").forEach(function(el){
+  const t=((el.textContent||"")+" "+(el.getAttribute("aria-label")||"")+" "+(el.title||"")).toLowerCase();
+  if(/share.*email|email.*share|send email/.test(t)){
+   el.addEventListener("click",function(){
+    if(typeof window.buildHumanEmail==="function"){
+      const r=window.buildHumanEmail();
+      if(window.XCEmail) window.XCEmail.writeEmail(r);
+    }
+   },true);
+  }
+ });
+});
+</script></body></html>

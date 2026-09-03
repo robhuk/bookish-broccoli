@@ -154,4 +154,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
+<script id="handy-links-direct-v169">
+document.addEventListener("DOMContentLoaded",function(){
+  document.querySelectorAll("a[href^='http://'],a[href^='https://']").forEach(function(a){
+    a.target="_blank";
+    a.rel="noopener noreferrer";
+  });
+});
+</script>
 </body></html>
