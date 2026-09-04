@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>TIR Builder</title>
 <style>
 body{font-family:Arial,sans-serif;margin:0;background:#f4f4f4;color:#222}
@@ -54,79 +53,15 @@ textarea{
   min-height:120px;
   resize:vertical;
 }
-</style><style id="xc-print-style">
-@media print{
- body{background:#fff!important}
- .actions,button,a.menu,.no-print{display:none!important}
- .app,.container,main{max-width:none!important;box-shadow:none!important}
- .card{break-inside:avoid}
- @page{size:A4;margin:14mm}
-}
-</style><style id="xc-pdf-print-style">
-@media print{
-  body{background:#fff!important;color:#111!important}
-  .no-print,.actions,button,a.menu{display:none!important}
-  header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  main{max-width:none!important;margin:0!important;padding:0!important}
-  .card{box-shadow:none!important;break-inside:avoid}
-  input,select,textarea{border:0!important;background:#fff!important;padding:2px 0!important}
-  @page{size:A4;margin:14mm}
-}
-</style><style id="xc-shared-pdf-engine-v115">
-@media print{
- body{background:#fff!important;color:#111!important}
- .no-print,.actions,button,a.menu{display:none!important}
- header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
- main{max-width:none!important;margin:0!important;padding:0!important}
- .card{box-shadow:none!important;break-inside:avoid}
- @page{size:A4;margin:14mm}
-}
-</style><style id="tir-report-print-v116">
-@media print{
-  body.tir-print-mode>*{display:none!important}
-  body.tir-print-mode #tirPrintArea{display:block!important}
-  #tirPrintArea{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#111;background:#fff;padding:0}
-  #tirPrintArea h1,#tirPrintArea h2{color:#b5121b}
-  @page{size:A4;margin:14mm}
-}
-#tirPrintArea{display:none}
-</style><link href="xc.css" rel="stylesheet"/>
-<style id="globalPageDataControls">
-.global-page-data-controls{position:fixed;top:12px;right:12px;z-index:99999;display:flex;gap:8px}.global-page-data-controls button{width:42px;height:42px;border:0;border-radius:12px;background:#fff;color:#d10a4b;box-shadow:0 2px 10px rgba(0,0,0,.18);font-size:20px;cursor:pointer}.global-page-data-controls button:hover{transform:translateY(-1px)}@media print{.global-page-data-controls{display:none!important}}
-</style>
-
-<style>
-.action-row{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:14px;
-  width:100%;
-  padding:12px 0 10px;
-  box-sizing:border-box;
-  clear:both;
-}
-.action-row .page-actions,.action-row .header-actions,.action-row .top-actions,.action-row .toolbar-actions{
-  position:static!important;
-  right:auto!important; left:auto!important; top:auto!important;
-  display:flex!important; justify-content:center!important; gap:14px!important;
-}
-@media print{.print-hide,.action-row{display:none!important}}
-</style>
-
-<style id="tir-remove-bottom-print-txt">
-#saveTxtBtn,#printBtn,.save-txt-button,.print-button,
-button[onclick*="saveTxt"],button[onclick*="window.print"]{
-  display:none!important;
-}
-</style>
-</head>
-<body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header><a class="xc-main-menu" href="index.html">← Main menu</a>
+</style></head>
+<body><header class="xc-compact-header"><img class="xc-page-header-logo" src="crosscountry-logo-white.png" alt="XC"></header><a class="xc-main-menu" href="index.html">← Main menu</a>
 <div class="hdr">TIR Builder</div>
 <div class="wrap">
+
 <div class="card">
+
 <div id="infoToggle" style="font-weight:bold;cursor:pointer">➖ Information Notice</div>
-<div class="notice" id="infoPanel">
+<div id="infoPanel" class="notice">
 <p>The information you provide may be used by the company to establish the matters of the travel irregularity and contact you regarding it.</p>
 <p>You may receive correspondence regarding this matter.</p>
 <p>Failure to respond to correspondence may result in the matter being progressed in your absence.</p>
@@ -135,13 +70,15 @@ button[onclick*="saveTxt"],button[onclick*="window.print"]{
 <p>Do not ignore correspondence relating to this matter.</p>
 <p><em>Your personal information has been collected and is in line with the National Rail Conditions of Travel and National Railway Byelaws. It will be processed in accordance with the Data Protection Act 2018.</em></p>
 </div>
+
 <h3>🚆 Train Information</h3>
-<label>Headcode</label><input id="hc" placeholder="1V50"/>
-<label>Origin Time</label><input id="ot" type="time"/>
-<label>Origin Station</label><input id="orig" list="stations"/>
-<label>From</label><input id="frm" list="stations"/>
-<label>To</label><input id="to" list="stations"/>
-<label>Time Person First Encountered</label><input id="enc" type="time"/>
+<label>Headcode</label><input id="hc" placeholder="1V50">
+<label>Origin Time</label><input type="time" id="ot">
+<label>Origin Station</label><input list="stations" id="orig">
+<label>From</label><input list="stations" id="frm">
+<label>To</label><input list="stations" id="to">
+<label>Time Person First Encountered</label><input type="time" id="enc">
+
 <datalist id="stations">
 <option value="Glasgow Central (GLC)"><option value="Motherwell (MTH)"><option value="Edinburgh Haymarket (HYM)">
 <option value="Edinburgh Waverley (EDB)"><option value="Dunbar (DUN)"><option value="Berwick-upon-Tweed (BWK)">
@@ -150,42 +87,53 @@ button[onclick*="saveTxt"],button[onclick*="window.print"]{
 <option value="Leeds (LDS)"><option value="Wakefield Westgate (WKF)"><option value="Doncaster (DON)">
 <option value="Sheffield (SHF)"><option value="Chesterfield (CHD)"><option value="Derby (DBY)">
 <option value="Burton-on-Trent (BUT)"><option value="Tamworth (TAM)"><option value="Birmingham New Street (BHM)">
-</option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></option></datalist>
+</datalist>
+
 <h3>📋 Irregularity</h3>
 <select id="irr"><option>No Ticket</option><option>No Means to Pay</option><option>Railcard Issue</option><option>Travelled Over Distance</option><option>Wrong Ticket Type</option><option>Other</option></select>
-<div class="hidden" id="railWrap"><label>Railcard Issue</label><select id="rail"><option>No Railcard</option><option>Wrong Railcard</option><option>Railcard Belonging to Another Person</option><option>Expired Railcard</option><option>Suspected Forgery / Error</option><option>Screenshot Not Physical App/Railcard</option></select></div>
-<div class="hidden" id="otherWrap"><label>Other Irregularity</label><input id="otherIrr"/></div>
+<div id="railWrap" class="hidden"><label>Railcard Issue</label><select id="rail"><option>No Railcard</option><option>Wrong Railcard</option><option>Railcard Belonging to Another Person</option><option>Expired Railcard</option><option>Suspected Forgery / Error</option><option>Screenshot Not Physical App/Railcard</option></select></div>
+<div id="otherWrap" class="hidden"><label>Other Irregularity</label><input id="otherIrr"></div>
+
 <h3>👤 Passenger</h3>
-<label>Full Name</label><input id="nameField"/>
-<label>Date of Birth</label><input id="dob"/>
+<label>Full Name</label><input id="nameField">
+<label>Date of Birth</label><input id="dob">
 <label>Address</label><textarea id="addr"></textarea>
-<label>Occupation <span style="font-weight:normal">(optional)</span></label><input id="occupation"/>
+<label>Occupation <span style="font-weight:normal">(optional)</span></label><input id="occupation">
 <label>Gender</label><select id="gender"><option>Male</option><option>Female</option><option>Other</option></select>
-<div class="hidden" id="genderWrap"><label>Specify Gender</label><input id="genderOther"/></div>
+<div id="genderWrap" class="hidden"><label>Specify Gender</label><input id="genderOther"></div>
+
 <label>ID Verified?</label><select id="idv"><option>No</option><option>Yes</option></select>
-<div class="hidden" id="idWrap"><label>Verification Method</label><input id="idMethod"/></div>
+<div id="idWrap" class="hidden"><label>Verification Method</label><input id="idMethod"></div>
+
 <label>Zero Fare Issued?</label><select id="zf"><option>No</option><option>Yes</option></select>
-<div class="hidden" id="zfWrap"><label>Ticket Number</label><input id="ticket"/></div>
+<div id="zfWrap" class="hidden"><label>Ticket Number</label><input id="ticket"></div>
+
 <h3>Questions</h3>
-<label>Can you tell me where you joined the train today?</label><input id="q1" list="stations"/>
-<label>Where are you travelling to today?</label><input id="q2"/>
-<label>Can you tell me what ticket, pass or authority to travel you hold for this journey?</label><input id="q3"/>
+<label>Can you tell me where you joined the train today?</label><input list="stations" id="q1">
+<label>Where are you travelling to today?</label><input id="q2">
+<label>Can you tell me what ticket, pass or authority to travel you hold for this journey?</label><input id="q3">
 <label>Can you explain why you boarded the train without a valid ticket, and what your intentions were regarding payment for your journey?</label><textarea id="q4"></textarea>
-<label>Before boarding the train, did you have an opportunity to buy a ticket?</label><input id="q5"/>
-<label>Can you tell me if there was a ticket office and/or ticket machines available at the station where you joined the service?</label><input id="q6"/>
-<label>Do you have any form of identification with you today?</label><input id="q10"/>
+<label>Before boarding the train, did you have an opportunity to buy a ticket?</label><input id="q5">
+<label>Can you tell me if there was a ticket office and/or ticket machines available at the station where you joined the service?</label><input id="q6">
+<label>Do you have any form of identification with you today?</label><input id="q10">
 <label>Is there anything else you would like to tell me about this matter?</label><textarea id="q11"></textarea>
+
 <div id="toggle" style="font-weight:bold;cursor:pointer">➕ Operational Notes</div>
-<div class="hidden" id="notesWrap"><textarea data-report-label="Any additional notes or information" id="notes"></textarea></div>
+<div id="notesWrap" class="hidden"><textarea id="notes"></textarea></div>
+
 <div class="evidence">📎 Don't forget to submit evidence. Seized railcards, ticket images, electronic product captures, screenshots, BWV references etc and attach to printed form / email.</div>
-<div class="actions"><button button="" class="pdf" generate="" generatepdf"📄="" id="generatePDF" pdf<="" type="button">
 
+<div class="actions">
+<button class="btn" onclick="copyR()">📋 Copy</button>
+<button class="btn" onclick="emailR()">✉️ Email</button>
+<button class="btn" onclick="saveTxt()">💾 Save TXT</button>
+<button class="btn" onclick="savePdf()">📄 Save PDF</button>
+</div>
 
-
-</button></div>
 </div>
 <div class="card"><h3>Generated Report</h3><div id="report"></div></div>
 </div>
+
 <script>
 infoToggle.onclick=()=>{infoPanel.classList.toggle('hidden');infoToggle.innerHTML=infoPanel.classList.contains('hidden')?'➕ Information Notice':'➖ Information Notice';};
 toggle.onclick=()=>{notesWrap.classList.toggle('hidden');toggle.innerHTML=notesWrap.classList.contains('hidden')?'➕ Operational Notes':'➖ Operational Notes';update();};
@@ -290,120 +238,6 @@ function savePdf(){
 }
 update();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
-</script>
-<script id="xc-button-safety">
-document.addEventListener("click",function(e){
- const b=e.target.closest("button[data-action]");
- if(!b)return;
- const fn=b.dataset.action;
- if(typeof window[fn]==="function")window[fn](e);
-});
-</script>
-<script id="xc-standard-actions-v104">
-(function(){
- function callFirst(names, evt){
-   for(const n of names){
-     if(typeof window[n]==="function"){ try{ window[n](evt); return true; }catch(e){ console.error(e); } }
-   }
-   return false;
- }
- document.addEventListener("click",function(e){
-   const b=e.target.closest("button");
-   if(!b)return;
-   const id=(b.id||"").toLowerCase();
-   const text=(b.textContent||"").trim().toLowerCase();
-   if(id==="copy"||id==="copybtn"||text==="copy"||text.includes("copy")){
-     if(callFirst(["copyReport","copyData","copyCounts","copyAll","copyToClipboard","copyForm"],e)) return;
-   }
-   if(id==="email"||id==="emailbtn"||text.includes("email")){
-     if(callFirst(["emailReport","emailData","emailCounts","emailAll","sendEmail","emailForm"],e)) return;
-   }
-   if(id==="pdf"||id==="pdfbtn"||text.includes("generate pdf")||text.includes("export pdf")||text.includes("save pdf")){
-     if(callFirst(["generateIncidentPDF","generatePDF","exportPDF","savePDF","generatePdf","exportPdf"],e)) return;
-   }
-   if(id==="clear"||id==="clearbtn"||text==="clear"||text.includes("clear all")){
-     if(callFirst(["clearForm","clearAll","clearNotes","clearData","clearCounts","resetForm"],e)) return;
-   }
- });
-})();
-</script><script>function printPDF(){window.print();}</script><script id="tir-report-print-v116">
-(function(){
- const btn=document.getElementById("tirExportPDF");
- if(!btn)return;
- btn.addEventListener("click",function(e){
-  e.preventDefault();
-  const source=null;
-  const node=source?document.querySelector(source):null;
-  if(!node){alert("Generate the report first.");return;}
-  let area=document.getElementById("tirPrintArea");
-  if(!area){area=document.createElement("div");area.id="tirPrintArea";document.body.appendChild(area);}
-  area.innerHTML=node.innerHTML;
-  document.body.classList.add("tir-print-mode");
-  const cleanup=function(){document.body.classList.remove("tir-print-mode");window.removeEventListener("afterprint",cleanup)};
-  window.addEventListener("afterprint",cleanup);
-  window.print();
- });
-})();
-</script><script id="xc-button-repair-v118">
-document.addEventListener("click",function(e){
- const b=e.target.closest("button[data-action]");
- if(!b)return;
- const fn=b.dataset.action;
- if(typeof window[fn]==="function"){e.preventDefault();window[fn](e);}
-});
-</script><script src="xc-common.js"></script><script>
-(function(){
- const oldPrint=window.print;
- window.addEventListener('beforeprint',()=>{
-   let area=document.getElementById('tirExportHeader'); if(!area){area=document.createElement('div');area.id='tirExportHeader';area.style.cssText='display:none';document.body.prepend(area)}
-   const n=document.getElementById('nameField')?.value.trim(); const dob=document.getElementById('dob')?.value; const hc=document.getElementById('hc')?.value.trim();
-   const lines=[]; if(n)lines.push('Name: '+n); if(dob)lines.push('DOB: '+dob.split('-').reverse().join('/')); lines.push('Date: '+new Date().toLocaleDateString('en-GB')); if(hc)lines.push('Headcode: '+hc);
-   area.innerHTML='<div style="margin:0 0 14px;font-weight:700">'+lines.join('<br>')+'</div>'; area.style.display='block';
- });
- window.addEventListener('afterprint',()=>{const a=document.getElementById('tirExportHeader');if(a)a.style.display='none'});
-})();
-</script>
-<script>
-(function(){
-  const key='xc_page_data_'+location.pathname.split('/').pop();
-  function fields(){return [...document.querySelectorAll('input,textarea,select')].filter(e=>e.type!=='button'&&e.type!=='submit'&&e.type!=='reset');}
-  function save(){const data={};fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i);data[k]={v:e.type==='checkbox'?e.checked:e.value,t:e.type};});localStorage.setItem(key,JSON.stringify(data));alert('Data saved.');}
-  function clear(){if(!confirm('Are you sure you want to clear all data on this page?'))return;fields().forEach(e=>{if(e.type==='checkbox'||e.type==='radio')e.checked=false;else if(e.type!=='hidden')e.value='';e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});localStorage.removeItem(key);}
-  function restore(){try{const data=JSON.parse(localStorage.getItem(key)||'{}');fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i),d=data[k];if(!d)return;if(e.type==='checkbox')e.checked=!!d.v;else e.value=d.v;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});}catch(_){}}
-  document.addEventListener('DOMContentLoaded',()=>{
-    const bar=document.createElement('div');bar.className='global-page-data-controls';bar.innerHTML='<button type="button" aria-label="Save data" title="Save data">💾</button><button type="button" aria-label="Clear data" title="Clear data">🗑️</button>';document.body.appendChild(bar);
-    bar.children[0].addEventListener('click',save);bar.children[1].addEventListener('click',clear);restore();
-  });
-})();
-</script>
-
-
-
-<script id="xc-form-email-fields-v165">
-(function(){
- function clean(v){return String(v==null?"":v).trim();}
- function labelFor(el){
-   if(el.labels&&el.labels.length)return clean(el.labels[0].innerText).replace(/[:*]\s*$/,"");
-   if(el.id){const l=document.querySelector('label[for="'+el.id+'"]');if(l)return clean(l.innerText).replace(/[:*]\s*$/,"");}
-   const wrap=el.closest(".field,.form-group,.input-group,.row,div");
-   const l=wrap&&wrap.querySelector("label");
-   return clean(l?l.innerText:(el.getAttribute("aria-label")||el.placeholder||el.name||el.id||"Information")).replace(/[:*]\s*$/,"");
- }
- window.xcFormFieldDataV165=function(){
-   const out=[];
-   document.querySelectorAll("input,textarea,select").forEach(el=>{
-     if(el.disabled||el.type==="hidden"||/^(button|submit|reset)$/i.test(el.type))return;
-     if((el.type==="checkbox"||el.type==="radio")&&!el.checked)return;
-     let v=el.tagName==="SELECT"?clean(el.options[el.selectedIndex]?.text||el.value):clean(el.value);
-     if(el.type==="checkbox")v=el.checked?"Yes":"No";
-     if(v)out.push({label:labelFor(el),value:v});
-   });
-   return out;
- };
- window.xcFormFieldsAsTextV165=function(){
-   return window.xcFormFieldDataV165().map(x=>x.label+": "+x.value).join("\n");
- };
-})();
 </script>
 </body>
 </html>

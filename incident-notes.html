@@ -1,435 +1,232 @@
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
-<meta content="#b5121b" name="theme-color"/>
-<title>Incident Report Notes - XC Train Manager App</title>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#b5121b"><title>Incident Report Notes - XC Train Manager App</title>
 <style>
-*{box-sizing:border-box}
-html{background:#b5121b}
-body{margin:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f3f3f3;color:#222}
-header{background:#b5121b;color:#fff;border-bottom:4px solid #f5c242;padding:12px 16px}
-.top{display:flex;align-items:center;gap:12px}.logo{width:86px;height:24px;object-fit:contain}.heading{font-weight:900;font-size:20px;margin-left:auto}
-main{max-width:720px;margin:auto;padding:12px 14px 35px}
-.menu{display:block;text-align:center;text-decoration:none;background:#b5121b;color:#fff;border-radius:10px;padding:12px;font-weight:800;margin-bottom:12px}
-.card{background:#fff;border-radius:14px;border:1px solid #ddd;box-shadow:0 2px 7px #0001;padding:15px;margin-bottom:12px}
-.card h2{font-size:17px;color:#b5121b;margin:0 0 6px}.hint{font-size:13px;color:#666;margin-bottom:12px;line-height:1.4}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.full{grid-column:1/-1}
-.field label{display:block;font-size:13px;font-weight:800;margin-bottom:5px}
-input,select,textarea{width:100%;min-height:44px;padding:10px 11px;border:1px solid #bbb;border-radius:9px;font:inherit;line-height:1.25;background:#fff}
-textarea{height:120px;min-height:120px;resize:vertical}
-.yesno{display:grid;grid-template-columns:1fr 1fr;gap:8px}.yn{border:1px solid #bbb;background:#fff;border-radius:9px;padding:11px;font:inherit;font-weight:800;cursor:pointer}.yn.selected{background:#b5121b;color:#fff;border-color:#b5121b}
+*{box-sizing:border-box}html{background:#b5121b}body{margin:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f3f3f3;color:#222}
+header{background:#b5121b;color:#fff;border-bottom:4px solid #f5c242;padding:12px 16px}.top{display:flex;align-items:center;gap:12px}.logo{width:86px;height:24px;object-fit:contain}.heading{font-weight:900;font-size:20px;margin-left:auto}
+main{max-width:720px;margin:auto;padding:12px 14px 35px}.menu{display:block;text-align:center;text-decoration:none;background:#b5121b;color:#fff;border-radius:10px;padding:12px;font-weight:800;margin-bottom:12px}
+.card{background:#fff;border-radius:14px;border:1px solid #ddd;box-shadow:0 2px 7px #0001;padding:15px;margin-bottom:12px}.card h2{font-size:17px;color:#b5121b;margin:0 0 5px}.hint{font-size:13px;color:#666;margin-bottom:12px;line-height:1.4}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.full{grid-column:1/-1}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:10px;border:1px solid #bbb;border-radius:9px;font:inherit;background:#fff}.field textarea{min-height:100px;resize:vertical}
+.yesno{display:grid;grid-template-columns:1fr 1fr;gap:8px}.yn{border:1px solid #bbb;background:#fff}.yn.selected{background:#b5121b;color:#fff;border-color:#b5121b}
 .detail{display:none;margin-top:10px}.detail.show{display:block}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.actions button{padding:13px;border:0;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer}
-.copy{background:#fff;color:#b5121b;border:1px solid #b5121b!important}.email{background:#b5121b;color:#fff}.pdf{background:#222;color:#fff}.clear{background:#eee;color:#222}
-.status{text-align:center;min-height:20px;color:#666;font-size:13px;margin:9px}
-.note{font-size:12px;color:#666;text-align:center;line-height:1.4}.print-footer{display:none}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.actions button{padding:13px;border:0;border-radius:10px;font-weight:800;font-size:14px}.copy{background:#fff;color:#b5121b;border:1px solid #b5121b!important}.email{background:#b5121b;color:#fff}.pdf{background:#222;color:#fff}.clear{background:#eee;color:#222}.status{text-align:center;min-height:20px;color:#666;font-size:13px;margin:9px}
 @media(max-width:520px){.grid,.actions{grid-template-columns:1fr}}
-@media print{
- body{background:#fff;color:#111}
- header{background:#b5121b!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
- .menu,.actions,.status{display:none!important}
- main{max-width:none;padding:0}
- .card{box-shadow:none;border:1px solid #bbb;break-inside:avoid}
- .yesno{display:none}
- .detail.show{display:block}
- .print-footer{display:block;position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:9px;color:#555;border-top:1px solid #bbb;padding:5px;background:#fff}
- @page{size:A4;margin:13mm 12mm 17mm}
-}
-</style>
-<style id="xc-pdf-print-style">
-@media print{
-  body{background:#fff!important;color:#111!important}
-  .no-print,.actions,button,a.menu{display:none!important}
-  header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  main{max-width:none!important;margin:0!important;padding:0!important}
-  .card{box-shadow:none!important;break-inside:avoid}
-  input,select,textarea{border:0!important;background:#fff!important;padding:2px 0!important}
-  @page{size:A4;margin:14mm}
-}
-</style><style id="xc-shared-pdf-engine-v115">
-@media print{
- body{background:#fff!important;color:#111!important}
- .no-print,.actions,button,a.menu{display:none!important}
- header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
- main{max-width:none!important;margin:0!important;padding:0!important}
- .card{box-shadow:none!important;break-inside:avoid}
- @page{size:A4;margin:14mm}
-}
-</style><link href="xc.css" rel="stylesheet"/>
-<style id="globalPageDataControls">
-.global-page-data-controls{position:fixed;top:12px;right:12px;z-index:99999;display:flex;gap:8px}.global-page-data-controls button{width:42px;height:42px;border:0;border-radius:12px;background:#fff;color:#d10a4b;box-shadow:0 2px 10px rgba(0,0,0,.18);font-size:20px;cursor:pointer}.global-page-data-controls button:hover{transform:translateY(-1px)}@media print{.global-page-data-controls{display:none!important}}
-</style>
-
-<style>
-.action-row{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:14px;
+</style><style id="xc-uniform-inputs">
+/* XC uniform form controls */
+input[type="text"],input[type="number"],input[type="date"],input[type="time"],
+input[type="email"],input[type="tel"],input[type="search"],input[type="url"],
+input:not([type]),select,textarea{
   width:100%;
-  padding:12px 0 10px;
+  min-height:44px;
+  height:44px;
   box-sizing:border-box;
-  clear:both;
+  padding:10px 11px;
+  border:1px solid #bbb;
+  border-radius:9px;
+  font:inherit;
+  line-height:1.25;
+  background:#fff;
 }
-.action-row .page-actions,.action-row .header-actions,.action-row .top-actions,.action-row .toolbar-actions{
-  position:static!important;
-  right:auto!important; left:auto!important; top:auto!important;
-  display:flex!important; justify-content:center!important; gap:14px!important;
+textarea{
+  height:120px;
+  min-height:120px;
+  resize:vertical;
 }
-@media print{.print-hide,.action-row{display:none!important}}
-</style>
+</style><style id="witness-style">
+.witness{border:1px solid #ddd;border-radius:10px;padding:12px;margin-bottom:10px;background:#fafafa}
+.witness-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;color:#b5121b;font-weight:900}
+.remove-witness{padding:6px 9px!important;background:#eee!important;color:#222!important;border:0!important;border-radius:7px!important}
+.contemporaneous-note{color:#444;text-align:center;font-size:13px;line-height:1.4}
+</style><style id="incident-action-style">
+.quick-btn{display:block;width:100%;margin:0 0 12px;padding:13px;border:0;border-radius:10px;background:#f5c242;color:#222;font:inherit;font-weight:900;cursor:pointer}
+</style></head><body>
+<header><div class="top"><img class="logo" src="crosscountry-logo-white.png" alt="XC"><div class="heading">Incident Report Notes</div></div></header>
+<main><a class="menu" href="index.html">← Main menu</a><button type="button" id="quickQuestionsBtn" class="quick-btn">⚡ Quick Incident Questions</button>
 
-<style id="incident-header-no-save-v153">
-header #saveBtn, header #clearBtn,
-header .save-btn, header .clear-btn,
-header .page-actions, header .header-actions,
-header .top-actions, header .toolbar-actions,
-header .action-row { display:none!important; }
-</style>
-</head>
-<body>
-<header><div class="top"><img alt="XC" class="logo" src="crosscountry-logo-white.png"/><div class="heading">Incident Report Notes</div></div></header>
-<main>
-<a class="menu" href="index.html">← Main menu</a>
-<div class="card">
-<h2>Quick Incident Questions</h2>
-<div class="hint">Complete the questions below. Selecting <strong>Yes</strong> opens the relevant details box.</div>
-<div class="field">
-<label>Event/fixture related incident?</label>
-<div class="yesno">
-<button class="yn" data-target="eventDetails" data-value="Yes" type="button">Yes</button>
-<button class="yn" data-target="eventDetails" data-value="No" type="button">No</button>
+<div class="card"><h2>Quick Incident Questions</h2><div class="hint">Complete the quick questions below. This is intended as a contemporaneous note and does not replace any formal operational incident report that may subsequently be required.</div>
+
+<div class="field"><label>Was this incident potentially linked to an event / fixture?</label>
+<div class="yesno"><button type="button" class="yn" data-target="eventDetail" data-value="Yes">Yes</button><button type="button" class="yn" data-target="eventDetail" data-value="No">No</button></div>
+<div id="eventDetail" class="detail"><label>Event / fixture details</label><textarea id="eventText" placeholder="Football (name teams), Festival, Racing, other events, any impact factors such as alcohol or drugs, or due to delay / disruption?"></textarea></div></div>
+
+<div class="field" style="margin-top:15px"><label>Were staff assaulted (verbal or physical)?</label>
+<div class="yesno"><button type="button" class="yn" data-target="staffDetail" data-value="Yes">Yes</button><button type="button" class="yn" data-target="staffDetail" data-value="No">No</button></div>
+<div id="staffDetail" class="detail"><label>Staff assault details</label><textarea id="staffText" placeholder="Details of verbal or physical assault."></textarea></div></div>
+
+<div class="field" style="margin-top:15px"><label>Were passengers / others assaulted (verbal or physical)?</label>
+<div class="yesno"><button type="button" class="yn" data-target="passengerDetail" data-value="Yes">Yes</button><button type="button" class="yn" data-target="passengerDetail" data-value="No">No</button></div>
+<div id="passengerDetail" class="detail"><label>Passenger / other assault details</label><textarea id="passengerText" placeholder="Details of verbal or physical assault."></textarea></div></div>
 </div>
-<div class="detail" id="eventDetails">
-<label>Event / fixture details</label>
-<textarea id="eventText" placeholder="Football (name teams), Festival, Racing, other events, any impact factors such as alcohol or drugs, or due to delay / disruption?"></textarea>
-</div>
-</div>
-<div class="field" style="margin-top:15px">
-<label>Were staff assaulted (verbal or physical)?</label>
-<div class="yesno">
+
+<div class="card"><h2>Incident Details</h2><div class="grid">
+<div class="field"><label>Date</label><input id="date" type="date"></div><div class="field"><label>Time</label><input id="time" type="time"></div>
+<div class="field"><label>Headcode</label><input id="headcode" placeholder="e.g. 1E23"></div><div class="field"><label>Unit</label><input id="unit" maxlength="6" inputmode="numeric"></div>
+<div class="field full"><label>Location of incident</label><input id="location"></div>
+<div class="field full"><label>What happened?</label><textarea id="description"></textarea></div>
+</div></div>
+
+<div class="card"><h2>Operational / Response Information</h2><div class="grid"><div class="field"><label>Time Control informed</label><input id="controlTime" type="time"></div>
+<div class="field"><label>Police / BTP called?</label><select id="police"><option value="">Select</option><option>Yes</option><option>No</option></select></div>
+<div id="btpDetail" class="detail"><label>Log / incident / crime number</label><input id="btpNumber" placeholder="Enter reference number"></div>
+
+<div class="field"><label>Damage to train?</label><select id="damage"><option value="">Select</option><option>Yes</option><option>No</option></select></div>
+<div id="damageDetail" class="detail"><label>Damage details</label><textarea id="damageText" placeholder="Describe the damage to the train."></textarea></div>
+
+<div class="field full"><label>Nature of damage / other relevant information</label><textarea id="nature"></textarea></div>
+<div class="field full"><label>Any additional notes or information</label><textarea id="notes"></textarea></div>
+</div></div>
 
 
-</div>
-<div class="detail" id="staffDetails">
-<label>Staff assault details</label>
-<textarea id="staffText" placeholder="Enter details of the verbal or physical assault."></textarea>
-</div>
-</div>
-<div class="field" style="margin-top:15px">
-<label>Were passengers / others assaulted (verbal or physical)?</label>
-<div class="yesno">
-
-
-</div>
-<div class="detail" id="passengerDetails">
-<label>Passenger / other assault details</label>
-<textarea id="passengerText" placeholder="Enter details of the verbal or physical assault."></textarea>
-</div>
-</div>
-</div>
-<div class="card">
-<h2>Incident Details</h2>
-<div class="grid">
-<div class="field"><label>Date</label><input id="date" type="date"/></div>
-<div class="field"><label>Time</label><input id="time" type="time"/></div>
-<div class="field"><label>Headcode</label><input id="headcode" placeholder="e.g. 1E23"/></div>
-<div class="field"><label>Unit</label><input id="unit" inputmode="numeric" maxlength="6" placeholder="Unit number"/></div>
-<div class="field full"><label>Location of incident</label><input id="location"/></div>
-<div class="field full"><label>What happened?</label><textarea id="description" placeholder="Record what happened, in chronological order where possible."></textarea></div>
-</div>
-</div>
-<div class="card">
-<h2>Operational / Response Information</h2>
-<div class="grid">
-<div class="field"><label>Time Control informed</label><input id="controlTime" type="time"/></div>
-<div class="field">
-<label>Police / BTP called?</label>
-<select id="police"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>
-<div class="detail" id="btpDetail">
-<label>Log / incident / crime number</label>
-<input id="btpNumber" placeholder="Enter reference number"/>
-</div>
-</div>
-<div class="field">
-<label>Damage to train?</label>
-<select id="damage"><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select>
-<div class="detail" id="damageDetail">
-<label>Damage details</label>
-<textarea id="damageText" placeholder="Describe the damage to the train."></textarea>
-</div>
-</div>
-<div class="field full">
-<label>Nature of damage / other relevant information</label>
-<textarea id="nature"></textarea>
-</div>
-</div>
-</div>
-<div class="card">
-<h2>Any additional notes or information</h2>
-<div class="field"><label>Any additional notes or information</label><textarea id="notes"></textarea></div>
-</div>
 <div class="card">
 <h2>Witnesses</h2>
-<div class="field"><label>Witnesses</label><textarea id="witnessesText" placeholder="Enter witness names and any relevant witness information."></textarea></div>
+<div class="field"><label>Witnesses</label><textarea id="witnessesText" placeholder="Enter witness names and any relevant witness details here."></textarea></div>
 </div>
-<div class="card note">
-<strong>These are contemporaneous notes taken at the time of an incident so it is recorded.</strong>
-</div>
-<div class="actions">
-
-
-<button button="" class="pdf" generate="" id="generatePDF" pdf<="" type="button" 📄="">
-
-</button></div>
-<div class="status" id="status"></div>
-<div class="print-footer">These are contemporaneous notes taken at the time of an incident so it is recorded.</div>
-</main>
+<div class="card contemporaneous-note"><strong>This is a contemporaneous note taken at the time of the incident to ensure details were recorded.</strong></div><div class="actions"><button class="copy" id="copy">📋 Copy</button><button class="email" id="email">📧 Email</button><button class="pdf" id="pdf">📄 Create PDF</button><button class="clear" id="clear">🗑 Clear</button></div>
+<div id="status" class="status"></div><footer class="incident-footer">These are contemporaneous notes taken at the time of an incident so it is recorded.</footer></main>
 <script>
-(function(){
-"use strict";
+(function(){document.getElementById("quickQuestionsBtn").onclick=function(){
+ const card=document.querySelector(".card");
+ if(card)card.scrollIntoView({behavior:"smooth",block:"start"});
+};
 
-const $=id=>document.getElementById(id);
-const formFields=[
- ["Date","date"],["Time","time"],["Headcode","headcode"],["Unit","unit"],
- ["Location of incident","location"],["What happened","description"],
- ["Time Control informed","controlTime"],["Police / BTP called?","police"],
- ["Log / incident / crime number","btpNumber"],["Damage to train?","damage"],
- ["Damage details","damageText"],["Nature of damage / other relevant information","nature"],
- ["Any additional notes or information","notes"],["Witnesses","witnessesText"],
- ["Event / fixture details","eventText"],["Staff assault details","staffText"],
- ["Passenger / other assault details","passengerText"]
-];
 
-function setStatus(text){
- const el=$("status"); if(!el)return;
- el.textContent=text;
- setTimeout(()=>{if(el.textContent===text)el.textContent=""},2500);
-}
-
-function bindYN(){
- document.querySelectorAll(".yn").forEach(btn=>{
-  btn.addEventListener("click",function(){
-   const target=$(this.dataset.target);
-   document.querySelectorAll('[data-target="'+this.dataset.target+'"]').forEach(b=>b.classList.remove("selected"));
-   this.classList.add("selected");
-   if(target){
-    const yes=this.dataset.value==="Yes";
-    target.classList.toggle("show",yes);
-    if(!yes)target.querySelectorAll("input,textarea").forEach(x=>x.value="");
-   }
-  });
+     show("Witness removed.");
+   });
+ });
+ box.querySelectorAll("input").forEach(input=>{
+   input.addEventListener("input",function(){
+     const m=this.id.match(/(\d+)$/); if(!m)return;
+     const i=Number(m[1]); if(!witnesses[i])return;
+     if(this.id.startsWith("wname"))witnesses[i].name=this.value;
+     if(this.id.startsWith("waddress"))witnesses[i].address=this.value;
+     if(this.id.startsWith("wtel")){this.value=this.value.replace(/\D/g,"").slice(0,11);witnesses[i].telephone=this.value;}
+     if(this.id.startsWith("wemail"))witnesses[i].email=this.value;
+   });
  });
 }
+function escWitness(v){return String(v||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function removeWitness(i){
+  if(!confirm("Remove this witness and delete all of their details?")) return;
+  witnesses[i].name="";
+  witnesses[i].address="";
+  witnesses[i].telephone="";
+  witnesses[i].email="";
+  witnesses.splice(i,1);
+  renderWitnesses();
+}
+document.getElementById("addWitness").onclick=()=>{witnesses.push({name:"",address:"",telephone:"",email:""});renderWitnesses();setTimeout(()=>document.getElementById("wname"+(witnesses.length-1))?.focus(),50)};
+renderWitnesses();
 
-function bindConditionalSelect(selectId,detailId,inputIds){
- const sel=$(selectId), box=$(detailId);
+const d=new Date();date.value=d.toISOString().slice(0,10);time.value=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+function bindYN(selectId,detailId,fieldId){
+ const sel=document.getElementById(selectId), box=document.getElementById(detailId);
  if(!sel||!box)return;
  function update(){
-  const yes=sel.value==="Yes";
-  box.classList.toggle("show",yes);
-  if(!yes)inputIds.forEach(id=>{const x=$(id);if(x)x.value=""});
+   const yes=(sel.value||"").toLowerCase()==="yes";
+   box.classList.toggle("show",yes);
+   if(!yes && fieldId){const f=document.getElementById(fieldId);if(f)f.value="";}
  }
- sel.addEventListener("change",update);
- update();
+ sel.addEventListener("change",update);update();
 }
+bindYN("damage","damageDetail","damageText");
+bindYN("police","btpDetail","btpNumber");
 
-function answer(target,label){
- const selected=document.querySelector('[data-target="'+target+'"].selected');
- return selected ? selected.dataset.value : "";
-}
-
-function collect(includeBlank){
- const out=[];
- formFields.forEach(([label,id])=>{
-  const el=$(id);
-  if(!el)return;
-  const value=(el.value||"").trim();
-  if(includeBlank || value)out.push([label,value||"Not answered / applicable"]);
- });
- out.push(["Event/fixture related incident?",answer("eventDetails","")||"Not answered / applicable"]);
- out.push(["Were staff assaulted (verbal or physical)?",answer("staffDetails","")||"Not answered / applicable"]);
- out.push(["Were passengers / others assaulted (verbal or physical)?",answer("passengerDetails","")||"Not answered / applicable"]);
- return out;
-}
-
-function reportText(){
- const get=id => ($(id)?.value||"").trim();
- const dateRaw=get("date");
- const date=dateRaw ? dateRaw.split("-").reverse().map((v,i)=>i===2?v.slice(-2):v).join("/") : "";
- const time=get("time");
- const headcode=get("headcode");
- const unit=get("unit");
- const location=get("location");
- const description=get("description");
- const controlTime=get("controlTime");
- const police=get("police");
- const btpNumber=get("btpNumber");
- const damage=get("damage");
- const damageText=get("damageText");
- const nature=get("nature");
- const notes=get("notes");
- const witnesses=get("witnessesText");
- const event=answer("eventDetails")||"";
- const eventText=get("eventText");
- const staffAssault=answer("staffDetails")||"";
- const staffText=get("staffText");
- const passengerAssault=answer("passengerDetails")||"";
- const passengerText=get("passengerText");
-
- const lines=[];
- lines.push("Hello,");
- lines.push("");
-
- let opening="Please find below an initial report of an incident";
- if(headcode) opening+=" on service "+headcode;
- if(date) opening+=" on "+date;
- if(time) opening+=" at "+time;
- if(location) opening+=" at "+location;
- opening+=".";
- lines.push(opening);
-
- if(unit) lines.push("The unit involved was "+unit+".");
- if(description) lines.push(description);
-
- if(event==="Yes") lines.push("The incident was event or fixture related. "+eventText);
- else if(event==="No") lines.push("The incident was not event or fixture related.");
-
- if(staffAssault==="Yes") lines.push("Staff were assaulted. "+staffText);
- else if(staffAssault==="No") lines.push("No staff assault was reported.");
-
- if(passengerAssault==="Yes") lines.push("Passengers or other persons were assaulted. "+passengerText);
- else if(passengerAssault==="No") lines.push("No passenger or other person assault was reported.");
-
- if(controlTime) lines.push("Control was informed at "+controlTime+".");
-
- if(police==="Yes"){
-   let t="Police / BTP were called.";
-   if(btpNumber) t+=" Reference number: "+btpNumber+".";
-   lines.push(t);
- } else if(police==="No") {
-   lines.push("Police / BTP were not called.");
- }
-
- if(damage==="Yes"){
-   let t="Damage to the train was reported.";
-   if(damageText) t+=" "+damageText;
-   lines.push(t);
- } else if(damage==="No") {
-   lines.push("No damage to the train was reported.");
- }
-
- if(nature) lines.push(nature);
- if(witnesses) lines.push("Witness information: "+witnesses);
- if(notes) lines.push(notes);
-
- lines.push("");
- lines.push("These are contemporaneous notes taken at the time of the incident.");
-
- return lines.filter(Boolean).join("
-
-");
-}
-
-async function copyReport(){
- const text=reportText();
- try{await navigator.clipboard.writeText(text)}
- catch(e){
-  const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);
-  ta.select();document.execCommand("copy");ta.remove();
- }
- setStatus("Copied to clipboard.");
-}
-
-function emailReport(){
- const hc=$("headcode")?.value.trim()||"HEADCODE";
- const dv=$("date")?.value||new Date().toISOString().slice(0,10);
- const ds=dv?dv.split("-").reverse().map((v,i)=>i===2?v.slice(-2):v).join("/"):"DATE";
- location.href="mailto:?subject="+encodeURIComponent("Incident initial report for "+hc+" on "+ds)+
- "&body="+encodeURIComponent(reportText());
-}
-
-function generatePDF(){
- window.print();
-}
-
-function clearForm(){
- if(!confirm("Are you sure? This will clear the incident report."))return;
- document.querySelectorAll("input,textarea").forEach(el=>el.value="");
- document.querySelectorAll("select").forEach(el=>el.selectedIndex=0);
- document.querySelectorAll(".yn").forEach(el=>el.classList.remove("selected"));
- document.querySelectorAll(".detail").forEach(el=>el.classList.remove("show"));
- const d=new Date();
- $("date").value=d.toISOString().slice(0,10);
- $("time").value=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
- setStatus("Incident report cleared.");
-}
-
-bindYN();
-bindConditionalSelect("police","btpDetail",["btpNumber"]);
-bindConditionalSelect("damage","damageDetail",["damageText"]);
-
-const now=new Date();
-$("date").value=now.toISOString().slice(0,10);
-$("time").value=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
-
-$("incidentCopy").addEventListener("click",copyReport);
-$("incidentEmail").addEventListener("click",emailReport);
-$("incidentPDF").addEventListener("click",generatePDF);
-$("incidentClear").addEventListener("click",clearForm);
-})();
-</script>
-<script id="xc-pdf-print-script">
-function generatePDF(){
-  window.print();
-}
-document.getElementById("generatePDF")?.addEventListener("click",generatePDF);</script><script id="xc-button-repair-v118">
-document.addEventListener("click",function(e){
- const b=e.target.closest("button[data-action]");
- if(!b)return;
- const fn=b.dataset.action;
- if(typeof window[fn]==="function"){e.preventDefault();window[fn](e);}
+document.querySelectorAll(".yn").forEach(b=>b.onclick=()=>{
+ const target=document.getElementById(b.dataset.target);
+ document.querySelectorAll('[data-target="'+b.dataset.target+'"]').forEach(x=>x.classList.remove("selected"));
+ b.classList.add("selected");
+ target.classList.toggle("show",b.dataset.value==="Yes");
+ if(b.dataset.value!=="Yes")target.querySelector("textarea").value="";
 });
-</script><script src="xc-common.js"></script>
-<script>
-(function(){
-  const key='xc_page_data_'+location.pathname.split('/').pop();
-  function fields(){return [...document.querySelectorAll('input,textarea,select')].filter(e=>e.type!=='button'&&e.type!=='submit'&&e.type!=='reset');}
-  function save(){const data={};fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i);data[k]={v:e.type==='checkbox'?e.checked:e.value,t:e.type};});localStorage.setItem(key,JSON.stringify(data));alert('Data saved.');}
-  function clear(){if(!confirm('Are you sure you want to clear all data on this page?'))return;fields().forEach(e=>{if(e.type==='checkbox'||e.type==='radio')e.checked=false;else if(e.type!=='hidden')e.value='';e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});localStorage.removeItem(key);}
-  function restore(){try{const data=JSON.parse(localStorage.getItem(key)||'{}');fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i),d=data[k];if(!d)return;if(e.type==='checkbox')e.checked=!!d.v;else e.value=d.v;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});}catch(_){}}
-  document.addEventListener('DOMContentLoaded',()=>{
-    const bar=document.createElement('div');bar.className='global-page-data-controls';bar.innerHTML='<button type="button" aria-label="Save data" title="Save data">💾</button><button type="button" aria-label="Clear data" title="Clear data">🗑️</button>';document.body.appendChild(bar);
-    bar.children[0].addEventListener('click',save);bar.children[1].addEventListener('click',clear);restore();
-  });
+function txt(){
+ const out=["XC STAFF APP — INCIDENT REPORT NOTES"];
+ const add=(label,value)=>{if(String(value??"").trim())out.push(label+": "+String(value).trim())};
+ document.querySelectorAll("input,select,textarea").forEach(el=>{
+   const field=el.closest(".field");
+   const label=field?.querySelector("label")?.innerText?.trim() || el.name || el.id;
+   if(label)add(label,el.value);
+ });
+ const yn=target=>{const b=document.querySelector('[data-target="'+target+'"].selected');return b?b.dataset.value:""};
+ add("Was this incident potentially linked to an event / fixture?",yn("eventDetail"));
+ add("Were staff assaulted (verbal or physical)?",yn("staffDetail"));
+ add("Were passengers / others assaulted (verbal or physical)?",yn("passengerDetail"));
+ return out.join("\n");
+}
+function show(x){status.textContent=x;setTimeout(()=>status.textContent="",2500)}
+copy.onclick=async()=>{try{await navigator.clipboard.writeText(txt());show("Copied to clipboard.")}catch(e){show("Unable to copy.")}};
+email.onclick=()=>location.href="mailto:?subject="+encodeURIComponent("Incident Report Notes - "+(headcode.value||""))+"&body="+encodeURIComponent(txt());
+pdf.onclick=function(e){
+ e.preventDefault();
+ try{generateIncidentPDF();}
+ catch(err){console.error(err);show("Unable to generate PDF. Please try again.");}
+};
+clear.onclick=()=>{if(!confirm("Are you sure? This will clear the incident notes."))return;document.querySelectorAll("input,textarea").forEach(x=>x.value="");document.querySelectorAll("select").forEach(x=>x.selectedIndex=0);document.querySelectorAll(".yn").forEach(x=>x.classList.remove("selected"));document.querySelectorAll(".detail").forEach(x=>x.classList.remove("show"));date.value=d.toISOString().slice(0,10);show("Incident notes cleared.")};
 })();
-</script>
 
-<script id="humanReadableReportTextV152">
-(function(){
-  function tidyText(text){
-    return String(text||"")
-      .replace(/[ \t]+\n/g,"\n")
-      .replace(/\n{3,}/g,"\n\n")
-      .replace(/ +([,.;:!?])/g,"$1")
-      .replace(/\bhello,\s*/i,"Hello,\n\n")
-      .replace(/\bthanks\s*$/i,"Thanks")
-      .trim();
-  }
-  document.addEventListener("DOMContentLoaded",function(){
-    // Apply only to generated report/email previews, not user input fields.
-    document.querySelectorAll("#generatedReport,#generatedEmail,#output,#emailPreview,.generated-report,.email-preview,.report-output").forEach(function(el){
-      if(el.matches("textarea,input")) return;
-      var original=el.textContent;
-      if(original && original.trim()) el.textContent=tidyText(original);
-    });
+function generateIncidentPDF(){
+ const escPDF=v=>String(v||"").replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)").replace(/\r?\n/g," ");
+ const valueOrNA=v=>String(v??"").trim() ? String(v).trim() : "Not answered / applicable";
+ const items=[];
+ const add=(label,value)=>items.push({label:String(label),text:valueOrNA(value)});
+ const yn=target=>{const b=document.querySelector('[data-target="'+target+'"].selected');return b?b.dataset.value:""};
+ // Every input/select/textarea is included, with blanks explicitly marked.
+ document.querySelectorAll("input,select,textarea").forEach(el=>{
+   if(el.type==="button"||el.type==="submit")return;
+   const field=el.closest(".field");
+   const label=field?.querySelector("label")?.innerText?.trim() || el.name || el.id;
+   if(label)add(label,el.value);
+ });
+ // Quick Incident Questions are button-based and therefore need adding separately.
+ add("Was this incident potentially linked to an event / fixture?",yn("eventDetail"));
+ add("Were staff assaulted (verbal or physical)?",yn("staffDetail"));
+ add("Were passengers / others assaulted (verbal or physical)?",yn("passengerDetail"));
+ items.push({notice:"These are contemporaneous notes taken at the time of an incident so it is recorded."});
+
+ const d=new Date();
+ const generated=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+" on "+
+   String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear();
+ const pages=[[]];let used=0;const max=40;
+ items.forEach(it=>{
+   let units=it.notice?3:Math.max(2,Math.ceil((it.label.length+it.text.length)/82)+1);
+   if(used+units>max){pages.push([]);used=0}
+   pages.at(-1).push(it);used+=units;
+ });
+ const objs=["","<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"],refs=[];
+ pages.forEach((its,pi)=>{
+  let c="BT /F1 18 Tf 0.64 0.02 0.20 rg 42 795 Td (XC STAFF APP) Tj ";
+  c+="/F1 14 Tf 0.12 0.12 0.12 rg 0 -27 Td (OPERATING INCIDENT REPORT / STATEMENT) Tj ";
+  c+="/F1 8 Tf 0.35 0.35 0.35 rg 0 -16 Td ("+escPDF("Report generated at "+generated)+") Tj ";
+  its.forEach(it=>{
+   if(it.notice){
+    c+=" 0 -24 Td /F1 7 Tf 0.35 0.35 0.35 rg ("+escPDF(it.notice)+") Tj ";
+   }else{
+    const w=wrapPDF(it.text,82);
+    c+=" 0 -15 Td /F1 7 Tf 0.35 0.35 0.35 rg ("+escPDF(it.label)+") Tj ";
+    c+=" 0 -11 Td /F1 9 Tf 0.12 0.12 0.12 rg ("+escPDF(w[0]||"Not answered / applicable")+") Tj ";
+    for(let j=1;j<w.length;j++)c+=" 0 -11 Td ("+escPDF(w[j])+") Tj ";
+   }
   });
-})();
-</script>
-
-
-</body>
-</html>
+  c+=" ET 0.64 0.02 0.20 RG 1 w 42 50 m 553 50 l S BT /F1 8 Tf 0.35 0.35 0.35 rg 42 32 Td (XC STAFF APP) Tj 400 0 Td ("+escPDF("Page "+(pi+1)+" of "+pages.length)+") Tj ET";
+  const st=objs.push("<< /Length "+c.length+" >>\nstream\n"+c+"\nendstream");
+  refs.push(objs.push("<< /Type /Page /Parent 1 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 2 0 R >> >> /Contents "+st+" 0 R >>"));
+ });
+ objs[0]="<< /Type /Pages /Count "+refs.length+" /Kids ["+refs.map(x=>x+" 0 R").join(" ")+"] >>";
+ const cat=objs.push("<< /Type /Catalog /Pages 1 0 R >>");
+ let pdf="%PDF-1.4\n",off=[0];
+ objs.forEach((o,i)=>{off.push(pdf.length);pdf+=(i+1)+" 0 obj\n"+o+"\nendobj\n"});
+ const xr=pdf.length;
+ pdf+="xref\n0 "+(objs.length+1)+"\n0000000000 65535 f \n";
+ for(let i=1;i<off.length;i++)pdf+=String(off[i]).padStart(10,"0")+" 00000 n \n";
+ pdf+="trailer\n<< /Size "+(objs.length+1)+" /Root "+cat+" 0 R >>\nstartxref\n"+xr+"\n%%EOF";
+ const a=document.createElement("a"),url=URL.createObjectURL(new Blob([pdf],{type:"application/pdf"}));
+ const datePart=String(d.getDate()).padStart(2,"0")+String(d.getMonth()+1).padStart(2,"0")+d.getFullYear();
+ a.href=url;a.download="XC-Incident-Report-"+(document.getElementById("headcode")?.value||"NO-HEADC0DE")+"-"+datePart+".pdf";
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+ show("PDF report generated.");
+}
+function wrapPDF(text,max){
+ const words=String(text||"").split(/\s+/),out=[];let line="";
+ words.forEach(w=>{if(!line)line=w;else if((line+" "+w).length<=max)line+=" "+w;else{out.push(line);line=w;}});
+ if(line)out.push(line);return out.length?out:[""];
+}
+</script></body></html>

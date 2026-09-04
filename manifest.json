@@ -1,18 +1,13 @@
 {
-  "name": "XC Staff App",
-  "short_name": "XC Staff App",
-  "start_url": "index.html",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait",
-  "theme_color": "#b5121b",
-  "background_color": "#f4f4f6",
-  "icons": [
-    {
-      "src": "xc-staff-app-icon.jpg",
-      "sizes": "1024x1024",
-      "type": "image/jpeg",
-      "purpose": "any maskable"
-    }
+  "name":"XC Staff App",
+  "short_name":"XC Staff App",
+  "start_url":"index.html",
+  "scope":"./",
+  "display":"standalone",
+  "orientation":"portrait",
+  "theme_color":"#b5121b",
+  "background_color":"#f4f4f4",
+  "icons":[
+    {"src":"xc-staff-app-icon.jpg","sizes":"1024x1024","type":"image/jpeg","purpose":"any maskable"}
   ]
 }

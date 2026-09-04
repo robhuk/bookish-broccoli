@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
-<meta content="#b5121b" name="theme-color"/><title>Delay Repay - XC Staff App</title>
-<link href="manifest.json" rel="manifest"/>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#b5121b"><title>Delay Repay - XC Staff App</title>
+<link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f3f3f3;color:#222}
 .header{background:#b5121b;color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px}.header img{width:145px;height:32px;object-fit:contain}.title{font-weight:800;font-size:19px;margin-left:auto}
@@ -45,74 +44,13 @@ textarea{
   min-height:120px;
   resize:vertical;
 }
-</style><link href="xc.css" rel="stylesheet"/>
-<style>
-.action-row{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:14px;
-  width:100%;
-  padding:12px 0 10px;
-  box-sizing:border-box;
-  clear:both;
-}
-.action-row .page-actions,.action-row .header-actions,.action-row .top-actions,.action-row .toolbar-actions{
-  position:static!important;
-  right:auto!important; left:auto!important; top:auto!important;
-  display:flex!important; justify-content:center!important; gap:14px!important;
-}
-@media print{.print-hide,.action-row{display:none!important}}
-</style>
-</head><body>
-<header class="header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/><div class="title">Delay Repay</div></header>
+</style></head><body>
+<header class="header"><img class="xc-page-header-logo" src="crosscountry-logo-white.png" alt="XC"><div class="title">Delay Repay</div></header>
 <main><a class="xc-main-menu" href="index.html">← Main menu</a>
 <div class="card"><h1>Delay Repay</h1>
 <p class="message">If your CrossCountry train has been delayed by 30 minutes or more to the destination detailed on your ticket, you are entitled to compensation</p>
 <p class="note">Use the Delay Repay link on the CrossCountry website to make a claim.</p>
 </div><div class="delay-repay-qr-wrap">
-<img alt="Delay Repay QR code" class="delay-repay-qr" src="delay-repay-qr.png"/>
-<div class="qr-caption"><strong>Scan this QR code</strong><br/>Show this QR code to the customer so they can claim their Delay Repay online.</div>
-</div></main><script id="xc-button-safety">
-document.addEventListener("click",function(e){
- const b=e.target.closest("button[data-action]");
- if(!b)return;
- const fn=b.dataset.action;
- if(typeof window[fn]==="function")window[fn](e);
-});
-</script>
-<script id="xc-standard-actions-v104">
-(function(){
- function callFirst(names, evt){
-   for(const n of names){
-     if(typeof window[n]==="function"){ try{ window[n](evt); return true; }catch(e){ console.error(e); } }
-   }
-   return false;
- }
- document.addEventListener("click",function(e){
-   const b=e.target.closest("button");
-   if(!b)return;
-   const id=(b.id||"").toLowerCase();
-   const text=(b.textContent||"").trim().toLowerCase();
-   if(id==="copy"||id==="copybtn"||text==="copy"||text.includes("copy")){
-     if(callFirst(["copyReport","copyData","copyCounts","copyAll","copyToClipboard","copyForm"],e)) return;
-   }
-   if(id==="email"||id==="emailbtn"||text.includes("email")){
-     if(callFirst(["emailReport","emailData","emailCounts","emailAll","sendEmail","emailForm"],e)) return;
-   }
-   if(id==="pdf"||id==="pdfbtn"||text.includes("generate pdf")||text.includes("export pdf")||text.includes("save pdf")){
-     if(callFirst(["generateIncidentPDF","generatePDF","exportPDF","savePDF","generatePdf","exportPdf"],e)) return;
-   }
-   if(id==="clear"||id==="clearbtn"||text==="clear"||text.includes("clear all")){
-     if(callFirst(["clearForm","clearAll","clearNotes","clearData","clearCounts","resetForm"],e)) return;
-   }
- });
-})();
-</script><script id="xc-button-repair-v118">
-document.addEventListener("click",function(e){
- const b=e.target.closest("button[data-action]");
- if(!b)return;
- const fn=b.dataset.action;
- if(typeof window[fn]==="function"){e.preventDefault();window[fn](e);}
-});
-</script><script src="xc-common.js"></script></body></html>
+<img src="delay-repay-qr.png" alt="Delay Repay QR code" class="delay-repay-qr">
+<div class="qr-caption"><strong>Scan this QR code</strong><br>Show this QR code to the customer so they can claim their Delay Repay online.</div>
+</div></main></body></html>

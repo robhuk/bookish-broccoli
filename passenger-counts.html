@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="#b5121b" name="theme-color"/>
-<meta content="yes" name="apple-mobile-web-app-capable"/>
-<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<meta content="XC Staff App" name="apple-mobile-web-app-title"/><link href="manifest.json" rel="manifest"/><link href="crosscountry-logo-white.png" rel="icon"/><title>👥 Manual Passenger Counts</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#b5121b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="XC Staff App"><link rel="manifest" href="manifest.json"><link rel="icon" href="crosscountry-logo-white.png"><title>👥 Manual Passenger Counts</title><style>
 :root{--red:#b5121b;--gold:#f5c242;--bg:#f4f4f4;--text:#222;--muted:#666;--border:#d8d8d8}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 header{background:var(--red);color:#fff;padding:14px 16px;border-bottom:5px solid var(--gold)}
@@ -23,8 +22,8 @@ table{width:100%;border-collapse:collapse}th,td{padding:7px 4px;border-bottom:1p
 .train-block table{width:100%;border-collapse:collapse;margin-top:10px}
 .train-block th,.train-block td{border:1px solid #bbb;padding:6px}
 .train-block input{width:100%;box-sizing:border-box}
-<style>.pdf-action{margin:10px 0}.pdf-action button{width:100%;background:#222;color:#fff;border:0;border-radius:10px;padding:12px;font-weight:800}</style>
-<style id="xc-safe-area">
+<style>.pdf-action{margin:10px 0}.pdf-action button{width:100%;background:#222;color:#fff;border:0;border-radius:10px;padding:12px;font-weight:800}</style></style>
+</style><style id="xc-safe-area">
 html{background:#b5121b}
 body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
 </style><style id="xc-main-menu-style">
@@ -61,122 +60,42 @@ textarea{
   min-height:120px;
   resize:vertical;
 }
-</style><style id="xc-print-style">
-@media print{
- body{background:#fff!important}
- .actions,button,a.menu,.no-print{display:none!important}
- .app,.container,main{max-width:none!important;box-shadow:none!important}
- .card{break-inside:avoid}
- @page{size:A4;margin:14mm}
-}
-</style><style id="xc-pdf-print-style">
-@media print{
-  body{background:#fff!important;color:#111!important}
-  .no-print,.actions,button,a.menu{display:none!important}
-  header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  main{max-width:none!important;margin:0!important;padding:0!important}
-  .card{box-shadow:none!important;break-inside:avoid}
-  input,select,textarea{border:0!important;background:#fff!important;padding:2px 0!important}
-  @page{size:A4;margin:14mm}
-}
-</style><style id="xc-shared-pdf-engine-v115">
-@media print{
- body{background:#fff!important;color:#111!important}
- .no-print,.actions,button,a.menu{display:none!important}
- header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
- main{max-width:none!important;margin:0!important;padding:0!important}
- .card{box-shadow:none!important;break-inside:avoid}
- @page{size:A4;margin:14mm}
-}
-</style><style id="passenger-pdf-v117">
-#passengerPrintArea{display:none}
-@media print{
- body.passenger-print>*{display:none!important}
- body.passenger-print #passengerPrintArea{display:block!important}
- #passengerPrintArea{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#111;background:#fff;padding:0}
- #passengerPrintArea h1,#passengerPrintArea h2{color:#b5121b}
- #passengerPrintArea table{width:100%;border-collapse:collapse;margin:0 0 18px}
- #passengerPrintArea th,#passengerPrintArea td{border:1px solid #999;padding:6px;text-align:left}
- #passengerPrintArea th{background:#b5121b;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
- @page{size:A4;margin:14mm}
-}
-
-.count-black{color:#111!important}.count-green{color:#16803c!important;font-weight:600}.count-orange{color:#d66a00!important;font-weight:600}.count-red{color:#c82020!important;font-weight:600}.count-red-bold{color:#c82020!important;font-weight:800!important}
-</style><link href="xc.css" rel="stylesheet"/>
-<style id="globalPageDataControls">
-.global-page-data-controls{position:fixed;top:12px;right:12px;z-index:99999;display:flex;gap:8px}.global-page-data-controls button{width:42px;height:42px;border:0;border-radius:12px;background:#fff;color:#d10a4b;box-shadow:0 2px 10px rgba(0,0,0,.18);font-size:20px;cursor:pointer}.global-page-data-controls button:hover{transform:translateY(-1px)}@media print{.global-page-data-controls{display:none!important}}
-</style>
-
-<style>
-.action-row{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:14px;
-  width:100%;
-  padding:12px 0 10px;
-  box-sizing:border-box;
-  clear:both;
-}
-.action-row .page-actions,.action-row .header-actions,.action-row .top-actions,.action-row .toolbar-actions{
-  position:static!important;
-  right:auto!important; left:auto!important; top:auto!important;
-  display:flex!important; justify-content:center!important; gap:14px!important;
-}
-@media print{.print-hide,.action-row{display:none!important}}
-</style>
-
-<style id="passenger-full-numbers-v150">
-input[type="number"]{
-  min-width:0!important;
-  width:100%!important;
-  box-sizing:border-box!important;
-  font-variant-numeric:tabular-nums;
-}
-.passenger-table input[type="number"],table input[type="number"]{
-  text-align:center;
-}
-</style>
-
-<style id="passenger-remove-bottom-local-actions-v154">
-#saveDataBtn,#clearDataBtn,#saveLocalBtn,#clearLocalBtn,
-.save-data-locally,.clear-data,.local-data-actions,.storage-actions{
-  display:none!important;
-}
-</style>
-</head><body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header>
+</style></head><body><header class="xc-compact-header"><img class="xc-page-header-logo" src="crosscountry-logo-white.png" alt="XC"></header>
 <header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">👥 Manual Passenger Counts</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a>
-<div class="passenger-actions"><button onclick="saveCounts()" type="button">💾 Save Locally</button></div><section class="train-block"><label>Reason / Notes <span style="font-weight:normal">(optional — any information or why STAR Mobile was not used)</span></label><textarea id="reasonNotes" oninput="reasonNotes=this.value"></textarea></section>
+
+<div class="passenger-actions">
+<button type="button" onclick="saveCounts()">💾 Save Locally</button>
+<button type="button" onclick="clearAll()">🗑 Clear All</button>
+</div><div class="passenger-export-actions">
+</div>
 <div id="trains"></div>
-<div class="passenger-actions"><button onclick="addTrain()" type="button">＋ Add Additional Train</button></div>
-<div id="status"></div></main><script>
+<div class="passenger-actions"><button type="button" onclick="addTrain()">＋ Add Additional Train</button></div>
+
+<div id="status"></div>
+<div class="passenger-export-actions"><button type="button" onclick="generatePDF()">📄 Save PDF</button><button type="button" onclick="emailCounts()">✉️ Email counts</button></div></main><script>
 const KEY="xc_staff_app_passenger_counts_v3";
 let trains=[];
-let reasonNotes="";
-function blank(){return {date:new Date().toISOString().slice(0,10),headcode:"",rows:Array.from({length:10},()=>({station:"",first:"",standard:"",entered:false}))}}
+function blank(){return {date:new Date().toISOString().slice(0,10),headcode:"",rows:Array.from({length:10},()=>({station:"",first:"",standard:""}))}}
 function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 function addTrain(){trains.push(blank());render()}
 function update(t,k,v){trains[t][k]=v}
 function updateRow(t,r,k,v){trains[t].rows[r][k]=v}
-function countClass(type,v){const n=Number(v); if(v===""||Number.isNaN(n)) return ""; if(type==="standard"){return n<100?"count-black":n<=150?"count-green":n<=200?"count-orange":"count-red"} return n<=8?"count-black":n<=15?"count-green":n<=20?"count-orange":n<=25?"count-red":"count-red-bold"}
 function render(){
- const notes=document.getElementById("reasonNotes"); if(notes && notes.value!==reasonNotes) notes.value=reasonNotes;
  document.getElementById("trains").innerHTML=trains.map((t,ti)=>`
  <section class="train-block">
  <h3>Train ${ti+1}</h3>
  <label>Date</label><input type="date" value="${esc(t.date)}" onchange="update(${ti},'date',this.value)">
  <label>Headcode</label><input value="${esc(t.headcode)}" placeholder="e.g. 1V50" oninput="update(${ti},'headcode',this.value)">
- <table><thead><tr><th>Station</th><th>First Class</th><th>Standard</th><th>Count entered</th></tr></thead>
+ <table><thead><tr><th>Station</th><th>First Class</th><th>Standard</th></tr></thead>
  <tbody>${t.rows.map((r,ri)=>`<tr>
  <td><input value="${esc(r.station)}" oninput="updateRow(${ti},${ri},'station',this.value)"></td>
- <td><input class="${countClass('first',r.first)}" type="number" inputmode="numeric" value="${esc(r.first)}" oninput="updateRow(${ti},${ri},'first',this.value);render()" min="0" max="999" step="1" inputmode="numeric"></td>
- <td><input class="${countClass('standard',r.standard)}" type="number" inputmode="numeric" value="${esc(r.standard)}" oninput="updateRow(${ti},${ri},'standard',this.value);render()" min="0" max="999" step="1" inputmode="numeric"></td>
- <td style="text-align:center"><input type="checkbox" ${r.entered?"checked":""} onchange="updateRow(${ti},${ri},'entered',this.checked)"></td>
+ <td><input type="number" min="0" inputmode="numeric" value="${esc(r.first)}" oninput="updateRow(${ti},${ri},'first',this.value)"></td>
+ <td><input type="number" min="0" inputmode="numeric" value="${esc(r.standard)}" oninput="updateRow(${ti},${ri},'standard',this.value)"></td>
  </tr>`).join("")}</tbody></table>
  </section>`).join("")
 }
-function saveCounts(){localStorage.setItem(KEY,JSON.stringify({trains,reasonNotes}));show("Passenger counts saved locally.")}
-function clearAll(){if(!confirm("Are you sure you want to clear all passenger count data?"))return;trains=[blank()];reasonNotes="";localStorage.removeItem(KEY);render();const n=document.getElementById("reasonNotes");if(n)n.value="";show("All passenger counts cleared.")}
+function saveCounts(){localStorage.setItem(KEY,JSON.stringify(trains));show("Passenger counts saved locally.")}
+function clearAll(){if(!confirm("Are you sure? This will clear the page and all saved passenger counts."))return;trains=[blank()];localStorage.removeItem(KEY);render();show("All passenger counts cleared.")}
 function show(x){document.getElementById("status").textContent=x;setTimeout(()=>document.getElementById("status").textContent="",2500)}
 function reportRows(){return trains.flatMap((t,i)=>t.rows.filter(r=>r.station||r.first||r.standard).map(r=>[r.station,r.first||"",r.standard||""]))}
 async function makePDF(){
@@ -211,29 +130,23 @@ async function makePDF(){
  return doc.output("blob");
 }
 
-async function generatePDF(){try{let blob=await makePDF();let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="XC-Passenger-Counts.pdf";a.click();show("PDF generated.")}catch(e){show("")}}
+async function generatePDF(){try{let blob=await makePDF();let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="XC-Passenger-Counts.pdf";a.click();show("PDF generated.")}catch(e){show("PDF generation unavailable.")}}
 async function emailCounts(){
  saveCounts();
- const primary=trains[0]||{};
- const emailDate=primary.date ? primary.date.split("-").reverse().map((v,i)=>i===2?v.slice(-2):v).join("/") : new Date().toLocaleDateString("en-GB",{day:"2-digit",month:"2-digit",year:"2-digit"});
- const emailHeadcodes=trains.map(t=>(t.headcode||"").trim()).filter(Boolean);
- const subject="PaxCount for "+(emailHeadcodes.length?emailHeadcodes.join(" "):"HEADCODE(s)")+" on "+emailDate;
- let body="Hello,\n\nDue to STAR Mobile not being available, please find counts for the following train(s):\n";
- const notes=(document.getElementById("reasonNotes")?.value||reasonNotes||"").trim();
- if(notes) body+="\nReason / Notes: "+notes+"\n";
- body+="\nPASSENGER COUNTS\n\n";
+ const subject="Passenger Counts - "+new Date().toLocaleDateString("en-GB");
+ let body="XC STAFF APP - PASSENGER COUNTS\n\n";
  trains.forEach((t,i)=>{
-   body+="TRAIN "+(i+1)+(t.headcode?" — "+t.headcode:"")+"\n";
+   body+="TRAIN "+(i+1)+" — "+(t.headcode||"")+"\n";
    body+="DATE: "+(t.date?t.date.split("-").reverse().join("/"):"")+"\n";
-   body+="Station | First Class | Standard | Count entered\n";
-   body+="-----------------------------------------------\n";
+   body+="---------------------------------------------\n";
+   body+="STATION                         FIRST   STANDARD\n";
    t.rows.filter(r=>r.station||r.first||r.standard).forEach(r=>{
-     body+=(r.station||"")+" | "+(r.first||"0")+" | "+(r.standard||"0")+" | "+(r.entered?"Yes":"No")+"\n";
+     body+=String(r.station||"").padEnd(32).slice(0,32)+" "+String(r.first||"0").padStart(5)+" "+String(r.standard||"0").padStart(9)+"\n";
    });
    body+="\n";
  });
  location.href="mailto:?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
-} 
+}
 async function emailPDF(){ return emailCounts(); }
 
 try{trains=JSON.parse(localStorage.getItem(KEY)||"[]");if(!trains.length)trains=[blank()]}catch(e){trains=[blank()]}
@@ -257,237 +170,4 @@ function xcGeneratePDF(title){
  pdf+="trailer\n<< /Size "+(o.length+1)+" /Root "+cat+" 0 R >>\nstartxref\n"+xr+"\n%%EOF";
  let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([pdf],{type:"application/pdf"}));a.download=title.replace(/[^a-z0-9]+/gi,"-")+".pdf";a.click();
 }
-</script><script id="xc-button-safety">
-document.addEventListener("click",function(e){
- const b=e.target.closest("button[data-action]");
- if(!b)return;
- const fn=b.dataset.action;
- if(typeof window[fn]==="function")window[fn](e);
-});
-</script>
-<script>function printPDF(){window.print();}</script><script id="passenger-pdf-v117">
-(function(){
- const btn=document.getElementById("passengerGeneratePDF");
- if(!btn)return;
- btn.addEventListener("click",function(e){
-   e.preventDefault();e.stopPropagation();
-   const source=null;
-   const node=source?document.querySelector(source):null;
-   const tables=document.querySelectorAll("table");
-   let html="";
-   if(node) html=node.innerHTML;
-   else if(tables.length) tables.forEach(t=>{html+=t.outerHTML;});
-   else{
-     const rows=[];
-     document.querySelectorAll("input,select,textarea").forEach(el=>{
-       if(el.value.trim()) rows.push("<p><strong>"+(el.name||el.id)+"</strong>: "+el.value.trim()+"</p>");
-     });
-     html=rows.join("");
-   }
-   if(!html){alert("Enter passenger counts first.");return;}
-   let area=document.getElementById("passengerPrintArea");
-   if(!area){area=document.createElement("div");area.id="passengerPrintArea";document.body.appendChild(area);}
-   area.innerHTML="<h1>XC Passenger Counts</h1>"+html+
-     "<p style='font-size:9px;color:#555;margin-top:24px'>Report generated at "+
-     new Date().toLocaleString("en-GB")+"</p>";
-   document.body.classList.add("passenger-print");
-   const cleanup=()=>{document.body.classList.remove("passenger-print");window.removeEventListener("afterprint",cleanup)};
-   window.addEventListener("afterprint",cleanup);
-   window.print();
- });
-})();
-</script><script id="xc-button-repair-v118">
-document.addEventListener("click",function(e){
- const b=e.target.closest("button[data-action]");
- if(!b)return;
- const fn=b.dataset.action;
- if(typeof window[fn]==="function"){e.preventDefault();window[fn](e);}
-});
-</script><script src="xc-common.js"></script>
-<script>
-(function(){
-  const key='xc_page_data_'+location.pathname.split('/').pop();
-  function fields(){return [...document.querySelectorAll('input,textarea,select')].filter(e=>e.type!=='button'&&e.type!=='submit'&&e.type!=='reset');}
-  function save(){const data={};fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i);data[k]={v:e.type==='checkbox'?e.checked:e.value,t:e.type};});localStorage.setItem(key,JSON.stringify(data));alert('Data saved.');}
-  function clear(){if(!confirm('Are you sure you want to clear all data on this page?'))return;fields().forEach(e=>{if(e.type==='checkbox'||e.type==='radio')e.checked=false;else if(e.type!=='hidden')e.value='';e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});localStorage.removeItem(key);}
-  function restore(){try{const data=JSON.parse(localStorage.getItem(key)||'{}');fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i),d=data[k];if(!d)return;if(e.type==='checkbox')e.checked=!!d.v;else e.value=d.v;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});}catch(_){}}
-  document.addEventListener('DOMContentLoaded',()=>{
-    const bar=document.createElement('div');bar.className='global-page-data-controls';bar.innerHTML='<button type="button" aria-label="Save data" title="Save data">💾</button><button type="button" aria-label="Clear data" title="Clear data">🗑️</button>';document.body.appendChild(bar);
-    bar.children[0].addEventListener('click',save);bar.children[1].addEventListener('click',clear);restore();
-  });
-})();
-</script>
-
-<script id="passenger-count-validation-v151">
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('input[type="number"]').forEach(function (input) {
-    input.addEventListener('input', function () {
-      var digits = this.value.replace(/\D/g, '').slice(0, 3);
-      if (digits === '') { this.value = ''; return; }
-      var n = parseInt(digits, 10);
-      if (!Number.isFinite(n)) { this.value = ''; return; }
-      this.value = Math.min(999, Math.max(0, n));
-    });
-    input.addEventListener('keydown', function (e) {
-      if (['e','E','+','-','.'].includes(e.key)) e.preventDefault();
-    });
-  });
-});
-</script>
-
-<script id="humanReadableReportTextV152">
-(function(){
-  function tidyText(text){
-    return String(text||"")
-      .replace(/[ \t]+\n/g,"\n")
-      .replace(/\n{3,}/g,"\n\n")
-      .replace(/ +([,.;:!?])/g,"$1")
-      .replace(/\bhello,\s*/i,"Hello,\n\n")
-      .replace(/\bthanks\s*$/i,"Thanks")
-      .trim();
-  }
-  document.addEventListener("DOMContentLoaded",function(){
-    // Apply only to generated report/email previews, not user input fields.
-    document.querySelectorAll("#generatedReport,#generatedEmail,#output,#emailPreview,.generated-report,.email-preview,.report-output").forEach(function(el){
-      if(el.matches("textarea,input")) return;
-      var original=el.textContent;
-      if(original && original.trim()) el.textContent=tidyText(original);
-    });
-  });
-})();
-</script>
-
-
-
-<script id="xc-form-email-fields-v165">
-(function(){
- function clean(v){return String(v==null?"":v).trim();}
- function labelFor(el){
-   if(el.labels&&el.labels.length)return clean(el.labels[0].innerText).replace(/[:*]\s*$/,"");
-   if(el.id){const l=document.querySelector('label[for="'+el.id+'"]');if(l)return clean(l.innerText).replace(/[:*]\s*$/,"");}
-   const wrap=el.closest(".field,.form-group,.input-group,.row,div");
-   const l=wrap&&wrap.querySelector("label");
-   return clean(l?l.innerText:(el.getAttribute("aria-label")||el.placeholder||el.name||el.id||"Information")).replace(/[:*]\s*$/,"");
- }
- window.xcFormFieldDataV165=function(){
-   const out=[];
-   document.querySelectorAll("input,textarea,select").forEach(el=>{
-     if(el.disabled||el.type==="hidden"||/^(button|submit|reset)$/i.test(el.type))return;
-     if((el.type==="checkbox"||el.type==="radio")&&!el.checked)return;
-     let v=el.tagName==="SELECT"?clean(el.options[el.selectedIndex]?.text||el.value):clean(el.value);
-     if(el.type==="checkbox")v=el.checked?"Yes":"No";
-     if(v)out.push({label:labelFor(el),value:v});
-   });
-   return out;
- };
- window.xcFormFieldsAsTextV165=function(){
-   return window.xcFormFieldDataV165().map(x=>x.label+": "+x.value).join("\n");
- };
-})();
-</script>
-
-<script id="passenger-count-full-table-v167">
-(function(){
-  function clean(v){return String(v==null?"":v).trim();}
-  function findLabel(el){
-    if(el.labels&&el.labels.length) return clean(el.labels[0].innerText);
-    if(el.id){const l=document.querySelector('label[for="'+el.id+'"]');if(l)return clean(l.innerText);}
-    return "";
-  }
-  function tableText(){
-    const table=document.querySelector("table");
-    if(!table) return "";
-    const lines=[];
-    const rows=[...table.querySelectorAll("tr")];
-    rows.forEach((row,i)=>{
-      const cells=[...row.querySelectorAll("th,td")];
-      const vals=cells.map(cell=>{
-        const control=cell.querySelector("input,select,textarea");
-        if(control){
-          if(control.type==="checkbox") return control.checked ? "Yes" : "";
-          if(control.tagName==="SELECT") return clean(control.options[control.selectedIndex]?.text||control.value);
-          return clean(control.value);
-        }
-        return clean(cell.innerText);
-      });
-      if(vals.some(v=>v)) lines.push(vals.join(" | "));
-    });
-    return lines.join("\n");
-  }
-  window.buildPassengerCountExportV167=function(){
-    const date=(document.getElementById("date")||{}).value||"";
-    const headcodes=[...document.querySelectorAll('input[name*="head" i],input[id*="head" i]')]
-      .map(e=>clean(e.value)).filter(Boolean);
-    const reasonEl=[...document.querySelectorAll("textarea,input")].find(e=>{
-      const t=(e.id+" "+e.name+" "+e.placeholder+" "+findLabel(e)).toLowerCase();
-      return t.includes("reason")||t.includes("notes");
-    });
-    const reason=reasonEl?clean(reasonEl.value):"";
-    let body="Due to STAR Mobile not being available, please find counts for the following train(s):";
-    if(reason) body+="\n\nReason/Notes: "+reason;
-    body+="\n\nPassenger Counts:\n"+tableText().split("\n").map(line=>line.split("|").filter(cell=>clean(cell).toLowerCase()!=="count entered"&&clean(cell).toLowerCase()!=="yes"&&clean(cell).toLowerCase()!=="no").join("|").trim()).join("\n");
-    return {subject:`PaxCount for ${headcodes.length?headcodes.join(", "):"HEADCODE(s)"} on ${date||"DATE"}`,body};
-  };
-
-  document.addEventListener("DOMContentLoaded",function(){
-    document.querySelectorAll("button,a,[role='button']").forEach(function(el){
-      const t=((el.textContent||"")+" "+(el.getAttribute("aria-label")||"")+" "+(el.title||"")).toLowerCase();
-      if(/email|share/.test(t)){
-        el.addEventListener("click",function(){
-          const r=window.buildPassengerCountExportV167();
-          setTimeout(function(){
-            const subj=document.querySelector("#emailSubject,#subject,[data-output='subject'],.email-subject");
-            const body=document.querySelector("#generatedEmail,#emailBody,#output,#emailPreview,[data-output='body'],.email-preview,.report-output");
-            if(subj){if("value" in subj)subj.value=r.subject;else subj.textContent=r.subject;}
-            if(body){if("value" in body)body.value=r.body;else body.textContent=r.body;}
-          },0);
-        });
-      }
-    });
-  });
-})();
-</script>
-
-<script id="xc-human-email-passenger-v170">
-(function(){
- function clean(v){return String(v==null?"":v).trim();}
- function tableText(){
-   const t=document.querySelector("table"); if(!t)return "";
-   return [...t.querySelectorAll("tr")].map(r=>{
-     const vals=[...r.querySelectorAll("th,td")].map(c=>{
-       const txt=clean(c.innerText);
-       const input=c.querySelector("input,textarea,select");
-       if(input && input.type==="checkbox")return null;
-       if(/count entered/i.test(txt))return null;
-       if(input)return clean(input.tagName==="SELECT"?input.options[input.selectedIndex]?.text:input.value);
-       return txt;
-     }).filter(v=>v!==null);
-     return vals.some(Boolean)?vals.join(" | "):"";
-   }).filter(Boolean).join("\n");
- }
- window.buildHumanEmail=function(){
-   const inputs=[...document.querySelectorAll("input,textarea,select")];
-   const get=(words)=>{for(const e of inputs){const m=((e.id||"")+" "+(e.name||"")+" "+(e.placeholder||"")).toLowerCase();if(words.some(w=>m.includes(w))&&clean(e.value))return clean(e.value)}return ""};
-   const hc=get(["headcode"])||"HEADCODE(s)",d=get(["date"])||"DATE",reason=get(["reason","notes"]);
-   let body="Due to STAR Mobile not being available, please find counts for the following train(s):";
-   if(reason)body+=`\n\nReason/Notes: ${reason}`;
-   body+=`\n\nPassenger Counts:\n${tableText()}`;
-   return {subject:`PaxCount for ${hc} on ${d}`,body};
- };
-})();
-</script>
-<script id="xc-human-email-bridge-v170">
-document.addEventListener("DOMContentLoaded",function(){
- document.querySelectorAll("button,a,[role='button']").forEach(function(el){
-  const t=((el.textContent||"")+" "+(el.getAttribute("aria-label")||"")+" "+(el.title||"")).toLowerCase();
-  if(/share.*email|email.*share|send email/.test(t)){
-   el.addEventListener("click",function(){
-    if(typeof window.buildHumanEmail==="function"){
-      const r=window.buildHumanEmail();
-      if(window.XCEmail) window.XCEmail.writeEmail(r);
-    }
-   },true);
-  }
- });
-});
 </script></body></html>

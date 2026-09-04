@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="#b5121b" name="theme-color"/>
-<meta content="yes" name="apple-mobile-web-app-capable"/>
-<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<meta content="XC Staff App" name="apple-mobile-web-app-title"/><link href="manifest.json" rel="manifest"/><link href="crosscountry-logo-white.png" rel="icon"/><title>🚫 Reservations / Full &amp; Standing</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#b5121b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="XC Staff App"><link rel="manifest" href="manifest.json"><link rel="icon" href="crosscountry-logo-white.png"><title>🚫 Reservations / Full & Standing</title><style>
 :root{--red:#b5121b;--gold:#f5c242;--bg:#f4f4f4;--text:#222;--muted:#666;--border:#d8d8d8}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 header{background:var(--red);color:#fff;padding:14px 16px;border-bottom:5px solid var(--gold)}
@@ -15,7 +14,7 @@ button{width:100%;border:0;border-radius:11px;padding:14px;font:inherit;font-wei
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.status{text-align:center;color:#666;font-size:13px;margin-top:10px;min-height:18px}
 table{width:100%;border-collapse:collapse}th,td{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left}th{font-size:12px}
 @media(max-width:480px){.grid,.actions{grid-template-columns:1fr}}
-.main-menu-wrap{max-width:700px;margin:12px auto 0;padding:0 14px}.main-menu-btn{display:block;text-align:center;text-decoration:none;background:#fff;color:#b5121b;border:1px solid #b5121b;border-radius:10px;padding:11px 14px;font-weight:800;font-size:15px}<style>.pdf-action{margin:10px 0}.pdf-action button{width:100%;background:#222;color:#fff;border:0;border-radius:10px;padding:12px;font-weight:800}</style><style id="xc-safe-area">
+.main-menu-wrap{max-width:700px;margin:12px auto 0;padding:0 14px}.main-menu-btn{display:block;text-align:center;text-decoration:none;background:#fff;color:#b5121b;border:1px solid #b5121b;border-radius:10px;padding:11px 14px;font-weight:800;font-size:15px}<style>.pdf-action{margin:10px 0}.pdf-action button{width:100%;background:#222;color:#fff;border:0;border-radius:10px;padding:12px;font-weight:800}</style></style><style id="xc-safe-area">
 html{background:#b5121b}
 body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
 </style><style id="xc-main-menu-style">
@@ -44,44 +43,26 @@ textarea{
   min-height:120px;
   resize:vertical;
 }
-</style><link href="xc.css" rel="stylesheet"/>
-<style id="globalPageDataControls">
-.global-page-data-controls{position:fixed;top:12px;right:12px;z-index:99999;display:flex;gap:8px}.global-page-data-controls button{width:42px;height:42px;border:0;border-radius:12px;background:#fff;color:#d10a4b;box-shadow:0 2px 10px rgba(0,0,0,.18);font-size:20px;cursor:pointer}.global-page-data-controls button:hover{transform:translateY(-1px)}@media print{.global-page-data-controls{display:none!important}}
-</style>
-
-<style>
-.action-row{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:14px;
-  width:100%;
-  padding:12px 0 10px;
-  box-sizing:border-box;
-  clear:both;
-}
-.action-row .page-actions,.action-row .header-actions,.action-row .top-actions,.action-row .toolbar-actions{
-  position:static!important;
-  right:auto!important; left:auto!important; top:auto!important;
-  display:flex!important; justify-content:center!important; gap:14px!important;
-}
-@media print{.print-hide,.action-row{display:none!important}}
-</style>
-</head><body><header class="xc-compact-header"><img alt="XC" class="xc-page-header-logo" src="crosscountry-logo-white.png"/></header>
-<header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">🚫 Reservations / Full &amp; Standing</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a><div class="card"><div class="grid"><div class="field"><label>Date</label><input data-report-label="Date of incident" id="date" type="date"/></div><div class="field"><label>Headcode</label><input id="head"/></div><div class="field"><label>Original Departure Time</label><input id="departure" type="time"/></div><div class="field"><label>From</label><input id="from"/></div><div class="field"><label>To</label><input id="to"/></div></div></div><div class="card"><label>Report</label><select id="report"><option>Close reservations</option><option>Full &amp; standing service</option><option>Close reservations and full &amp; standing</option></select></div><div class="card"><label>Details</label><textarea id="details"></textarea></div><div class="card"></div></main><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});date.value=new Date().toISOString().slice(0,10);
+</style></head><body><header class="xc-compact-header"><img class="xc-page-header-logo" src="crosscountry-logo-white.png" alt="XC"></header>
+<header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">🚫 Reservations / Full & Standing</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a><div class="card"><div class="grid"><div class="field"><label>Date</label><input id="date" type="date"></div><div class="field"><label>Headcode</label><input id="head"></div><div class="field"><label>Original Departure Time</label><input id="departure" type="time"></div><div class="field"><label>From</label><input id="from"></div><div class="field"><label>To</label><input id="to"></div></div></div><div class="card"><label>Report</label><select id="report"><option>Close reservations</option><option>Full & standing service</option><option>Close reservations and full & standing</option></select></div><div class="card"><label>Details</label><textarea id="details"></textarea></div><div class="card"><button class="primary" type="button" onclick="emailMsg()">Generate Message</button></div><div class="pdf-action"><button type="button" onclick="xcGeneratePDF('Reservations')">📄 Generate PDF</button></div></main><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});date.value=new Date().toISOString().slice(0,10);
 function msg(){
- const d=date.value?date.value.split("-").reverse().map((v,i)=>i===2?v.slice(-2):v).join("/"):"";
- let action=report.value;
- if(action==="Close reservations") action="close reservations";
- else if(action==="Full & standing service") action="report a full and standing service";
- else action="close reservations and report a full and standing service";
- let text=`Hello, Please ${action} on ${head.value} this is the ${departure.value} service, ${to.value} - ${from.value}`;
- if(details.value.trim()) text+=`\n\n${details.value.trim()}`;
- return text;
+  let d=date.value.split("-").reverse().join(" ");
+  let action="";
+  if(report.value==="Close reservations"){
+    action="close reservations";
+  }else if(report.value==="Full & standing service"){
+    action="show a full and standing service";
+  }else{
+    action="close reservations and show full and standing service";
+  }
+  return `Hello, could you please ${action} (as selected)
+On ${head.value} on ${d}
+This is the train ${from.value} to ${to.value}
+
+Details: ${details.value}`;
 }
 function emailMsg(){
- const d=date.value?date.value.split("-").reverse().map((v,i)=>i===2?v.slice(-2):v).join("/"):"";
- location.href="mailto:?subject="+encodeURIComponent(report.value.toUpperCase()+" - "+head.value+" - "+d)+"&body="+encodeURIComponent(msg());
+  location.href="mailto:?subject="+encodeURIComponent(report.value+" - "+head.value)+"&body="+encodeURIComponent(msg());
 }</script><script>
 function xcGeneratePDF(title){
  const lines=[title,"","XC STAFF APP",""];
@@ -100,170 +81,4 @@ function xcGeneratePDF(title){
  pdf+="trailer\n<< /Size "+(o.length+1)+" /Root "+cat+" 0 R >>\nstartxref\n"+xr+"\n%%EOF";
  let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([pdf],{type:"application/pdf"}));a.download=title.replace(/[^a-z0-9]+/gi,"-")+".pdf";a.click();
 }
-</script><script id="xc-button-safety">
-document.addEventListener("click",function(e){
- const b=e.target.closest("button[data-action]");
- if(!b)return;
- const fn=b.dataset.action;
- if(typeof window[fn]==="function")window[fn](e);
-});
-</script>
-<script id="xc-standard-actions-v104">
-(function(){
- function callFirst(names, evt){
-   for(const n of names){
-     if(typeof window[n]==="function"){ try{ window[n](evt); return true; }catch(e){ console.error(e); } }
-   }
-   return false;
- }
- document.addEventListener("click",function(e){
-   const b=e.target.closest("button");
-   if(!b)return;
-   const id=(b.id||"").toLowerCase();
-   const text=(b.textContent||"").trim().toLowerCase();
-   if(id==="copy"||id==="copybtn"||text==="copy"||text.includes("copy")){
-     if(callFirst(["copyReport","copyData","copyCounts","copyAll","copyToClipboard","copyForm"],e)) return;
-   }
-   if(id==="email"||id==="emailbtn"||text.includes("email")){
-     if(callFirst(["emailReport","emailData","emailCounts","emailAll","sendEmail","emailForm"],e)) return;
-   }
-   if(id==="pdf"||id==="pdfbtn"||text.includes("generate pdf")||text.includes("export pdf")||text.includes("save pdf")){
-     if(callFirst(["generateIncidentPDF","generatePDF","exportPDF","savePDF","generatePdf","exportPdf"],e)) return;
-   }
-   if(id==="clear"||id==="clearbtn"||text==="clear"||text.includes("clear all")){
-     if(callFirst(["clearForm","clearAll","clearNotes","clearData","clearCounts","resetForm"],e)) return;
-   }
- });
-})();
-</script><script id="xc-button-repair-v118">
-document.addEventListener("click",function(e){
- const b=e.target.closest("button[data-action]");
- if(!b)return;
- const fn=b.dataset.action;
- if(typeof window[fn]==="function"){e.preventDefault();window[fn](e);}
-});
-</script><script src="xc-common.js"></script>
-<script>
-(function(){
-  const key='xc_page_data_'+location.pathname.split('/').pop();
-  function fields(){return [...document.querySelectorAll('input,textarea,select')].filter(e=>e.type!=='button'&&e.type!=='submit'&&e.type!=='reset');}
-  function save(){const data={};fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i);data[k]={v:e.type==='checkbox'?e.checked:e.value,t:e.type};});localStorage.setItem(key,JSON.stringify(data));alert('Data saved.');}
-  function clear(){if(!confirm('Are you sure you want to clear all data on this page?'))return;fields().forEach(e=>{if(e.type==='checkbox'||e.type==='radio')e.checked=false;else if(e.type!=='hidden')e.value='';e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});localStorage.removeItem(key);}
-  function restore(){try{const data=JSON.parse(localStorage.getItem(key)||'{}');fields().forEach((e,i)=>{const k=e.id||e.name||('field_'+i),d=data[k];if(!d)return;if(e.type==='checkbox')e.checked=!!d.v;else e.value=d.v;e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));});}catch(_){}}
-  document.addEventListener('DOMContentLoaded',()=>{
-    const bar=document.createElement('div');bar.className='global-page-data-controls';bar.innerHTML='<button type="button" aria-label="Save data" title="Save data">💾</button><button type="button" aria-label="Clear data" title="Clear data">🗑️</button>';document.body.appendChild(bar);
-    bar.children[0].addEventListener('click',save);bar.children[1].addEventListener('click',clear);restore();
-  });
-})();
-</script>
-
-<script id="humanReadableReportTextV152">
-(function(){
-  function tidyText(text){
-    return String(text||"")
-      .replace(/[ \t]+\n/g,"\n")
-      .replace(/\n{3,}/g,"\n\n")
-      .replace(/ +([,.;:!?])/g,"$1")
-      .replace(/\bhello,\s*/i,"Hello,\n\n")
-      .replace(/\bthanks\s*$/i,"Thanks")
-      .trim();
-  }
-  document.addEventListener("DOMContentLoaded",function(){
-    // Apply only to generated report/email previews, not user input fields.
-    document.querySelectorAll("#generatedReport,#generatedEmail,#output,#emailPreview,.generated-report,.email-preview,.report-output").forEach(function(el){
-      if(el.matches("textarea,input")) return;
-      var original=el.textContent;
-      if(original && original.trim()) el.textContent=tidyText(original);
-    });
-  });
-})();
-</script>
-
-
-
-
-
-
-
-<script id="xc-form-email-fields-v165">
-(function(){
- function clean(v){return String(v==null?"":v).trim();}
- function labelFor(el){
-   if(el.labels&&el.labels.length)return clean(el.labels[0].innerText).replace(/[:*]\s*$/,"");
-   if(el.id){const l=document.querySelector('label[for="'+el.id+'"]');if(l)return clean(l.innerText).replace(/[:*]\s*$/,"");}
-   const wrap=el.closest(".field,.form-group,.input-group,.row,div");
-   const l=wrap&&wrap.querySelector("label");
-   return clean(l?l.innerText:(el.getAttribute("aria-label")||el.placeholder||el.name||el.id||"Information")).replace(/[:*]\s*$/,"");
- }
- window.xcFormFieldDataV165=function(){
-   const out=[];
-   document.querySelectorAll("input,textarea,select").forEach(el=>{
-     if(el.disabled||el.type==="hidden"||/^(button|submit|reset)$/i.test(el.type))return;
-     if((el.type==="checkbox"||el.type==="radio")&&!el.checked)return;
-     let v=el.tagName==="SELECT"?clean(el.options[el.selectedIndex]?.text||el.value):clean(el.value);
-     if(el.type==="checkbox")v=el.checked?"Yes":"No";
-     if(v)out.push({label:labelFor(el),value:v});
-   });
-   return out;
- };
- window.xcFormFieldsAsTextV165=function(){
-   return window.xcFormFieldDataV165().map(x=>x.label+": "+x.value).join("\n");
- };
-})();
-</script>
-
-<script id="xc-human-email-v170">
-(function(){
-  function clean(v){return String(v==null?"":v).trim();}
-  function byWords(words){
-    const els=[...document.querySelectorAll("input,textarea,select")];
-    for(const e of els){
-      const meta=((e.id||"")+" "+(e.name||"")+" "+(e.placeholder||"")+" "+
-        (e.getAttribute("aria-label")||"")).toLowerCase();
-      if(words.some(w=>meta.includes(w))){
-        let v=e.tagName==="SELECT"?clean(e.options[e.selectedIndex]?.text||e.value):clean(e.value);
-        if(v)return v;
-      }
-    } return "";
-  }
-  function date(v){if(/^\d{4}-\d{2}-\d{2}$/.test(v)){const a=v.split("-");return a[2]+"/"+a[1]+"/"+a[0].slice(-2)}return v||"DATE";}
-  function writeEmail(r){
-    const s=document.querySelector("#emailSubject,#subject,[data-output='subject'],.email-subject");
-    const b=document.querySelector("#generatedEmail,#emailBody,#output,#emailPreview,[data-output='body'],.email-preview,.report-output");
-    if(s){if("value" in s)s.value=r.subject;else s.textContent=r.subject;}
-    if(b){if("value" in b)b.value=r.body;else b.textContent=r.body;}
-    return r;
-  }
-  window.XCEmail={clean,byWords,date,writeEmail};
-})();
-</script>
-
-<script id="xc-human-email-reservations-v170">
-(function(){
- window.buildHumanEmail=function(){
-  const h=XCEmail, report=h.byWords(["report type","report","request"])||"REPORT",hc=h.byWords(["headcode"])||"HEADCODE";
-  const d=h.date(h.byWords(["date"])),dep=h.byWords(["original departure","departure time"])||"ORIGINAL DEPARTURE TIME";
-  const from=h.byWords(["from","origin"])||"FROM",to=h.byWords(["to","destination"])||"TO";
-  const details=h.byWords(["details","additional information","notes"])||"";
-  let body=`Hello,\n\nPlease ${report.toLowerCase()} on ${hc} (${dep}, ${from} - ${to}).`;
-  if(details)body+=`\n\n${details}`;
-  return {subject:`${report} - ${hc} - ${d}`,body};
- };
-})();
-</script>
-
-<script id="xc-human-email-bridge-v170">
-document.addEventListener("DOMContentLoaded",function(){
- document.querySelectorAll("button,a,[role='button']").forEach(function(el){
-  const t=((el.textContent||"")+" "+(el.getAttribute("aria-label")||"")+" "+(el.title||"")).toLowerCase();
-  if(/share.*email|email.*share|send email/.test(t)){
-   el.addEventListener("click",function(){
-    if(typeof window.buildHumanEmail==="function"){
-      const r=window.buildHumanEmail();
-      if(window.XCEmail) window.XCEmail.writeEmail(r);
-    }
-   },true);
-  }
- });
-});
 </script></body></html>

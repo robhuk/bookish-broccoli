@@ -1,50 +1,59 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#d10a4b"><meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="XC Staff App">
-<link rel="manifest" href="manifest.json"><link rel="icon" href="xc-staff-app-icon.jpg"><link rel="apple-touch-icon" href="xc-staff-app-icon.jpg">
-<link rel="stylesheet" href="xc.css">
-<title>XC Train Manager App</title>
-<style>
-.xc-home{min-height:100vh;background:var(--xc-bg)}
-.xc-home-header{background:var(--xc-magenta);color:#fff;border-bottom:4px solid var(--xc-grey);padding:18px 16px 20px;text-align:center}
-.xc-home-header img{width:min(280px,78vw);height:auto;display:block;margin:0 auto 12px}
-.xc-home-kicker{font-size:11px;font-weight:800;letter-spacing:.14em;opacity:.9}
-.xc-home-title{margin:5px 0 0;color:#fff;font-size:25px;font-weight:900}
-.xc-home-navigation{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:760px;margin:18px auto;padding:0 14px}
-.xc-home-button{display:flex;align-items:center;gap:12px;min-height:70px;padding:14px 15px;border:1px solid var(--xc-border);border-left:6px solid var(--xc-magenta);border-radius:13px;background:#fff;color:#222;text-decoration:none;font-weight:850;box-shadow:0 2px 8px rgba(0,0,0,.07);transition:.15s}
-.xc-home-button:hover,.xc-home-button:active{background:var(--xc-pale);transform:translateY(-1px)}
-.xc-home-icon{width:34px;min-width:34px;text-align:center;font-size:24px}
-.xc-home-label{line-height:1.2}
-.xc-home-footer{text-align:center;color:#777;font-size:11px;padding:5px 14px 30px}
-@media(max-width:600px){.xc-home-navigation{grid-template-columns:1fr}.xc-home-title{font-size:22px}}
-.app-splash{position:fixed;inset:0;z-index:9999;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:1;visibility:visible}.app-splash img{width:100%;height:100%;object-fit:cover;display:block}.app-splash.hide{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease}
-</style>
-</head>
-<body class="xc-home">
-<div class="app-splash" id="appSplash" aria-label="XC Staff App"><img src="xc-staff-app-splash.jpg" alt=""></div>
-<header class="xc-home-header">
-  <img src="crosscountry-logo-white.png" alt="CrossCountry">
-  <div class="xc-home-kicker" style="font-size:14px;letter-spacing:.04em;font-weight:800">CrossCountry Crew Toolkit</div>
-</header>
-<section class="xc-home-navigation" aria-label="App pages">
-<a class="xc-home-button" href="delay-report.html"><span class="xc-home-icon">🚆</span><span class="xc-home-label">Report Delay to Line Manager</span></a>
-<a class="xc-home-button" href="book-off-late.html"><span class="xc-home-icon">⏰</span><span class="xc-home-label">Book Off Late</span></a>
-<a class="xc-home-button" href="passenger-counts.html"><span class="xc-home-icon">👥</span><span class="xc-home-label">Passenger Counts</span></a>
-<a class="xc-home-button" href="incident-notes.html"><span class="xc-home-icon">📝</span><span class="xc-home-label">Incident Report Notes</span></a>
-<a class="xc-home-button" href="reservations.html"><span class="xc-home-icon">🚫</span><span class="xc-home-label">Reservations / Full &amp; Standing</span></a>
-<a class="xc-home-button" href="btp-61016.html"><span class="xc-home-icon">🚔</span><span class="xc-home-label">BTP 61016 Message Builder</span></a>
-<a class="xc-home-button" href="report-defects.html"><span class="xc-home-icon">🔧</span><span class="xc-home-label">Report Defects</span></a>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#b5121b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="XC Staff App"><link rel="manifest" href="manifest.json"><link rel="icon" href="xc-staff-app-icon.jpg"><style>
+:root{--red:#b5121b;--gold:#f5c242;--bg:#f4f4f4;--text:#222;--muted:#666;--border:#d8d8d8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:var(--red);color:#fff;padding:14px 16px;border-bottom:5px solid var(--gold)}
+.top{display:flex;align-items:center;gap:12px}.logo{width:185px;height:40px;object-fit:contain;background:transparent}
+.back{color:#fff;text-decoration:none;font-weight:800;font-size:14px}.heading{margin-top:10px;font-size:24px;font-weight:850}
+main{max-width:650px;margin:auto;padding:18px 16px 35px}.card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 6px #00000010}
+label{display:block;font-size:14px;font-weight:800;margin:0 0 7px}input,select,textarea{width:100%;border:1px solid #bbb;border-radius:10px;padding:12px;font:inherit;background:#fff}textarea{min-height:130px;resize:vertical}
+.field{margin-bottom:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hint{font-size:13px;color:var(--muted);line-height:1.45}
+button{width:100%;border:0;border-radius:11px;padding:14px;font:inherit;font-weight:800;cursor:pointer}.primary{background:var(--red);color:#fff}.secondary{background:#eee;color:#222}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.status{text-align:center;color:#666;font-size:13px;margin-top:10px;min-height:18px}
+table{width:100%;border-collapse:collapse}th,td{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left}th{font-size:12px}
+@media(max-width:480px){.grid,.actions{grid-template-columns:1fr}}
 
-<a class="xc-home-button" href="commission-calculator.html"><span class="xc-home-icon">🧮</span><span class="xc-home-label">Commission / Scan Calculator</span></a>
-<a class="xc-home-button" href="delay-repay.html"><span class="xc-home-icon">💷</span><span class="xc-home-label">Delay Repay</span></a>
-<a class="xc-home-button" href="tir-builder.html"><span class="xc-home-icon">📋</span><span class="xc-home-label">TIR Builder</span></a>
-<a class="xc-home-button" href="help.html"><span class="xc-home-icon">❓</span><span class="xc-home-label">Help / Guide</span></a>
-<a class="xc-home-button" href="handy-links.html"><span class="xc-home-icon">🔗</span><span class="xc-home-label">Handy Links</span></a>
-</section>
-<div class="xc-home-footer" style="font-size:9px">CrossCountry Train Crew Toolkit © RH</div>
-<script>window.addEventListener("load",()=>setTimeout(()=>document.getElementById("appSplash")?.classList.add("hide"),450));</script>
-<script src="xc-common.js"></script>
-</body></html>
+.app-splash{position:fixed;inset:0;z-index:9999;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:1;visibility:visible}
+.app-splash img{width:100%;height:100%;object-fit:cover;display:block}
+.app-splash.hide{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease}
+.btp-home-icon{width:34px;height:38px;object-fit:contain;vertical-align:middle;margin-right:7px}
+.custom-home-btn{display:flex!important;align-items:center;gap:14px}
+.custom-home-btn img{width:52px;height:52px;object-fit:contain;flex:0 0 52px}
+</style><style>.home-page-list{display:grid;gap:10px}.home-page-list .homebtn{display:flex;align-items:center;gap:10px;text-decoration:none;background:#fff;color:#222;border-radius:12px;padding:14px;box-shadow:0 2px 8px #0001}.home-page-list .homebtn:hover{background:#f8e9ec}</style>
+<style id="xc-home-rebuild">
+:root{--xc-red:#b5121b;--xc-dark:#222;--xc-pink:#f5e5e8;--xc-grey:#f2f2f2}
+body{background:var(--xc-grey);color:var(--xc-dark)}
+.xc-home-navigation{display:grid;grid-template-columns:1fr;gap:11px;margin:20px auto 16px;max-width:680px}
+.xc-home-button{display:flex;align-items:center;gap:15px;min-height:58px;padding:14px 17px;border-radius:12px;background:#fff;color:#222;text-decoration:none;font-weight:800;border-left:6px solid var(--xc-red);box-shadow:0 2px 8px rgba(0,0,0,.10);transition:.15s}
+.xc-home-button:hover,.xc-home-button:active{background:var(--xc-pink);transform:translateY(-1px)}
+.xc-home-icon{width:34px;min-width:34px;text-align:center;font-size:23px}
+.xc-home-button:last-child{margin-top:8px;border-left-color:#555}
+.xc-home-title{color:var(--xc-red);font-weight:900}
+</style>
+<style id="xc-safe-area">
+html{background:#b5121b}
+body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
+</style><style id="xc-uniform-inputs">
+/* XC uniform form controls */
+input[type="text"],input[type="number"],input[type="date"],input[type="time"],
+input[type="email"],input[type="tel"],input[type="search"],input[type="url"],
+input:not([type]),select,textarea{
+  width:100%;
+  min-height:44px;
+  height:44px;
+  box-sizing:border-box;
+  padding:10px 11px;
+  border:1px solid #bbb;
+  border-radius:9px;
+  font:inherit;
+  line-height:1.25;
+  background:#fff;
+}
+textarea{
+  height:120px;
+  min-height:120px;
+  resize:vertical;
+}
+</style></head><body><h1 class="xc-home-title">XC Train Manager App</h1></div><section class="xc-home-navigation" aria-label="App pages"><a class="xc-home-button" href="delay-report.html"><span class="xc-home-icon">🚆</span><span>Report Delay to Line Manager</span></a><a class="xc-home-button" href="book-off-late.html"><span class="xc-home-icon">⏰</span><span>Book Off Late</span></a><a class="xc-home-button" href="passenger-counts.html"><span class="xc-home-icon">👥</span><span>Passenger Counts</span></a><a class="xc-home-button" href="incident-notes.html"><span class="xc-home-icon">📝</span><span>Incident Report Notes</span></a><a class="xc-home-button" href="reservations.html"><span class="xc-home-icon">🚫</span><span>Reservations / Full & Standing</span></a><a class="xc-home-button" href="btp-61016.html"><span class="xc-home-icon">🚔</span><span>BTP 61016 Message Builder</span></a><a class="xc-home-button" href="report-defects.html"><span class="xc-home-icon">🔧</span><span>Report Defects</span></a><a class="xc-home-button" href="notepad.html"><span class="xc-home-icon">📓</span><span>Notepad</span></a><a class="xc-home-button" href="commission-calculator.html"><span class="xc-home-icon">🧮</span><span>Commission / Scan Calculator</span></a><a class="xc-home-button" href="delay-repay.html"><span class="xc-home-icon">💷</span><span>Delay Repay</span></a><a class="xc-home-button" href="tir-builder.html"><span class="xc-home-icon">📋</span><span>TIR Builder</span></a><a class="xc-home-button" href="help.html"><span class="xc-home-icon">❓</span><span>Help / Guide</span></a></section></body></html>
