@@ -52,26 +52,12 @@ padding-left:max(0px,env(safe-area-inset-left));
 .xc-page-header-logo{width:86px;height:24px;object-fit:contain;display:block;flex:0 0 auto}
 </style><style id="xc-single-header-logo">
 .xc-page-header-logo{width:86px;height:24px;object-fit:contain;display:block;flex:0 0 auto}
-</style><style id="xc-uniform-inputs">
-/* XC uniform form controls */
-input[type="text"],input[type="number"],input[type="date"],input[type="time"],
-input[type="email"],input[type="tel"],input[type="search"],input[type="url"],
-input:not([type]),select,textarea{
-  width:100%;
-  min-height:44px;
-  height:44px;
-  box-sizing:border-box;
-  padding:10px 11px;
-  border:1px solid #bbb;
-  border-radius:9px;
-  font:inherit;
-  line-height:1.25;
-  background:#fff;
-}
-textarea{
-  height:120px;
-  min-height:120px;
-  resize:vertical;
+</style><style id="xc-v80-print-style">
+@media print{
+  .no-print,.actions,.buttons,.toolbar,button,a.menu{display:none!important}
+  body{background:#fff!important}
+  main,.container,.app{max-width:none!important;box-shadow:none!important}
+  @page{size:A4;margin:14mm}
 }
 </style></head>
 <body>
@@ -243,6 +229,39 @@ try{
 }catch(e){notes=[];}
 render();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
+})();
+</script>
+
+<script id="xc-v80-rewrite-repair">
+(function(){
+  function nativePDF(){ window.print(); }
+  window.xcNativePDF = nativePDF;
+
+  document.querySelectorAll('button').forEach(function(btn){
+    var text=(btn.textContent||'').trim().toLowerCase();
+    if(!text) return;
+
+    if(/(generate|export|save)\s*pdf/.test(text)){
+      var original = btn.getAttribute('onclick') || '';
+      // Only repair empty/missing PDF actions. Do not overwrite working
+      // page-specific builders such as TIR's generated-report export.
+      if(!original && !btn.dataset.xcPdfBound){
+        btn.dataset.xcPdfBound='1';
+        btn.addEventListener('click', nativePDF);
+      }
+    }
+  });
+
+  // Defensive support for action buttons that use data-action.
+  document.addEventListener('click', function(e){
+    var btn=e.target.closest('button[data-action]');
+    if(!btn) return;
+    var action=btn.dataset.action;
+    if(action && typeof window[action]==='function'){
+      e.preventDefault();
+      window[action](e);
+    }
+  });
 })();
 </script>
 </body>

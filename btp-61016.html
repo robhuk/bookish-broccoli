@@ -22,26 +22,12 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
 .xc-main-menu:hover,.xc-main-menu:active{background:#8f0f16;color:#fff}
 </style><style id="xc-header-logo">
 .xc-page-header-logo{width:86px;height:24px;object-fit:contain;display:block;flex:0 0 auto}
-</style><style id="xc-uniform-inputs">
-/* XC uniform form controls */
-input[type="text"],input[type="number"],input[type="date"],input[type="time"],
-input[type="email"],input[type="tel"],input[type="search"],input[type="url"],
-input:not([type]),select,textarea{
-  width:100%;
-  min-height:44px;
-  height:44px;
-  box-sizing:border-box;
-  padding:10px 11px;
-  border:1px solid #bbb;
-  border-radius:9px;
-  font:inherit;
-  line-height:1.25;
-  background:#fff;
-}
-textarea{
-  height:120px;
-  min-height:120px;
-  resize:vertical;
+</style><style id="xc-v80-print-style">
+@media print{
+  .no-print,.actions,.buttons,.toolbar,button,a.menu{display:none!important}
+  body{background:#fff!important}
+  main,.container,.app{max-width:none!important;box-shadow:none!important}
+  @page{size:A4;margin:14mm}
 }
 </style></head><body><header class="xc-compact-header"><img class="xc-page-header-logo" src="crosscountry-logo-white.png" alt="XC"></header>
 <header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading"><img class="btp-header-icon" src="btp-logo.png" alt="BTP"> BTP 61016 Message Builder</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a><div class="card"><div class="grid"><div class="field"><label>HEADCODE</label><input id="headcode" placeholder="e.g. 1V50"></div><div class="field"><label>TRAIN TIME</label><input id="trainTime" type="time"></div><div class="field"><label>FROM</label><input id="from"></div><div class="field"><label>TO</label><input id="to"></div><div class="field"><label>NEXT STOP</label><input id="nextStop"></div><div class="field"><label>AT (HH:MM)</label><input id="at" type="time"></div></div></div><div class="card"><label>INCIDENT DETAILS</label><textarea id="details"></textarea><details class="hint" style="margin-top:10px"><summary style="cursor:pointer;font-weight:800;color:#333">💡 Description reminder</summary><div style="padding-top:9px">Use where known/relevant:<br>• Name<br>• Age<br>• Gender<br>• Ethnicity<br>• Build<br>• Clothing<br>• Distinguishing features<br>• Direction of travel<br>• Intoxicated?<br>• Weapons?<br>• Companions?</div></details></div><div class="card"><div style="font-weight:800;text-align:center">Whole SMS Character Count: <span id="charCount">0</span><br>SMS Messages Required: <span id="smsCount">1</span></div></div><div class="card"><div class="actions"><button class="secondary" type="button" onclick="copyMsg()">📋 Copy Message</button><button class="primary" type="button" onclick="text61016()">💬 Text 61016</button></div><div id="status" class="status"></div></div><div class="pdf-action"><button type="button" onclick="xcGeneratePDF('BTP 61016 Message')">📄 Generate PDF</button></div></main><script>if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});function buildMessage(){let a=["BTP 61016 INCIDENT REPORT"];if(headcode.value)a.push("Headcode: "+headcode.value);if(trainTime.value)a.push("Train time: "+trainTime.value);if(from.value)a.push("From: "+from.value);if(to.value)a.push("To: "+to.value);if(nextStop.value)a.push("Next stop: "+nextStop.value);if(at.value)a.push("Time at next station: "+at.value);if(details.value.trim())a.push("Incident details: "+details.value.trim());return a.join("\n")}function update(){let m=buildMessage();charCount.textContent=m.length;smsCount.textContent=Math.max(1,Math.ceil(m.length/160))}["headcode","trainTime","from","to","nextStop","at","details"].forEach(x=>document.getElementById(x).addEventListener("input",update));async function copyMsg(){await navigator.clipboard.writeText(buildMessage());status.textContent="Message copied to clipboard."}function text61016(){location.href="sms:61016?&body="+encodeURIComponent(buildMessage())}update();</script><script>
@@ -54,7 +40,7 @@ function xcGeneratePDF(title){
  const W=595,H=842,m=42,lead=14,pages=[[]];let y=H-m;
  lines.forEach(x=>{if(y<55){pages.push([]);y=H-m}pages.at(-1).push(x);y-=lead});
  let o=[],add=x=>(o.push(x),o.length),po=add(""),fo=add("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"),refs=[];
- pages.forEach(ls=>{let c="BT /F1 10 Tf "+m+" "+(H-m)+" Td ";ls.forEach((x,i)=>{if(i)c+=" 0 -14 Td ";c+="("+esc(x)+") Tj "});c+=" ET";let st=add("<< /Length "+c.length+" >>\nstream\n"+c+"\nendstream");refs.push(add("<< /Type /Page /Parent "+po+" 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /Font << /F1 "+fo+" 0 R >> >> /Contents "+st+" 0 R >>"))});
+ pages.forEach((ls,pi)=>{let c="BT /F1 10 Tf "+m+" "+(H-m)+" Td ";ls.forEach((x,i)=>{if(i)c+=" 0 -14 Td ";c+="("+esc(x)+") Tj "});c+=" ET 0.64 0.02 0.20 RG 1 w "+m+" 42 m 553 42 l S BT /F1 8 Tf 0.35 0.35 0.35 rg "+m+" 28 Td (XC STAFF APP) Tj 400 0 Td ("+pdfEscape("Page "+(pi+1)+" of "+pages.length)+") Tj ET";let st=add("<< /Length "+c.length+" >>\nstream\n"+c+"\nendstream");refs.push(add("<< /Type /Page /Parent "+po+" 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /Font << /F1 "+fo+" 0 R >> >> /Contents "+st+" 0 R >>"))});
  o[po-1]="<< /Type /Pages /Count "+refs.length+" /Kids ["+refs.map(x=>x+" 0 R").join(" ")+"] >>";
  let cat=add("<< /Type /Catalog /Pages "+po+" 0 R >>"),pdf="%PDF-1.4\n",off=[0];
  o.forEach((x,i)=>{off.push(pdf.length);pdf+=(i+1)+" 0 obj\n"+x+"\nendobj\n"});
@@ -62,4 +48,37 @@ function xcGeneratePDF(title){
  pdf+="trailer\n<< /Size "+(o.length+1)+" /Root "+cat+" 0 R >>\nstartxref\n"+xr+"\n%%EOF";
  let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([pdf],{type:"application/pdf"}));a.download=title.replace(/[^a-z0-9]+/gi,"-")+".pdf";a.click();
 }
-</script></body></html>
+</script>
+<script id="xc-v80-rewrite-repair">
+(function(){
+  function nativePDF(){ window.print(); }
+  window.xcNativePDF = nativePDF;
+
+  document.querySelectorAll('button').forEach(function(btn){
+    var text=(btn.textContent||'').trim().toLowerCase();
+    if(!text) return;
+
+    if(/(generate|export|save)\s*pdf/.test(text)){
+      var original = btn.getAttribute('onclick') || '';
+      // Only repair empty/missing PDF actions. Do not overwrite working
+      // page-specific builders such as TIR's generated-report export.
+      if(!original && !btn.dataset.xcPdfBound){
+        btn.dataset.xcPdfBound='1';
+        btn.addEventListener('click', nativePDF);
+      }
+    }
+  });
+
+  // Defensive support for action buttons that use data-action.
+  document.addEventListener('click', function(e){
+    var btn=e.target.closest('button[data-action]');
+    if(!btn) return;
+    var action=btn.dataset.action;
+    if(action && typeof window[action]==='function'){
+      e.preventDefault();
+      window[action](e);
+    }
+  });
+})();
+</script>
+</body></html>

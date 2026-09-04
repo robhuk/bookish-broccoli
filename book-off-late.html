@@ -22,26 +22,12 @@ body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left)
 .xc-main-menu:hover,.xc-main-menu:active{background:#8f0f16;color:#fff}
 </style><style id="xc-header-logo">
 .xc-page-header-logo{width:86px;height:24px;object-fit:contain;display:block;flex:0 0 auto}
-</style><style id="xc-uniform-inputs">
-/* XC uniform form controls */
-input[type="text"],input[type="number"],input[type="date"],input[type="time"],
-input[type="email"],input[type="tel"],input[type="search"],input[type="url"],
-input:not([type]),select,textarea{
-  width:100%;
-  min-height:44px;
-  height:44px;
-  box-sizing:border-box;
-  padding:10px 11px;
-  border:1px solid #bbb;
-  border-radius:9px;
-  font:inherit;
-  line-height:1.25;
-  background:#fff;
-}
-textarea{
-  height:120px;
-  min-height:120px;
-  resize:vertical;
+</style><style id="xc-v80-print-style">
+@media print{
+  .no-print,.actions,.buttons,.toolbar,button,a.menu{display:none!important}
+  body{background:#fff!important}
+  main,.container,.app{max-width:none!important;box-shadow:none!important}
+  @page{size:A4;margin:14mm}
 }
 </style></head><body><header class="xc-compact-header"><img class="xc-page-header-logo" src="crosscountry-logo-white.png" alt="XC"></header>
 <header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">⏰ ⏰ Book Off Late (Late Running)</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a><div class="card">
@@ -189,7 +175,7 @@ function xcGeneratePDF(title){
  const W=595,H=842,m=42,lead=14,pages=[[]];let y=H-m;
  lines.forEach(x=>{if(y<55){pages.push([]);y=H-m}pages.at(-1).push(x);y-=lead});
  let o=[],add=x=>(o.push(x),o.length),po=add(""),fo=add("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"),refs=[];
- pages.forEach(ls=>{let c="BT /F1 10 Tf "+m+" "+(H-m)+" Td ";ls.forEach((x,i)=>{if(i)c+=" 0 -14 Td ";c+="("+esc(x)+") Tj "});c+=" ET";let st=add("<< /Length "+c.length+" >>\nstream\n"+c+"\nendstream");refs.push(add("<< /Type /Page /Parent "+po+" 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /Font << /F1 "+fo+" 0 R >> >> /Contents "+st+" 0 R >>"))});
+ pages.forEach((ls,pi)=>{let c="BT /F1 10 Tf "+m+" "+(H-m)+" Td ";ls.forEach((x,i)=>{if(i)c+=" 0 -14 Td ";c+="("+esc(x)+") Tj "});c+=" ET 0.64 0.02 0.20 RG 1 w "+m+" 42 m 553 42 l S BT /F1 8 Tf 0.35 0.35 0.35 rg "+m+" 28 Td (XC STAFF APP) Tj 400 0 Td ("+pdfEscape("Page "+(pi+1)+" of "+pages.length)+") Tj ET";let st=add("<< /Length "+c.length+" >>\nstream\n"+c+"\nendstream");refs.push(add("<< /Type /Page /Parent "+po+" 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /Font << /F1 "+fo+" 0 R >> >> /Contents "+st+" 0 R >>"))});
  o[po-1]="<< /Type /Pages /Count "+refs.length+" /Kids ["+refs.map(x=>x+" 0 R").join(" ")+"] >>";
  let cat=add("<< /Type /Catalog /Pages "+po+" 0 R >>"),pdf="%PDF-1.4\n",off=[0];
  o.forEach((x,i)=>{off.push(pdf.length);pdf+=(i+1)+" 0 obj\n"+x+"\nendobj\n"});
@@ -197,4 +183,37 @@ function xcGeneratePDF(title){
  pdf+="trailer\n<< /Size "+(o.length+1)+" /Root "+cat+" 0 R >>\nstartxref\n"+xr+"\n%%EOF";
  let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([pdf],{type:"application/pdf"}));a.download=title.replace(/[^a-z0-9]+/gi,"-")+".pdf";a.click();
 }
-</script></body></html>
+</script>
+<script id="xc-v80-rewrite-repair">
+(function(){
+  function nativePDF(){ window.print(); }
+  window.xcNativePDF = nativePDF;
+
+  document.querySelectorAll('button').forEach(function(btn){
+    var text=(btn.textContent||'').trim().toLowerCase();
+    if(!text) return;
+
+    if(/(generate|export|save)\s*pdf/.test(text)){
+      var original = btn.getAttribute('onclick') || '';
+      // Only repair empty/missing PDF actions. Do not overwrite working
+      // page-specific builders such as TIR's generated-report export.
+      if(!original && !btn.dataset.xcPdfBound){
+        btn.dataset.xcPdfBound='1';
+        btn.addEventListener('click', nativePDF);
+      }
+    }
+  });
+
+  // Defensive support for action buttons that use data-action.
+  document.addEventListener('click', function(e){
+    var btn=e.target.closest('button[data-action]');
+    if(!btn) return;
+    var action=btn.dataset.action;
+    if(action && typeof window[action]==='function'){
+      e.preventDefault();
+      window[action](e);
+    }
+  });
+})();
+</script>
+</body></html>

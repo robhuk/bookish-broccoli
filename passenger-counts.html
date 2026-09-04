@@ -1,173 +1,122 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#b5121b">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="XC Staff App"><link rel="manifest" href="manifest.json"><link rel="icon" href="crosscountry-logo-white.png"><title>👥 Manual Passenger Counts</title><style>
-:root{--red:#b5121b;--gold:#f5c242;--bg:#f4f4f4;--text:#222;--muted:#666;--border:#d8d8d8}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-header{background:var(--red);color:#fff;padding:14px 16px;border-bottom:5px solid var(--gold)}
-.top{display:flex;align-items:center;gap:12px}.logo{background:#fff;border-radius:8px;padding:4px 7px;width:145px;height:36px;object-fit:contain}
-.back{color:#fff;text-decoration:none;font-weight:800;font-size:14px}.heading{margin-top:10px;font-size:24px;font-weight:850}
-main{max-width:650px;margin:auto;padding:18px 16px 35px}.card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 6px #00000010}
-label{display:block;font-size:14px;font-weight:800;margin:0 0 7px}input,select,textarea{width:100%;border:1px solid #bbb;border-radius:10px;padding:12px;font:inherit;background:#fff}textarea{min-height:130px;resize:vertical}
-.field{margin-bottom:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hint{font-size:13px;color:var(--muted);line-height:1.45}
-button{width:100%;border:0;border-radius:11px;padding:14px;font:inherit;font-weight:800;cursor:pointer}.primary{background:var(--red);color:#fff}.secondary{background:#eee;color:#222}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.status{text-align:center;color:#666;font-size:13px;margin-top:10px;min-height:18px}
-table{width:100%;border-collapse:collapse}th,td{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left}th{font-size:12px}
-@media(max-width:480px){.grid,.actions{grid-template-columns:1fr}}
-.main-menu-wrap{max-width:700px;margin:12px auto 0;padding:0 14px}.main-menu-btn{display:block;text-align:center;text-decoration:none;background:#fff;color:#b5121b;border:1px solid #b5121b;border-radius:10px;padding:11px 14px;font-weight:800;font-size:15px}.save-row{display:flex;align-items:center;gap:10px;margin:0 0 14px}.save-btn{width:auto;background:#b5121b;color:#fff;border:0;border-radius:10px;padding:11px 16px;font-weight:800;font-size:14px}.clear-btn{width:auto;background:#fff;color:#b5121b;border:1px solid #b5121b;border-radius:10px;padding:10px 16px;font-weight:800;font-size:14px}#saveStatus{font-size:13px;color:#555}
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#b5121b"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>👥 Passenger Counts - XC Train Manager App</title>
 <style>
-.passenger-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-.passenger-actions button{flex:1;min-width:140px}
-.train-block{background:#fff;border-radius:14px;padding:14px;margin:12px 0;box-shadow:0 2px 8px #0001}
-.train-block table{width:100%;border-collapse:collapse;margin-top:10px}
-.train-block th,.train-block td{border:1px solid #bbb;padding:6px}
-.train-block input{width:100%;box-sizing:border-box}
-<style>.pdf-action{margin:10px 0}.pdf-action button{width:100%;background:#222;color:#fff;border:0;border-radius:10px;padding:12px;font-weight:800}</style></style>
-</style><style id="xc-safe-area">
-html{background:#b5121b}
-body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
-</style><style id="xc-main-menu-style">
-.xc-main-menu{display:block;width:100%;box-sizing:border-box;text-align:center;text-decoration:none;background:#b5121b;color:#fff;border-radius:10px;padding:11px 14px;margin:0 0 12px;font-weight:800;border:0}
-.xc-main-menu:hover,.xc-main-menu:active{background:#8f0f16;color:#fff}
-</style><style id="xc-header-logo">
-.xc-page-header-logo{width:86px;height:24px;object-fit:contain;display:block;flex:0 0 auto}
-</style><style id="passenger-all-export-style">
-.passenger-export-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
-.passenger-export-actions button{background:#fff;color:#b5121b;border:1px solid #b5121b;border-radius:10px;padding:12px;font-weight:800;font-size:14px;cursor:pointer}
-@media(max-width:520px){.passenger-export-actions{grid-template-columns:1fr}}
-</style><style id="passenger-print-export">
-.passenger-export-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0 0}
-.passenger-export-actions button{background:#fff;color:#b5121b;border:1px solid #b5121b;border-radius:10px;padding:12px;font-weight:800;font-size:15px}
-@media(max-width:520px){.passenger-export-actions{grid-template-columns:1fr}}
-</style><style id="xc-uniform-inputs">
-/* XC uniform form controls */
-input[type="text"],input[type="number"],input[type="date"],input[type="time"],
-input[type="email"],input[type="tel"],input[type="search"],input[type="url"],
-input:not([type]),select,textarea{
-  width:100%;
-  min-height:44px;
-  height:44px;
-  box-sizing:border-box;
-  padding:10px 11px;
-  border:1px solid #bbb;
-  border-radius:9px;
-  font:inherit;
-  line-height:1.25;
-  background:#fff;
+:root{--red:#b5121b;--gold:#f5c242;--bg:#f3f3f3;--text:#222;--border:#d7d7d7}
+*{box-sizing:border-box}html{background:var(--red)}
+body{margin:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+header{background:var(--red);color:#fff;border-bottom:5px solid var(--gold);padding:12px 16px}
+.top{display:flex;align-items:center;gap:10px}.logo{width:86px;height:24px;object-fit:contain}.heading{font-size:21px;font-weight:900;margin-left:auto}
+main{max-width:700px;margin:auto;padding:12px 14px 35px}.main-menu{display:block;text-align:center;text-decoration:none;background:var(--red);color:#fff;border-radius:10px;padding:11px 14px;font-weight:800;margin-bottom:12px}
+.card,.train-block{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 7px #0000000d}
+.save-row{display:flex;gap:8px;margin-bottom:12px}.save-row button{flex:1}
+button{border:0;border-radius:10px;padding:12px;font:inherit;font-weight:800;cursor:pointer;touch-action:manipulation}.primary{background:var(--red);color:#fff}.outline{background:#fff;color:var(--red);border:1px solid var(--red)}
+.field{margin-bottom:12px}label{display:block;font-size:13px;font-weight:800;margin-bottom:6px}
+input{width:100%;border:1px solid #bbb;border-radius:9px;padding:10px;font:inherit;background:#fff}
+.train-title{display:flex;justify-content:space-between;align-items:center;color:var(--red);margin:0 0 10px;font-size:17px}
+table{width:100%;border-collapse:collapse;margin-top:8px}th{background:var(--red);color:#fff;padding:8px 6px;text-align:left;font-size:12px}td{border:1px solid #ddd;padding:5px}td input{padding:7px;border:0;background:#fafafa}
+.bottom-actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:14px}.bottom-actions button{width:100%;font-size:15px}
+.status{text-align:center;color:#666;font-size:13px;min-height:20px;margin-top:8px}
+@media(max-width:480px){.save-row{flex-direction:column}}
+</style><style id="xc-v80-print-style">
+@media print{
+  .no-print,.actions,.buttons,.toolbar,button,a.menu{display:none!important}
+  body{background:#fff!important}
+  main,.container,.app{max-width:none!important;box-shadow:none!important}
+  @page{size:A4;margin:14mm}
 }
-textarea{
-  height:120px;
-  min-height:120px;
-  resize:vertical;
-}
-</style></head><body><header class="xc-compact-header"><img class="xc-page-header-logo" src="crosscountry-logo-white.png" alt="XC"></header>
-<header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">👥 Manual Passenger Counts</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a>
-
-<div class="passenger-actions">
-<button type="button" onclick="saveCounts()">💾 Save Locally</button>
-<button type="button" onclick="clearAll()">🗑 Clear All</button>
-</div><div class="passenger-export-actions">
-</div>
+</style></head><body>
+<header><div class="top"><img class="logo" src="crosscountry-logo-white.png" alt="XC"><div class="heading">Passenger Counts</div></div></header>
+<main><a class="main-menu" href="index.html">← Main menu</a>
+<div class="save-row"><button class="primary" type="button" id="saveBtn">💾 Save Locally</button><button class="outline" type="button" id="clearBtn">🗑 Clear All</button></div>
 <div id="trains"></div>
-<div class="passenger-actions"><button type="button" onclick="addTrain()">＋ Add Additional Train</button></div>
-
-<div id="status"></div>
-<div class="passenger-export-actions"><button type="button" onclick="generatePDF()">📄 Save PDF</button><button type="button" onclick="emailCounts()">✉️ Email counts</button></div></main><script>
-const KEY="xc_staff_app_passenger_counts_v3";
-let trains=[];
-function blank(){return {date:new Date().toISOString().slice(0,10),headcode:"",rows:Array.from({length:10},()=>({station:"",first:"",standard:""}))}}
-function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
-function addTrain(){trains.push(blank());render()}
-function update(t,k,v){trains[t][k]=v}
-function updateRow(t,r,k,v){trains[t].rows[r][k]=v}
+<div class="bottom-actions">
+<button class="outline" type="button" id="addTrainBtn">＋ Add Additional Train</button>
+<button class="primary" type="button" id="emailBtn">✉️ Email counts</button>
+<button class="outline" type="button" id="pdfBtn">📄 Save PDF</button>
+</div>
+<div id="status" class="status"></div>
+</main>
+<script>
+const KEY="xc_staff_app_passenger_counts_v4";let trains=[];
+const blank=()=>({date:new Date().toISOString().slice(0,10),headcode:"",rows:Array.from({length:10},()=>({station:"",first:"",standard:""}))});
+const esc=v=>String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 function render(){
  document.getElementById("trains").innerHTML=trains.map((t,ti)=>`
- <section class="train-block">
- <h3>Train ${ti+1}</h3>
- <label>Date</label><input type="date" value="${esc(t.date)}" onchange="update(${ti},'date',this.value)">
- <label>Headcode</label><input value="${esc(t.headcode)}" placeholder="e.g. 1V50" oninput="update(${ti},'headcode',this.value)">
- <table><thead><tr><th>Station</th><th>First Class</th><th>Standard</th></tr></thead>
- <tbody>${t.rows.map((r,ri)=>`<tr>
- <td><input value="${esc(r.station)}" oninput="updateRow(${ti},${ri},'station',this.value)"></td>
- <td><input type="number" min="0" inputmode="numeric" value="${esc(r.first)}" oninput="updateRow(${ti},${ri},'first',this.value)"></td>
- <td><input type="number" min="0" inputmode="numeric" value="${esc(r.standard)}" oninput="updateRow(${ti},${ri},'standard',this.value)"></td>
- </tr>`).join("")}</tbody></table>
- </section>`).join("")
+ <section class="train-block"><h3 class="train-title"><span>Passenger counts — Train ${ti+1}</span><span>${esc(t.headcode)}</span></h3>
+ <div class="field"><label>Headcode</label><input value="${esc(t.headcode)}" placeholder="e.g. 1V50" oninput="trains[${ti}].headcode=this.value"></div>
+ <div class="field"><label>Date</label><input type="date" value="${esc(t.date)}" onchange="trains[${ti}].date=this.value"></div>
+ <table><thead><tr><th>Station</th><th>First</th><th>Standard</th></tr></thead><tbody>
+ ${t.rows.map((r,ri)=>`<tr><td><input value="${esc(r.station)}" oninput="trains[${ti}].rows[${ri}].station=this.value"></td><td><input type="number" min="0" inputmode="numeric" value="${esc(r.first)}" oninput="trains[${ti}].rows[${ri}].first=this.value"></td><td><input type="number" min="0" inputmode="numeric" value="${esc(r.standard)}" oninput="trains[${ti}].rows[${ri}].standard=this.value"></td></tr>`).join("")}
+ </tbody></table></section>`).join("");
 }
-function saveCounts(){localStorage.setItem(KEY,JSON.stringify(trains));show("Passenger counts saved locally.")}
+function show(x){const e=document.getElementById("status");e.textContent=x;clearTimeout(show.t);show.t=setTimeout(()=>e.textContent="",2500)}
+function save(){localStorage.setItem(KEY,JSON.stringify(trains));show("Passenger counts saved locally.")}
 function clearAll(){if(!confirm("Are you sure? This will clear the page and all saved passenger counts."))return;trains=[blank()];localStorage.removeItem(KEY);render();show("All passenger counts cleared.")}
-function show(x){document.getElementById("status").textContent=x;setTimeout(()=>document.getElementById("status").textContent="",2500)}
-function reportRows(){return trains.flatMap((t,i)=>t.rows.filter(r=>r.station||r.first||r.standard).map(r=>[r.station,r.first||"",r.standard||""]))}
-async function makePDF(){
- await loadPDF();
- const doc=new jspdf.jsPDF({orientation:"portrait",unit:"mm",format:"a4"});
- const now=new Date();
- const ts=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0")+" on "+
-   String(now.getDate()).padStart(2,"0")+"/"+String(now.getMonth()+1).padStart(2,"0")+"/"+now.getFullYear();
-
- trains.forEach((t,i)=>{
-   if(i>0)doc.addPage();
-   doc.setFillColor(181,18,27);doc.rect(0,0,210,25,"F");
-   doc.setTextColor(255,255,255);doc.setFontSize(15);doc.setFont(undefined,"bold");
-   doc.text("XC STAFF APP",15,11);doc.setFontSize(11);doc.text("PASSENGER COUNTS",15,19);
-   doc.setTextColor(35,35,35);doc.setFontSize(13);doc.text("Train "+(i+1)+"  "+(t.headcode||""),15,35);
-   doc.setFontSize(9);doc.setFont(undefined,"normal");
-   doc.text("Date: "+(t.date?t.date.split("-").reverse().join("/"):""),15,42);
-   const rows=t.rows.filter(r=>r.station||r.first||r.standard).map((r,n)=>[String(n+1),r.station||"",r.first||"",r.standard||""]);
-   doc.autoTable({
-     startY:48,
-     head:[["#","Station","First Class","Standard"]],
-     body:rows.length?rows:[["","","",""]],
-     theme:"grid",
-     margin:{left:15,right:15,bottom:28},
-     styles:{font:"helvetica",fontSize:9,cellPadding:3,lineColor:[205,205,205],lineWidth:.25,textColor:[35,35,35],valign:"middle"},
-     headStyles:{fillColor:[181,18,27],textColor:[255,255,255],fontStyle:"bold",fontSize:9},
-     alternateRowStyles:{fillColor:[248,248,248]},
-     columnStyles:{0:{cellWidth:10,halign:"center"},1:{cellWidth:88},2:{cellWidth:42,halign:"center"},3:{cellWidth:42,halign:"center"}}
-   });
- });
- xcAddPdfFooters(doc);
- return doc.output("blob");
+function addTrain(){save();trains.push(blank());render();document.querySelectorAll(".train-block").at(-1)?.scrollIntoView({behavior:"smooth",block:"start"});}
+function allTablesText(){
+ const d=new Date(),date=String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear();
+ let out="XC TRAIN MANAGER APP\nPASSENGER COUNTS\nExported: "+date+" "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+"\n\n";
+ trains.forEach((t,i)=>{out+="TRAIN "+(i+1)+" — "+(t.headcode||"")+" — "+(t.date?t.date.split("-").reverse().join("/"):"")+"\n";
+ out+="Station | First | Standard\n";t.rows.filter(r=>r.station||r.first||r.standard).forEach(r=>out+=(r.station||"")+" | "+(r.first||"0")+" | "+(r.standard||"0")+"\n");out+="\n";});
+ return out;
 }
-
-async function generatePDF(){try{let blob=await makePDF();let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="XC-Passenger-Counts.pdf";a.click();show("PDF generated.")}catch(e){show("PDF generation unavailable.")}}
-async function emailCounts(){
- saveCounts();
+function emailCounts(){
+ save();
  const subject="Passenger Counts - "+new Date().toLocaleDateString("en-GB");
- let body="XC STAFF APP - PASSENGER COUNTS\n\n";
- trains.forEach((t,i)=>{
-   body+="TRAIN "+(i+1)+" — "+(t.headcode||"")+"\n";
-   body+="DATE: "+(t.date?t.date.split("-").reverse().join("/"):"")+"\n";
-   body+="---------------------------------------------\n";
-   body+="STATION                         FIRST   STANDARD\n";
-   t.rows.filter(r=>r.station||r.first||r.standard).forEach(r=>{
-     body+=String(r.station||"").padEnd(32).slice(0,32)+" "+String(r.first||"0").padStart(5)+" "+String(r.standard||"0").padStart(9)+"\n";
-   });
-   body+="\n";
- });
+ const body=allTablesText();
  location.href="mailto:?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
 }
-async function emailPDF(){ return emailCounts(); }
-
-try{trains=JSON.parse(localStorage.getItem(KEY)||"[]");if(!trains.length)trains=[blank()]}catch(e){trains=[blank()]}
-render();
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
-</script><script>
-function xcGeneratePDF(title){
- const lines=[title,"","XC STAFF APP",""];
- document.querySelectorAll("input,select,textarea").forEach(el=>{
-  if(el.value){const l=el.closest(".field")?.querySelector("label")?.innerText||el.name||el.id||"Entry";lines.push(l+": "+el.value)}
- });
- const esc=v=>String(v).replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)").replace(/\r?\n/g," ");
- const W=595,H=842,m=42,lead=14,pages=[[]];let y=H-m;
- lines.forEach(x=>{if(y<55){pages.push([]);y=H-m}pages.at(-1).push(x);y-=lead});
- let o=[],add=x=>(o.push(x),o.length),po=add(""),fo=add("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"),refs=[];
- pages.forEach(ls=>{let c="BT /F1 10 Tf "+m+" "+(H-m)+" Td ";ls.forEach((x,i)=>{if(i)c+=" 0 -14 Td ";c+="("+esc(x)+") Tj "});c+=" ET";let st=add("<< /Length "+c.length+" >>\nstream\n"+c+"\nendstream");refs.push(add("<< /Type /Page /Parent "+po+" 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /Font << /F1 "+fo+" 0 R >> >> /Contents "+st+" 0 R >>"))});
- o[po-1]="<< /Type /Pages /Count "+refs.length+" /Kids ["+refs.map(x=>x+" 0 R").join(" ")+"] >>";
- let cat=add("<< /Type /Catalog /Pages "+po+" 0 R >>"),pdf="%PDF-1.4\n",off=[0];
- o.forEach((x,i)=>{off.push(pdf.length);pdf+=(i+1)+" 0 obj\n"+x+"\nendobj\n"});
- let xr=pdf.length;pdf+="xref\n0 "+(o.length+1)+"\n0000000000 65535 f \n";for(let i=1;i<off.length;i++)pdf+=String(off[i]).padStart(10,"0")+" 00000 n \n";
- pdf+="trailer\n<< /Size "+(o.length+1)+" /Root "+cat+" 0 R >>\nstartxref\n"+xr+"\n%%EOF";
- let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([pdf],{type:"application/pdf"}));a.download=title.replace(/[^a-z0-9]+/gi,"-")+".pdf";a.click();
+function pdfEscape(v){return String(v||"").replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)");}
+function makePdf(){
+ save();
+ const W=595,H=842,m=42,lead=13,per=47,lines=[];
+ const d=new Date(),ts=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")+" on "+String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear();
+ lines.push(["PASSENGER COUNTS"]);
+ trains.forEach((t,i)=>{let a=["Train "+(i+1)+"  "+(t.headcode||""),"Date: "+(t.date?t.date.split("-").reverse().join("/"):""),"Station | First | Standard"];
+ t.rows.filter(r=>r.station||r.first||r.standard).forEach(r=>a.push((r.station||"")+" | "+(r.first||"0")+" | "+(r.standard||"0")));a.push("");lines.push(a)});
+ const pages=[[]];lines.flat().forEach(x=>{if(pages.at(-1).length>=per)pages.push([]);pages.at(-1).push(x)});
+ const objs=["","<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>"],refs=[];
+ pages.forEach((ls,pi)=>{let c="BT /F1 18 Tf 0.64 0.02 0.20 rg "+m+" 795 Td (XC STAFF APP) Tj /F1 13 Tf 0.12 0.12 0.12 rg 0 -25 Td (PASSENGER COUNTS) Tj /F1 9 Tf 0.35 0.35 0.35 rg 0 -17 Td ("+pdfEscape("Generated "+ts)+") Tj /F1 9 Tf 0.12 0.12 0.12 rg 0 -23 Td ";
+ ls.forEach((x,j)=>{if(j)c+=" 0 -"+lead+" Td ";c+="("+pdfEscape(x)+") Tj "});c+=" ET 0.64 0.02 0.20 RG 1 w "+m+" 50 m 553 50 l S BT /F1 8 Tf 0.35 0.35 0.35 rg "+m+" 32 Td (XC STAFF APP) Tj 400 0 Td ("+pdfEscape("Page "+(pi+1)+" of "+pages.length)+") Tj ET";let st=objs.push("<< /Length "+c.length+" >>\nstream\n"+c+"\nendstream");refs.push(objs.push("<< /Type /Page /Parent 1 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /Font << /F1 2 0 R >> >> /Contents "+st+" 0 R >>"))});
+ objs[0]="<< /Type /Pages /Count "+refs.length+" /Kids ["+refs.map(x=>x+" 0 R").join(" ")+"] >>";let cat=objs.push("<< /Type /Catalog /Pages 1 0 R >>"),pdf="%PDF-1.4\n",off=[0];objs.forEach((o,i)=>{off.push(pdf.length);pdf+=(i+1)+" 0 obj\n"+o+"\nendobj\n"});let xr=pdf.length;pdf+="xref\n0 "+(objs.length+1)+"\n0000000000 65535 f \n";for(let i=1;i<off.length;i++)pdf+=String(off[i]).padStart(10,"0")+" 00000 n \n";pdf+="trailer\n<< /Size "+(objs.length+1)+" /Root "+cat+" 0 R >>\nstartxref\n"+xr+"\n%%EOF";
+ const a=document.createElement("a"),url=URL.createObjectURL(new Blob([pdf],{type:"application/pdf"}));a.href=url;a.download="XC-Passenger-Counts-"+String(d.getDate()).padStart(2,"0")+String(d.getMonth()+1).padStart(2,"0")+d.getFullYear()+".pdf";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);show("PDF saved.");
 }
-</script></body></html>
+document.getElementById("saveBtn").onclick=save;document.getElementById("clearBtn").onclick=clearAll;document.getElementById("addTrainBtn").onclick=addTrain;document.getElementById("emailBtn").onclick=emailCounts;document.getElementById("pdfBtn").onclick=makePdf;
+try{trains=JSON.parse(localStorage.getItem(KEY)||"[]");if(!Array.isArray(trains)||!trains.length)trains=[blank()]}catch(e){trains=[blank()]}render();
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+<script id="xc-v80-rewrite-repair">
+(function(){
+  function nativePDF(){ window.print(); }
+  window.xcNativePDF = nativePDF;
+
+  document.querySelectorAll('button').forEach(function(btn){
+    var text=(btn.textContent||'').trim().toLowerCase();
+    if(!text) return;
+
+    if(/(generate|export|save)\s*pdf/.test(text)){
+      var original = btn.getAttribute('onclick') || '';
+      // Only repair empty/missing PDF actions. Do not overwrite working
+      // page-specific builders such as TIR's generated-report export.
+      if(!original && !btn.dataset.xcPdfBound){
+        btn.dataset.xcPdfBound='1';
+        btn.addEventListener('click', nativePDF);
+      }
+    }
+  });
+
+  // Defensive support for action buttons that use data-action.
+  document.addEventListener('click', function(e){
+    var btn=e.target.closest('button[data-action]');
+    if(!btn) return;
+    var action=btn.dataset.action;
+    if(action && typeof window[action]==='function'){
+      e.preventDefault();
+      window[action](e);
+    }
+  });
+})();
+</script>
+</body></html>
