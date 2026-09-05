@@ -1,240 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#ffb400" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Staff App" />
-<link rel="manifest" href="manifest.webmanifest" />
-<link rel="apple-touch-icon" href="icons/icon-180.png" />
-<title>CrossCountry Staff App</title>
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#231f20">
+  <title>XC Staff App</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="app-shell">
-  <aside class="sidebar">
-    <div class="brand">XC <span>Staff App</span></div>
-    <nav id="nav">
-      <button data-page="home" class="active">Home</button>
-      <button data-page="incident">Incident Form Notes</button>
-      <button data-page="passenger">Passenger Count</button>
-      <button data-page="reservations">Close Reservations / Crowding</button>
-      <button data-page="commission">Commission & Scan Calculator</button>
-      <button data-page="text61016">Text 61016</button>
-      <button data-page="crew">Crew Late Book Off</button>
-      <button data-page="delayrepay">Delay Repay</button>
-      <button data-page="tir">TIR Builder</button>
-      <button data-page="operational">Operational Delay Form</button>
-    </nav>
-  </aside>
+<header class="topbar"><div class="brand"><span class="xc">XC</span> Staff App</div><button class="home-btn" onclick="goHome()">⌂</button></header>
 
-  <main class="content">
-    <header><button id="menuBtn" aria-label="Open navigation">☰</button><h1 id="pageTitle">Staff App</h1><span id="offlineStatus" aria-live="polite"></span></header>
-<div id="saveStatus" class="save-status" aria-live="polite"></div>
-<div id="installBanner" class="install-banner hidden"><span>Install this Staff App for offline use.</span><button id="installBtn">Install App</button><button id="dismissInstall" class="secondary">Not now</button></div>
+<main id="home" class="screen active">
+  <h1>Staff App</h1>
+  <p class="hint">Select a form</p>
+  <div id="nav" class="nav-grid"></div>
+</main>
 
-    
-    <section class="page active home-page" id="home">
-      <div class="home-hero">
-        <div class="home-mark">XC</div>
-        <div>
-          <div class="eyebrow">STAFF APP</div>
-          <h2>Staff tools</h2>
-          <p>Select a form or tool to get started.</p>
-        </div>
-      </div>
-      <div class="home-section-title">Quick access</div>
-      <div class="home-grid" id="homeGrid">
-        <button class="home-card" data-open-page="incident"><span class="home-icon">!</span><span><b>Incident Form Notes</b><small>Record incident information</small></span><em>›</em></button>
-        <button class="home-card" data-open-page="passenger"><span class="home-icon">#</span><span><b>Passenger Count</b><small>Record loading and formation</small></span><em>›</em></button>
-        <button class="home-card" data-open-page="reservations"><span class="home-icon">R</span><span><b>Close Reservations / Crowding</b><small>Manage crowding information</small></span><em>›</em></button>
-        <button class="home-card" data-open-page="commission"><span class="home-icon">£</span><span><b>Commission & Scan Calculator</b><small>Calculate commission and scans</small></span><em>›</em></button>
-        <button class="home-card" data-open-page="text61016"><span class="home-icon">T</span><span><b>Text 61016</b><small>Create and manage the message</small></span><em>›</em></button>
-        <button class="home-card" data-open-page="crew"><span class="home-icon">C</span><span><b>Crew Late Book Off</b><small>Record a late book off</small></span><em>›</em></button>
-        <button class="home-card" data-open-page="delayrepay"><span class="home-icon">D</span><span><b>Delay Repay</b><small>Record journey delay details</small></span><em>›</em></button>
-        <button class="home-card" data-open-page="tir"><span class="home-icon">I</span><span><b>TIR Builder</b><small>Create a ticket irregularity report</small></span><em>›</em></button>
-        <button class="home-card" data-open-page="operational"><span class="home-icon">O</span><span><b>Operational Delay Form</b><small>Record and email delay details</small></span><em>›</em></button>
-      </div>
-    </section>
+<main id="formScreen" class="screen">
+  <div class="page-head"><button class="back" onclick="goHome()">‹ Back</button><h1 id="pageTitle"></h1>
+    <div class="actions"><button title="Save" onclick="saveCurrent()">💾</button><button title="Clear" onclick="clearCurrent()">🗑</button></div>
+  </div>
+  <form id="form"></form>
+  <div class="output-actions">
+    <button onclick="generate()">Generate</button>
+    <button onclick="copyOutput()">Copy</button>
+    <button onclick="window.print()">Print</button>
+    <button onclick="exportText()">Export</button>
+  </div>
+  <section class="output"><h2>Generated Email / Report</h2><div id="subject"></div><pre id="body"></pre></section>
+</main>
 
-    <section class="page" id="incident">
-      <div class="card">
-        <h2>Incident Form Notes</h2>
-        <form id="incidentForm">
-          <div class="grid">
-            <label>Date<input type="date" data-date></label>
-            <label>Time<input type="time"></label>
-            <label>Headcode<input class="headcode" maxlength="4" placeholder="1V50"></label>
-            <label>Location<input placeholder="Location"></label>
-          </div>
-          <label>Was the incident perceived to involve passengers?<select><option value="">Select</option><option>Yes</option><option>No</option><option>Unknown</option></select></label>
-          <label>Notes<textarea rows="8" placeholder="Enter incident notes..."></textarea></label>
-        </form>
-      </div>
-      <div class="recipient-wrap"><label>Email recipient<input type="email" class="email-recipient" placeholder="Enter recipient email address" autocomplete="email"></label></div>
-      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
-    </section>
-
-    <section class="page" id="passenger">
-      <div class="card">
-        <h2>Passenger Count</h2>
-        <form id="passengerForm">
-          <div class="grid">
-            <label>Date<input type="date" data-date></label>
-            <label>Headcode<input class="headcode" maxlength="4" placeholder="1V50"></label>
-            <label>Formation
-              <select id="formation">
-                <option value="">Select formation</option>
-                <option>2-car</option><option>3-car</option><option>4-car</option><option>5-car</option>
-                <option>6-car</option><option>7-car</option><option>8-car</option><option>9-car</option>
-                <option>10-car</option><option>Other</option>
-              </select>
-            </label>
-            <label>Location<input></label>
-          </div>
-          <div class="grid three">
-            <label>Front coach count<input type="number" min="0"></label>
-            <label>Middle coach count<input type="number" min="0"></label>
-            <label>Rear coach count<input type="number" min="0"></label>
-          </div>
-          <label>Additional notes<textarea rows="4"></textarea></label>
-        </form>
-      </div>
-      <div class="recipient-wrap"><label>Email recipient<input type="email" class="email-recipient" placeholder="Enter recipient email address" autocomplete="email"></label></div>
-      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
-    </section>
-
-    <section class="page" id="reservations">
-      <div class="card">
-        <h2>Close Reservations / Crowding</h2>
-        <div class="example-note">Example shown below</div>
-        <form id="reservationForm">
-          <div class="grid">
-            <label>Date<input type="date" data-date value="2026-09-05"></label>
-            <label>Headcode<input class="headcode" maxlength="4" value="1V50"></label>
-            <label>From<input value="Birmingham New Street"></label>
-            <label>To<input value="Bristol Temple Meads"></label>
-          </div>
-          <label>Reservation status<select><option>Close reservations</option><option>Keep reservations open</option></select></label>
-          <label>Crowding level<select><option>High</option><option>Moderate</option><option>Low</option></select></label>
-          <label>Reason<textarea rows="5">Expected high passenger loading due to disruption and reduced capacity.</textarea></label>
-        </form>
-      </div>
-      <div class="recipient-wrap"><label>Email recipient<input type="email" class="email-recipient" placeholder="Enter recipient email address" autocomplete="email"></label></div>
-      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
-    </section>
-
-    <section class="page" id="commission">
-      <div class="card">
-        <h2>Commission & Scan Calculator</h2>
-        <div class="grid">
-          <label>Tickets sold<input id="ticketsSold" type="number" min="0" value="0"></label>
-          <label>Commission per ticket (£)<input id="commissionRate" type="number" min="0" step="0.01" value="0"></label>
-          <label>Tickets scanned<input id="ticketsScanned" type="number" min="0" value="0"></label>
-          <label>Scan rate (%)<input id="scanRate" readonly></label>
-        </div>
-        <div class="result"><span>Total commission</span><strong id="commissionTotal">£0.00</strong></div>
-      </div>
-      <div class="recipient-wrap"><label>Email recipient<input type="email" class="email-recipient" placeholder="Enter recipient email address" autocomplete="email"></label></div>
-      <div class="actions">
-        <button id="generateHtml">Generate HTML</button><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button>
-        <button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button>
-      </div>
-    </section>
-
-    <section class="page" id="text61016">
-      <div class="card">
-        <h2>Text 61016</h2>
-        <p class="muted">The previous change to the 999 reminder has been undone.</p>
-        <label>Message text<textarea rows="12">61016
-
-Please follow the relevant operational procedure and provide the required information.</textarea></label>
-      </div>
-      <div class="recipient-wrap"><label>Email recipient<input type="email" class="email-recipient" placeholder="Enter recipient email address" autocomplete="email"></label></div>
-      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
-    </section>
-
-    <section class="page" id="crew">
-      <div class="card">
-        <h2>Crew Late Book Off</h2>
-        <div class="example-note">Example shown below</div>
-        <div class="grid">
-          <label>Date<input type="date" data-date value="2026-09-05"></label>
-          <label>Headcode<input class="headcode" maxlength="4" value="1V50"></label>
-          <label>Booked off time<input type="time" value="18:00"></label>
-          <label>Actual book off time<input type="time" value="18:27"></label>
-        </div>
-        <label>Reason<textarea rows="5">Service disruption and station duties resulted in the crew booking off late.</textarea></label>
-      </div>
-      <div class="recipient-wrap"><label>Email recipient<input type="email" class="email-recipient" placeholder="Enter recipient email address" autocomplete="email"></label></div>
-      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
-    </section>
-
-    <section class="page" id="delayrepay">
-      <div class="card">
-        <h2>Delay Repay</h2>
-        <div class="grid">
-          <label>Journey date<input type="date" data-date></label>
-          <label>Scheduled arrival<input type="time"></label>
-          <label>Actual arrival<input type="time"></label>
-          <label>Ticket value (£)<input type="number" min="0" step="0.01"></label>
-        </div>
-        <label>Journey details<textarea rows="5"></textarea></label>
-      </div>
-      <div class="recipient-wrap"><label>Email recipient<input type="email" class="email-recipient" placeholder="Enter recipient email address" autocomplete="email"></label></div>
-      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
-    </section>
-
-    <section class="page" id="tir">
-      <div class="card">
-        <h2>TIR Builder</h2>
-        <div class="grid">
-          <label>Date<input type="date" data-date></label>
-          <label>Headcode<input class="headcode" maxlength="4" placeholder="1V50"></label>
-          <label>Fare type<select id="fareType"><option value="">Select</option><option>Standard fare</option><option>Zero fare</option></select></label>
-          <label>Ticket type<input></label>
-        </div>
-        <div id="issuedTicketWrap" class="hidden"><label>Issued Ticket Number<input id="issuedTicketNumber" placeholder="Ticket number"></label></div>
-        <label>Report details<textarea rows="7"></textarea></label>
-      </div>
-      <div class="recipient-wrap"><label>Email recipient<input type="email" class="email-recipient" placeholder="Enter recipient email address" autocomplete="email"></label></div>
-      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
-    </section>
-
-    <section class="page" id="operational">
-      <div class="card">
-        <h2>Operational Delay Form</h2>
-        <form id="operationalForm">
-          <div class="grid">
-            <label>Date<input type="date" data-date></label>
-            <label>Headcode<input class="headcode" maxlength="4" placeholder="1V50"></label>
-            <label>Delay minutes<input type="number" min="0"></label>
-            <label>Location<input></label>
-          </div>
-          <label>Control Desk Aware<select id="controlAware"><option value="">Select</option><option>Yes</option><option>No</option></select></label>
-          <label>Cause<select>
-            <option value="">Select railway delay reason</option>
-            <option>Signal failure</option><option>Points failure</option><option>Track defect</option>
-            <option>Train fault</option><option>Infrastructure failure</option><option>Passenger action</option>
-            <option>Overcrowding</option><option>Weather</option><option>Emergency services</option>
-            <option>Operational incident</option><option>Other</option>
-          </select></label>
-          <label>Delay summary<textarea rows="7"></textarea></label>
-        </form>
-      </div>
-      <div class="email-preview">
-        <h3>Generated email</h3>
-        <p><strong>Subject:</strong> Delay: delay notification <b id="subjectHeadcode">[HEADCODE]</b> on [DATE]</p>
-        <p>Hello, please find attached a short summary of a delay to a service I was working,</p>
-        <p id="emailSummary">[DELAY SUMMARY]</p>
-      </div>
-      <div class="recipient-wrap"><label>Email recipient<input type="email" class="email-recipient" placeholder="Enter recipient email address" autocomplete="email"></label></div>
-      <div class="actions form-actions"><button id="copyEmail">Copy email</button><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
-    </section>
-  </main>
-</div>
 <script src="app.js"></script>
 </body>
 </html>
