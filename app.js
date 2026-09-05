@@ -152,7 +152,13 @@ $$('.page').forEach(page => {
       body = `Hello, please find attached a short summary of a delay to a service I was working,\n\n${summary}\n\nRegards,`;
     }
 
-    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const recipient = page.querySelector('.email-recipient')?.value.trim() || '';
+    if (!recipient) {
+      showSaveStatus('Enter a recipient email address before generating the email.');
+      page.querySelector('.email-recipient')?.focus();
+      return;
+    }
+    window.location.href = `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 });
 

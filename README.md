@@ -21,3 +21,7 @@ The interface has been redesigned to follow the supplied XC mobile reference: am
 
 ## Home page and page source
 The mobile home page now provides quick-access cards for every item identified as a `Page:` entry in the supplied source. The separate `Design instructions` entry is not created as an app page.
+
+
+## Email recipients
+Each page now contains an Email recipient field. The user enters the recipient address before selecting Generate Email; no recipient addresses are hard-coded into the app.
