@@ -1,33 +1,23 @@
-# CrossCountry Staff App — Offline PWA
+# CrossCountry Staff App — Mobile Offline PWA
 
-This version is a Progressive Web App (PWA).
+## Mobile app features
+- Installable on supported Android and iPhone/iPad devices.
+- Standalone app-style launch from the home screen.
+- Offline-capable after the first successful online load.
+- Save drafts locally on the device.
+- Clear individual pages and remove saved drafts.
+- Generate emails using the device's default email application.
+- Generate HTML form exports.
+- Print and export individual forms.
 
-## What it does
-- Can be installed on compatible Android and iPhone/iPad devices.
-- Runs in a standalone app-style window.
-- Caches the app shell for offline use after it has been loaded once.
-- Includes all requested Staff App pages except “Design instructions”.
+Saved drafts are held in the app/browser's local storage on the device. Clearing browser or app data may remove saved drafts.
 
-## Important
-PWAs require the app to be served from a web server using HTTPS (or from localhost during development). Opening `index.html` directly from the phone's file manager will not enable reliable service-worker installation or offline caching.
+To install, host these files on an HTTPS-enabled web server, open the site on the device, then use Install App / Add to Home Screen.
 
-## Android
-1. Host the files on an HTTPS website.
-2. Open the app in Chrome.
-3. Choose **Install app** or **Add to Home screen**.
-4. Open it once while online so the offline files are cached.
 
-## iPhone / iPad
-1. Host the files on an HTTPS website.
-2. Open the app in Safari.
-3. Tap **Share**.
-4. Choose **Add to Home Screen**.
-5. Open it from the Home Screen.
+## Visual design
+The interface has been redesigned to follow the supplied XC mobile reference: amber header, warm off-white surfaces, XC crimson action areas, white cards, and mobile-first spacing.
 
-## Included files
-- index.html
-- styles.css
-- app.js
-- manifest.webmanifest
-- service-worker.js
-- icons/
+
+## Home page and page source
+The mobile home page now provides quick-access cards for every item identified as a `Page:` entry in the supplied source. The separate `Design instructions` entry is not created as an app page.

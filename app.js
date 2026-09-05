@@ -59,3 +59,109 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./service-worker.js').catch(console.error);
   });
 }
+
+
+// Persistent offline save/clear/email features.
+const pageKey = id => `crosscountry-staff-app:${id}`;
+const saveStatus = $('#saveStatus');
+
+function showSaveStatus(message){
+  if (!saveStatus) return;
+  saveStatus.textContent = message;
+  saveStatus.classList.add('show');
+  clearTimeout(showSaveStatus.timer);
+  showSaveStatus.timer = setTimeout(() => {
+    saveStatus.textContent = '';
+    saveStatus.classList.remove('show');
+  }, 3500);
+}
+
+function getPageFields(page){
+  return [...page.querySelectorAll('input, select, textarea')];
+}
+
+function savePage(page){
+  const data = getPageFields(page).map((el, index) => ({
+    key: el.id || el.name || `field_${index}`,
+    value: el.value
+  }));
+  localStorage.setItem(pageKey(page.id), JSON.stringify(data));
+  showSaveStatus('Saved on this device for offline use.');
+}
+
+function restorePage(page){
+  const raw = localStorage.getItem(pageKey(page.id));
+  if (!raw) return;
+  try {
+    const saved = JSON.parse(raw);
+    getPageFields(page).forEach((el, index) => {
+      const key = el.id || el.name || `field_${index}`;
+      const match = saved.find(item => item.key === key);
+      if (match) el.value = match.value;
+    });
+  } catch(e) {}
+}
+
+function updatePageState(page){
+  if (page.id === 'tir') {
+    const fare = page.querySelector('#fareType');
+    const wrap = page.querySelector('#issuedTicketWrap');
+    if (fare && wrap) wrap.classList.toggle('hidden', fare.value !== 'Zero fare');
+  }
+  if (page.id === 'commission') calc();
+  if (page.id === 'operational') updateEmail();
+}
+
+$$('.page').forEach(page => {
+  restorePage(page);
+  updatePageState(page);
+
+  page.querySelector('.save-btn')?.addEventListener('click', () => savePage(page));
+
+  page.querySelector('.clear-btn')?.addEventListener('click', () => {
+    if (!confirm('Clear all fields on this page and remove its saved draft?')) return;
+    getPageFields(page).forEach(el => {
+      if (el.hasAttribute('data-date')) el.value = today;
+      else if (el.tagName === 'SELECT') el.selectedIndex = 0;
+      else if (!el.readOnly) el.value = '';
+    });
+    localStorage.removeItem(pageKey(page.id));
+    updatePageState(page);
+    showSaveStatus('Page cleared.');
+  });
+
+  page.querySelector('.email-btn')?.addEventListener('click', () => {
+    const title = $('#pageTitle').textContent;
+    const lines = [];
+
+    getPageFields(page).forEach((el, index) => {
+      if (!el.value) return;
+      const labelNode = el.closest('label');
+      const label = labelNode ? (labelNode.childNodes[0]?.textContent || `Field ${index+1}`).trim() : `Field ${index+1}`;
+      lines.push(`${label}: ${el.value}`);
+    });
+
+    let subject = `${title} - ${new Date().toLocaleDateString()}`;
+    let body = `Hello,\n\nPlease find below the completed ${title} form.\n\n${lines.join('\n')}\n\nRegards,`;
+
+    if (page.id === 'operational') {
+      const hc = page.querySelector('.headcode')?.value || '[HEADCODE]';
+      const dt = page.querySelector('[data-date]')?.value || '[DATE]';
+      const summary = page.querySelector('textarea')?.value || '[DELAY SUMMARY]';
+      subject = `Delay: delay notification ${hc} on ${dt}`;
+      body = `Hello, please find attached a short summary of a delay to a service I was working,\n\n${summary}\n\nRegards,`;
+    }
+
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+});
+
+
+// Home page quick-access navigation.
+$$('[data-open-page]').forEach(card => {
+  card.addEventListener('click', () => {
+    const id = card.dataset.openPage;
+    const navButton = document.querySelector(`#nav button[data-page="${id}"]`);
+    if (navButton) navButton.click();
+  });
+});

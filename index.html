@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#061b2b" />
+<meta name="theme-color" content="#ffb400" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Staff App" />
@@ -15,9 +15,10 @@
 <body>
 <div class="app-shell">
   <aside class="sidebar">
-    <div class="brand">CrossCountry <span>Staff App</span></div>
+    <div class="brand">XC <span>Staff App</span></div>
     <nav id="nav">
-      <button data-page="incident" class="active">Incident Form Notes</button>
+      <button data-page="home" class="active">Home</button>
+      <button data-page="incident">Incident Form Notes</button>
       <button data-page="passenger">Passenger Count</button>
       <button data-page="reservations">Close Reservations / Crowding</button>
       <button data-page="commission">Commission & Scan Calculator</button>
@@ -30,10 +31,35 @@
   </aside>
 
   <main class="content">
-    <header><button id="menuBtn" aria-label="Open navigation">☰</button><h1 id="pageTitle">Incident Form Notes</h1><span id="offlineStatus" aria-live="polite"></span></header>
+    <header><button id="menuBtn" aria-label="Open navigation">☰</button><h1 id="pageTitle">Staff App</h1><span id="offlineStatus" aria-live="polite"></span></header>
+<div id="saveStatus" class="save-status" aria-live="polite"></div>
 <div id="installBanner" class="install-banner hidden"><span>Install this Staff App for offline use.</span><button id="installBtn">Install App</button><button id="dismissInstall" class="secondary">Not now</button></div>
 
-    <section class="page active" id="incident">
+    
+    <section class="page active home-page" id="home">
+      <div class="home-hero">
+        <div class="home-mark">XC</div>
+        <div>
+          <div class="eyebrow">STAFF APP</div>
+          <h2>Staff tools</h2>
+          <p>Select a form or tool to get started.</p>
+        </div>
+      </div>
+      <div class="home-section-title">Quick access</div>
+      <div class="home-grid" id="homeGrid">
+        <button class="home-card" data-open-page="incident"><span class="home-icon">!</span><span><b>Incident Form Notes</b><small>Record incident information</small></span><em>›</em></button>
+        <button class="home-card" data-open-page="passenger"><span class="home-icon">#</span><span><b>Passenger Count</b><small>Record loading and formation</small></span><em>›</em></button>
+        <button class="home-card" data-open-page="reservations"><span class="home-icon">R</span><span><b>Close Reservations / Crowding</b><small>Manage crowding information</small></span><em>›</em></button>
+        <button class="home-card" data-open-page="commission"><span class="home-icon">£</span><span><b>Commission & Scan Calculator</b><small>Calculate commission and scans</small></span><em>›</em></button>
+        <button class="home-card" data-open-page="text61016"><span class="home-icon">T</span><span><b>Text 61016</b><small>Create and manage the message</small></span><em>›</em></button>
+        <button class="home-card" data-open-page="crew"><span class="home-icon">C</span><span><b>Crew Late Book Off</b><small>Record a late book off</small></span><em>›</em></button>
+        <button class="home-card" data-open-page="delayrepay"><span class="home-icon">D</span><span><b>Delay Repay</b><small>Record journey delay details</small></span><em>›</em></button>
+        <button class="home-card" data-open-page="tir"><span class="home-icon">I</span><span><b>TIR Builder</b><small>Create a ticket irregularity report</small></span><em>›</em></button>
+        <button class="home-card" data-open-page="operational"><span class="home-icon">O</span><span><b>Operational Delay Form</b><small>Record and email delay details</small></span><em>›</em></button>
+      </div>
+    </section>
+
+    <section class="page" id="incident">
       <div class="card">
         <h2>Incident Form Notes</h2>
         <form id="incidentForm">
@@ -47,7 +73,7 @@
           <label>Notes<textarea rows="8" placeholder="Enter incident notes..."></textarea></label>
         </form>
       </div>
-      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
     </section>
 
     <section class="page" id="passenger">
@@ -75,7 +101,7 @@
           <label>Additional notes<textarea rows="4"></textarea></label>
         </form>
       </div>
-      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
     </section>
 
     <section class="page" id="reservations">
@@ -94,7 +120,7 @@
           <label>Reason<textarea rows="5">Expected high passenger loading due to disruption and reduced capacity.</textarea></label>
         </form>
       </div>
-      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
     </section>
 
     <section class="page" id="commission">
@@ -109,7 +135,7 @@
         <div class="result"><span>Total commission</span><strong id="commissionTotal">£0.00</strong></div>
       </div>
       <div class="actions">
-        <button id="generateHtml">Generate HTML</button>
+        <button id="generateHtml">Generate HTML</button><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button>
         <button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button>
       </div>
     </section>
@@ -122,7 +148,7 @@
 
 Please follow the relevant operational procedure and provide the required information.</textarea></label>
       </div>
-      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
     </section>
 
     <section class="page" id="crew">
@@ -137,7 +163,7 @@ Please follow the relevant operational procedure and provide the required inform
         </div>
         <label>Reason<textarea rows="5">Service disruption and station duties resulted in the crew booking off late.</textarea></label>
       </div>
-      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
     </section>
 
     <section class="page" id="delayrepay">
@@ -151,7 +177,7 @@ Please follow the relevant operational procedure and provide the required inform
         </div>
         <label>Journey details<textarea rows="5"></textarea></label>
       </div>
-      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
     </section>
 
     <section class="page" id="tir">
@@ -166,7 +192,7 @@ Please follow the relevant operational procedure and provide the required inform
         <div id="issuedTicketWrap" class="hidden"><label>Issued Ticket Number<input id="issuedTicketNumber" placeholder="Ticket number"></label></div>
         <label>Report details<textarea rows="7"></textarea></label>
       </div>
-      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+      <div class="actions form-actions"><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
     </section>
 
     <section class="page" id="operational">
@@ -196,7 +222,7 @@ Please follow the relevant operational procedure and provide the required inform
         <p>Hello, please find attached a short summary of a delay to a service I was working,</p>
         <p id="emailSummary">[DELAY SUMMARY]</p>
       </div>
-      <div class="actions"><button id="copyEmail">Copy email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+      <div class="actions form-actions"><button id="copyEmail">Copy email</button><button class="save-btn">Save</button><button class="clear-btn secondary">Clear</button><button class="email-btn secondary">Generate Email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
     </section>
   </main>
 </div>

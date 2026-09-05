@@ -1,4 +1,4 @@
-const CACHE_NAME = 'crosscountry-staff-app-v2';
+const CACHE_NAME = 'crosscountry-staff-app-home-v6';
 const APP_SHELL = [
   './',
   './index.html',
