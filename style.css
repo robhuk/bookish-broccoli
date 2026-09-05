@@ -1,1 +1,60 @@
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f3f3;color:#231f20}.topbar{height:58px;background:#231f20;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:sticky;top:0;z-index:5}.brand{font-weight:700;font-size:20px}.xc{color:#fff;background:#7e2f7f;padding:4px 7px;margin-right:7px}.home-btn,.actions button,.back{border:0;background:transparent;color:#fff;font-size:20px}.screen{display:none;padding:16px;max-width:760px;margin:auto}.screen.active{display:block}h1{margin:10px 0 8px}.hint{color:#666}.nav-grid{display:grid;gap:12px}.nav-grid button{padding:20px;text-align:left;border:0;border-radius:10px;background:#fff;box-shadow:0 2px 8px #0002;font-size:17px;font-weight:700;border-left:8px solid #7e2f7f}.page-head{display:flex;align-items:center;gap:10px}.page-head h1{flex:1;font-size:22px}.actions{display:flex;gap:8px}.actions button{color:#231f20;background:#fff;border-radius:8px;padding:8px}.back{color:#231f20;font-size:15px;padding:8px 0}form{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px #0001}label{display:block;font-weight:700;margin-top:14px}input,textarea,select{width:100%;margin-top:6px;padding:12px;border:1px solid #bbb;border-radius:7px;font:inherit}textarea{min-height:90px}.checks{display:grid;gap:8px;margin-top:8px}.checks label{font-weight:400;margin:0}.checks input{width:auto;margin-right:8px}.table-wrap{overflow:auto}.count-table{width:100%;border-collapse:collapse;margin-top:12px}.count-table th,.count-table td{border:1px solid #ccc;padding:5px}.count-table input{margin:0;padding:8px;min-width:90px}.note{background:#fff3cd;padding:12px;border-radius:8px;margin:12px 0;color:#664d03}.output-actions{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.output-actions button{background:#7e2f7f;color:white;border:0;border-radius:8px;padding:12px 16px;font-weight:700}.output{background:#fff;border-radius:10px;padding:16px;box-shadow:0 2px 8px #0001}.output h2{margin-top:0}#subject{font-weight:700;margin-bottom:10px}pre{white-space:pre-wrap;font-family:inherit;margin:0}@media print{.topbar,.page-head,.output-actions,form{display:none!important}.screen{display:block!important}.output{box-shadow:none}}
+.delay-repay-card{text-align:center;padding:24px 18px!important}
+.delay-repay-brand{font-size:38px;letter-spacing:1px;color:#777;line-height:1}
+.brand-cross{color:#b01840}.by-arriva{font-size:17px;margin-top:8px;color:#777}.by-arriva b{color:#b01840;font-size:25px}
+.delay-repay-rule{height:2px;background:#b01840;margin:24px 0}
+.delay-repay-title{font-size:42px;color:#72152b;margin:10px 0}.delay-repay-clock{font-size:64px;color:#b01840;line-height:1}
+.delay-repay-intro{font-size:20px;line-height:1.45;max-width:620px;margin:18px auto}.delay-repay-intro strong{color:#b01840}
+.delay-repay-dash{border-top:2px dashed #e7b8c2;margin:24px 0 18px}.delay-repay-qr{width:min(330px,80vw);height:auto;display:block;margin:0 auto 22px}
+.delay-repay-scan{display:flex;align-items:center;justify-content:center;gap:18px;text-align:left;max-width:600px;margin:0 auto 24px}.scan-icon{font-size:56px;color:#b01840}.delay-repay-scan h3{font-size:27px;color:#72152b;margin:0 0 6px}.delay-repay-scan p{margin:0;font-size:17px;line-height:1.35}
+.delay-repay-info{border:1px solid #ecc7cf;background:#fff7f8;border-radius:12px;padding:18px;display:flex;align-items:center;gap:16px;text-align:left;max-width:680px;margin:0 auto;font-size:18px;line-height:1.45}.delay-repay-info span{font-size:48px;color:#b01840}.delay-repay-info b{color:#b01840;font-weight:400}
+@media(max-width:480px){.delay-repay-title{font-size:34px}.delay-repay-intro{font-size:18px}.delay-repay-brand{font-size:31px}.delay-repay-scan{align-items:flex-start}.delay-repay-scan h3{font-size:24px}}
+
+
+/* CrossCountry colour scheme */
+:root{
+  --xc-crimson:#c8103d;
+  --xc-burgundy:#8f1736;
+  --xc-deep:#6f1028;
+  --xc-amber:#f5a000;
+  --xc-amber-dark:#e88d00;
+  --xc-cream:#f5f0e8;
+  --xc-warm-grey:#e8e4de;
+  --xc-charcoal:#202226;
+  --xc-white:#ffffff;
+}
+
+body{background:var(--xc-cream);color:var(--xc-charcoal)}
+.topbar{
+  background:linear-gradient(90deg,var(--xc-burgundy),var(--xc-crimson));
+  color:var(--xc-white);
+  border-bottom:3px solid var(--xc-amber);
+}
+.xc{background:var(--xc-crimson)}
+.nav-grid button{
+  border-left-color:var(--xc-crimson);
+  background:var(--xc-white);
+}
+.nav-grid button:hover{background:#fff8fa}
+form,.output{background:var(--xc-white)}
+.output-actions button,
+#formScreen .actions button{
+  background:var(--xc-crimson);
+  color:var(--xc-white);
+}
+.output-actions button:hover{background:var(--xc-burgundy)}
+.back{color:var(--xc-burgundy)}
+.note{
+  background:#fff3d6;
+  color:#5a3b00;
+  border-left:5px solid var(--xc-amber);
+}
+input:focus,textarea:focus,select:focus{
+  outline:2px solid var(--xc-amber);
+  border-color:var(--xc-amber);
+}
+.delay-repay-rule{background:var(--xc-crimson)}
+.delay-repay-title,.delay-repay-scan h3{color:var(--xc-burgundy)}
+.delay-repay-clock,.delay-repay-intro strong,.scan-icon,.delay-repay-info span{color:var(--xc-crimson)}
+.delay-repay-info{background:#fff7f8;border-color:#efc5cf}
+.delay-repay-info b{color:var(--xc-crimson)}
