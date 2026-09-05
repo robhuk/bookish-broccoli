@@ -1,38 +1,205 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#b5121b">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="XC Staff App"><link rel="manifest" href="manifest.json"><link rel="icon" href="xc-staff-app-icon.jpg"><style>
-:root{--red:#b5121b;--gold:#f5c242;--bg:#f4f4f4;--text:#222;--muted:#666;--border:#d8d8d8}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-header{background:var(--red);color:#fff;padding:14px 16px;border-bottom:5px solid var(--gold)}
-.top{display:flex;align-items:center;gap:12px}.logo{width:185px;height:40px;object-fit:contain;background:transparent}
-.back{color:#fff;text-decoration:none;font-weight:800;font-size:14px}.heading{margin-top:10px;font-size:24px;font-weight:850}
-main{max-width:650px;margin:auto;padding:18px 16px 35px}.card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 6px #00000010}
-label{display:block;font-size:14px;font-weight:800;margin:0 0 7px}input,select,textarea{width:100%;border:1px solid #bbb;border-radius:10px;padding:12px;font:inherit;background:#fff}textarea{min-height:130px;resize:vertical}
-.field{margin-bottom:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hint{font-size:13px;color:var(--muted);line-height:1.45}
-button{width:100%;border:0;border-radius:11px;padding:14px;font:inherit;font-weight:800;cursor:pointer}.primary{background:var(--red);color:#fff}.secondary{background:#eee;color:#222}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.status{text-align:center;color:#666;font-size:13px;margin-top:10px;min-height:18px}
-table{width:100%;border-collapse:collapse}th,td{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left}th{font-size:12px}
-@media(max-width:480px){.grid,.actions{grid-template-columns:1fr}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#061b2b" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Staff App" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="icons/icon-180.png" />
+<title>CrossCountry Staff App</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">CrossCountry <span>Staff App</span></div>
+    <nav id="nav">
+      <button data-page="incident" class="active">Incident Form Notes</button>
+      <button data-page="passenger">Passenger Count</button>
+      <button data-page="reservations">Close Reservations / Crowding</button>
+      <button data-page="commission">Commission & Scan Calculator</button>
+      <button data-page="text61016">Text 61016</button>
+      <button data-page="crew">Crew Late Book Off</button>
+      <button data-page="delayrepay">Delay Repay</button>
+      <button data-page="tir">TIR Builder</button>
+      <button data-page="operational">Operational Delay Form</button>
+    </nav>
+  </aside>
 
-.app-splash{position:fixed;inset:0;z-index:9999;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:1;visibility:visible}
-.app-splash img{width:100%;height:100%;object-fit:cover;display:block}
-.app-splash.hide{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease}
-.btp-home-icon{width:34px;height:38px;object-fit:contain;vertical-align:middle;margin-right:7px}
-.custom-home-btn{display:flex!important;align-items:center;gap:14px}
-.custom-home-btn img{width:52px;height:52px;object-fit:contain;flex:0 0 52px}
-</style><style>.home-page-list{display:grid;gap:10px}.home-page-list .homebtn{display:flex;align-items:center;gap:10px;text-decoration:none;background:#fff;color:#222;border-radius:12px;padding:14px;box-shadow:0 2px 8px #0001}.home-page-list .homebtn:hover{background:#f8e9ec}</style>
-<style id="xc-home-rebuild">
-:root{--xc-red:#b5121b;--xc-dark:#222;--xc-pink:#f5e5e8;--xc-grey:#f2f2f2}
-body{background:var(--xc-grey);color:var(--xc-dark)}
-.xc-home-navigation{display:grid;grid-template-columns:1fr;gap:11px;margin:20px auto 16px;max-width:680px}
-.xc-home-button{display:flex;align-items:center;gap:15px;min-height:58px;padding:14px 17px;border-radius:12px;background:#fff;color:#222;text-decoration:none;font-weight:800;border-left:6px solid var(--xc-red);box-shadow:0 2px 8px rgba(0,0,0,.10);transition:.15s}
-.xc-home-button:hover,.xc-home-button:active{background:var(--xc-pink);transform:translateY(-1px)}
-.xc-home-icon{width:34px;min-width:34px;text-align:center;font-size:23px}
-.xc-home-button:last-child{margin-top:8px;border-left-color:#555}
-.xc-home-title{color:var(--xc-red);font-weight:900}
-</style>
-<style id="xc-safe-area">
-html{background:#b5121b}
-body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
-</style></head><body><h1 class="xc-home-title">XC Train Manager App</h1></div><section class="xc-home-navigation" aria-label="App pages"><a class="xc-home-button" href="delay-report.html"><span class="xc-home-icon">🚆</span><span>Report Delay to Line Manager</span></a><a class="xc-home-button" href="book-off-late.html"><span class="xc-home-icon">⏰</span><span>Book Off Late</span></a><a class="xc-home-button" href="passenger-counts.html"><span class="xc-home-icon">👥</span><span>Passenger Counts</span></a><a class="xc-home-button" href="incident-notes.html"><span class="xc-home-icon">📝</span><span>Incident Report Notes</span></a><a class="xc-home-button" href="reservations.html"><span class="xc-home-icon">🚫</span><span>Reservations / Full & Standing</span></a><a class="xc-home-button" href="btp-61016.html"><span class="xc-home-icon">🚔</span><span>BTP 61016 Message Builder</span></a><a class="xc-home-button" href="report-defects.html"><span class="xc-home-icon">🔧</span><span>Report Defects</span></a><a class="xc-home-button" href="notepad.html"><span class="xc-home-icon">📓</span><span>Notepad</span></a><a class="xc-home-button" href="commission-calculator.html"><span class="xc-home-icon">🧮</span><span>Commission / Scan Calculator</span></a><a class="xc-home-button" href="delay-repay.html"><span class="xc-home-icon">💷</span><span>Delay Repay</span></a><a class="xc-home-button" href="tir-builder.html"><span class="xc-home-icon">📋</span><span>TIR Builder</span></a><a class="xc-home-button" href="help.html"><span class="xc-home-icon">❓</span><span>Help / Guide</span></a></section></body></html>
+  <main class="content">
+    <header><button id="menuBtn" aria-label="Open navigation">☰</button><h1 id="pageTitle">Incident Form Notes</h1><span id="offlineStatus" aria-live="polite"></span></header>
+<div id="installBanner" class="install-banner hidden"><span>Install this Staff App for offline use.</span><button id="installBtn">Install App</button><button id="dismissInstall" class="secondary">Not now</button></div>
+
+    <section class="page active" id="incident">
+      <div class="card">
+        <h2>Incident Form Notes</h2>
+        <form id="incidentForm">
+          <div class="grid">
+            <label>Date<input type="date" data-date></label>
+            <label>Time<input type="time"></label>
+            <label>Headcode<input class="headcode" maxlength="4" placeholder="1V50"></label>
+            <label>Location<input placeholder="Location"></label>
+          </div>
+          <label>Was the incident perceived to involve passengers?<select><option value="">Select</option><option>Yes</option><option>No</option><option>Unknown</option></select></label>
+          <label>Notes<textarea rows="8" placeholder="Enter incident notes..."></textarea></label>
+        </form>
+      </div>
+      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+    </section>
+
+    <section class="page" id="passenger">
+      <div class="card">
+        <h2>Passenger Count</h2>
+        <form id="passengerForm">
+          <div class="grid">
+            <label>Date<input type="date" data-date></label>
+            <label>Headcode<input class="headcode" maxlength="4" placeholder="1V50"></label>
+            <label>Formation
+              <select id="formation">
+                <option value="">Select formation</option>
+                <option>2-car</option><option>3-car</option><option>4-car</option><option>5-car</option>
+                <option>6-car</option><option>7-car</option><option>8-car</option><option>9-car</option>
+                <option>10-car</option><option>Other</option>
+              </select>
+            </label>
+            <label>Location<input></label>
+          </div>
+          <div class="grid three">
+            <label>Front coach count<input type="number" min="0"></label>
+            <label>Middle coach count<input type="number" min="0"></label>
+            <label>Rear coach count<input type="number" min="0"></label>
+          </div>
+          <label>Additional notes<textarea rows="4"></textarea></label>
+        </form>
+      </div>
+      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+    </section>
+
+    <section class="page" id="reservations">
+      <div class="card">
+        <h2>Close Reservations / Crowding</h2>
+        <div class="example-note">Example shown below</div>
+        <form id="reservationForm">
+          <div class="grid">
+            <label>Date<input type="date" data-date value="2026-09-05"></label>
+            <label>Headcode<input class="headcode" maxlength="4" value="1V50"></label>
+            <label>From<input value="Birmingham New Street"></label>
+            <label>To<input value="Bristol Temple Meads"></label>
+          </div>
+          <label>Reservation status<select><option>Close reservations</option><option>Keep reservations open</option></select></label>
+          <label>Crowding level<select><option>High</option><option>Moderate</option><option>Low</option></select></label>
+          <label>Reason<textarea rows="5">Expected high passenger loading due to disruption and reduced capacity.</textarea></label>
+        </form>
+      </div>
+      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+    </section>
+
+    <section class="page" id="commission">
+      <div class="card">
+        <h2>Commission & Scan Calculator</h2>
+        <div class="grid">
+          <label>Tickets sold<input id="ticketsSold" type="number" min="0" value="0"></label>
+          <label>Commission per ticket (£)<input id="commissionRate" type="number" min="0" step="0.01" value="0"></label>
+          <label>Tickets scanned<input id="ticketsScanned" type="number" min="0" value="0"></label>
+          <label>Scan rate (%)<input id="scanRate" readonly></label>
+        </div>
+        <div class="result"><span>Total commission</span><strong id="commissionTotal">£0.00</strong></div>
+      </div>
+      <div class="actions">
+        <button id="generateHtml">Generate HTML</button>
+        <button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button>
+      </div>
+    </section>
+
+    <section class="page" id="text61016">
+      <div class="card">
+        <h2>Text 61016</h2>
+        <p class="muted">The previous change to the 999 reminder has been undone.</p>
+        <label>Message text<textarea rows="12">61016
+
+Please follow the relevant operational procedure and provide the required information.</textarea></label>
+      </div>
+      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+    </section>
+
+    <section class="page" id="crew">
+      <div class="card">
+        <h2>Crew Late Book Off</h2>
+        <div class="example-note">Example shown below</div>
+        <div class="grid">
+          <label>Date<input type="date" data-date value="2026-09-05"></label>
+          <label>Headcode<input class="headcode" maxlength="4" value="1V50"></label>
+          <label>Booked off time<input type="time" value="18:00"></label>
+          <label>Actual book off time<input type="time" value="18:27"></label>
+        </div>
+        <label>Reason<textarea rows="5">Service disruption and station duties resulted in the crew booking off late.</textarea></label>
+      </div>
+      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+    </section>
+
+    <section class="page" id="delayrepay">
+      <div class="card">
+        <h2>Delay Repay</h2>
+        <div class="grid">
+          <label>Journey date<input type="date" data-date></label>
+          <label>Scheduled arrival<input type="time"></label>
+          <label>Actual arrival<input type="time"></label>
+          <label>Ticket value (£)<input type="number" min="0" step="0.01"></label>
+        </div>
+        <label>Journey details<textarea rows="5"></textarea></label>
+      </div>
+      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+    </section>
+
+    <section class="page" id="tir">
+      <div class="card">
+        <h2>TIR Builder</h2>
+        <div class="grid">
+          <label>Date<input type="date" data-date></label>
+          <label>Headcode<input class="headcode" maxlength="4" placeholder="1V50"></label>
+          <label>Fare type<select id="fareType"><option value="">Select</option><option>Standard fare</option><option>Zero fare</option></select></label>
+          <label>Ticket type<input></label>
+        </div>
+        <div id="issuedTicketWrap" class="hidden"><label>Issued Ticket Number<input id="issuedTicketNumber" placeholder="Ticket number"></label></div>
+        <label>Report details<textarea rows="7"></textarea></label>
+      </div>
+      <div class="actions"><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+    </section>
+
+    <section class="page" id="operational">
+      <div class="card">
+        <h2>Operational Delay Form</h2>
+        <form id="operationalForm">
+          <div class="grid">
+            <label>Date<input type="date" data-date></label>
+            <label>Headcode<input class="headcode" maxlength="4" placeholder="1V50"></label>
+            <label>Delay minutes<input type="number" min="0"></label>
+            <label>Location<input></label>
+          </div>
+          <label>Control Desk Aware<select id="controlAware"><option value="">Select</option><option>Yes</option><option>No</option></select></label>
+          <label>Cause<select>
+            <option value="">Select railway delay reason</option>
+            <option>Signal failure</option><option>Points failure</option><option>Track defect</option>
+            <option>Train fault</option><option>Infrastructure failure</option><option>Passenger action</option>
+            <option>Overcrowding</option><option>Weather</option><option>Emergency services</option>
+            <option>Operational incident</option><option>Other</option>
+          </select></label>
+          <label>Delay summary<textarea rows="7"></textarea></label>
+        </form>
+      </div>
+      <div class="email-preview">
+        <h3>Generated email</h3>
+        <p><strong>Subject:</strong> Delay: delay notification <b id="subjectHeadcode">[HEADCODE]</b> on [DATE]</p>
+        <p>Hello, please find attached a short summary of a delay to a service I was working,</p>
+        <p id="emailSummary">[DELAY SUMMARY]</p>
+      </div>
+      <div class="actions"><button id="copyEmail">Copy email</button><button class="secondary print-btn">Print</button><button class="secondary export-btn">Export</button></div>
+    </section>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
