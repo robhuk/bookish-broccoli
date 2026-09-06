@@ -23,10 +23,11 @@
   </div>
   <form id="form"></form>
   <div class="output-actions">
-    <button onclick="generate()">Generate</button>
-    <button onclick="copyOutput()">Copy</button>
-    <button onclick="window.print()">Print</button>
-    <button onclick="exportText()">Export</button>
+    <button onclick="generate()">⚙️ Generate</button>
+    <button onclick="copyOutput()">📋 Copy</button>
+    <button onclick="emailOutput()" id="emailBtn">✉️ Email</button>
+    <button onclick="window.print()">🖨️ Print</button>
+    <button onclick="send61016SMS()" id="sms61016Btn" style="display:none">📱 Send SMS to 61016</button>
   </div>
   <section class="output"><h2>Generated Email / Report</h2><div id="subject"></div><pre id="body"></pre></section>
 </main>

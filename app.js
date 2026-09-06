@@ -11,9 +11,13 @@ const pages=[
 ];
 let current=null;
 const nav=document.getElementById('nav'),form=document.getElementById('form');
-pages.forEach(p=>{let b=document.createElement('button');b.textContent=p.title;b.onclick=()=>openPage(p.id);nav.appendChild(b)});
+const pageIcons={incident:'🚨',passenger:'👥',reservations:'🚆',commission:'💷',delay:'⏱️',late_book_off:'🕒','61016':'📱',delay_repay:'💰'};
+pages.forEach(p=>{let b=document.createElement('button');b.textContent=(pageIcons[p.id]||'📄')+' '+p.title;b.onclick=()=>openPage(p.id);nav.appendChild(b)});
 function goHome(){document.getElementById('formScreen').classList.remove('active');document.getElementById('home').classList.add('active')}
-function openPage(id){current=pages.find(p=>p.id===id);document.getElementById('home').classList.remove('active');document.getElementById('formScreen').classList.add('active');document.getElementById('pageTitle').textContent=current.title;document.getElementById('subject').textContent='';document.getElementById('body').textContent='';render();if(!current.delayRepay)loadCurrent()}
+function openPage(id){current=pages.find(p=>p.id===id);
+document.getElementById('emailBtn').style.display=(id==='delay_repay'||id==='commission')?'none':'inline-block';
+document.getElementById('sms61016Btn').style.display=id==='61016'?'inline-block':'none';
+document.getElementById('home').classList.remove('active');document.getElementById('formScreen').classList.add('active');document.getElementById('pageTitle').textContent=current.title;document.getElementById('subject').textContent='';document.getElementById('body').textContent='';render();if(!current.delayRepay)loadCurrent()}
 function slug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'')}
 function render(){form.innerHTML='';
 if(current.delayRepay){
@@ -60,5 +64,18 @@ else {s='Passenger counts';let rows=[];for(let i=0;i<15;i++){if(d['station_'+i]|
 document.getElementById('subject').innerHTML='Subject: '+s.replace(d.headcode||'__','<b>'+ (d.headcode||'') +'</b>');
 document.getElementById('body').textContent=b}
 function copyOutput(){navigator.clipboard.writeText(document.getElementById('subject').innerText+'\n\n'+document.getElementById('body').innerText);alert('Copied.')}
+function emailOutput(){
+  if(current.delayRepay||current.id==='commission')return;
+  generate();
+  const subject=document.getElementById('subject').innerText.replace(/^Subject:\s*/,'');
+  const body=document.getElementById('body').innerText;
+  window.location.href='mailto:?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+}
+function send61016SMS(){
+  if(current.id!=='61016')return;
+  generate();
+  const message=document.getElementById('body').innerText;
+  window.location.href='sms:61016?body='+encodeURIComponent(message);
+}
 function exportText(){let text=document.getElementById('subject').innerText+'\n\n'+document.getElementById('body').innerText;let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download=(current?.id||'report')+'.txt';a.click();URL.revokeObjectURL(a.href)}
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js');

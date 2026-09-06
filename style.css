@@ -58,3 +58,5 @@ input:focus,textarea:focus,select:focus{
 .delay-repay-clock,.delay-repay-intro strong,.scan-icon,.delay-repay-info span{color:var(--xc-crimson)}
 .delay-repay-info{background:#fff7f8;border-color:#efc5cf}
 .delay-repay-info b{color:var(--xc-crimson)}
+
+.output-actions button{font-size:15px}.nav-grid button{display:flex;align-items:center;gap:10px}
