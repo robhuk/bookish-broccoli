@@ -60,3 +60,56 @@ input:focus,textarea:focus,select:focus{
 .delay-repay-info b{color:var(--xc-crimson)}
 
 .output-actions button{font-size:15px}.nav-grid button{display:flex;align-items:center;gap:10px}
+
+.commission-card{max-width:620px;margin:auto}
+.commission-intro{text-align:center;padding-bottom:8px;border-bottom:2px solid var(--xc-amber)}
+.commission-icon{font-size:48px}.commission-intro h2{margin:4px 0;color:var(--xc-burgundy)}
+.commission-results{margin-top:22px;display:grid;gap:10px}
+.commission-results>div{display:flex;justify-content:space-between;align-items:center;padding:16px;border-radius:10px;background:#f5f0e8}
+.commission-results span{font-weight:700}.commission-results strong{font-size:22px}
+.commission-results .commission-total{display:block;text-align:center;background:linear-gradient(90deg,var(--xc-burgundy),var(--xc-crimson));color:#fff;padding:24px;margin-top:8px}
+.commission-total span{display:block;font-size:18px;margin-bottom:5px}
+.commission-total strong{display:block;font-size:42px;font-weight:800;letter-spacing:.5px}
+
+.passenger-summary{margin:16px 0}
+.capacity-live{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.capacity-live>div{background:#f5f0e8;border-radius:10px;padding:14px;text-align:center}
+.capacity-live span,.capacity-live small{display:block}
+.capacity-live strong{display:block;font-size:28px;color:var(--xc-burgundy);margin:4px 0}
+.capacity-live small{font-size:13px;color:#555}
+.capacity-live .all-capacity{grid-column:1/-1;background:linear-gradient(90deg,var(--xc-burgundy),var(--xc-crimson));color:#fff}
+.capacity-live .all-capacity strong{color:#fff;font-size:34px}
+.row-count{font-size:18px;color:var(--xc-burgundy);display:block;text-align:center}
+.capacity-details{margin-top:18px;background:#fff;border:1px solid #ddd;border-radius:10px;padding:12px}
+.capacity-details summary{cursor:pointer;font-weight:800;color:var(--xc-burgundy);font-size:17px}
+.capacity-table{width:100%;border-collapse:collapse;margin-top:12px}
+.capacity-table th,.capacity-table td{border:1px solid #ccc;padding:9px;text-align:center}
+.capacity-table th{background:var(--xc-burgundy);color:#fff}
+@media(max-width:600px){.capacity-table{font-size:12px}.capacity-table th,.capacity-table td{padding:6px}.count-table{font-size:12px}}
+
+.collapsible-note{padding:0!important;border-left:0!important;background:transparent!important}
+.collapsible-note details{background:#fff3d6;border-left:5px solid var(--xc-amber);border-radius:8px;overflow:hidden}
+.collapsible-note summary{cursor:pointer;padding:14px 16px;font-weight:800;color:#5a3b00}
+.collapsible-note-content{padding:0 16px 16px;white-space:pre-line;line-height:1.45;color:#5a3b00}
+
+.emergency-banner{
+  margin-bottom:10px;
+  padding:10px 12px;
+  border-radius:8px;
+  background:var(--xc-crimson);
+  color:#fff;
+  font-size:14px;
+  line-height:1.35;
+  text-align:center;
+  box-shadow:0 2px 5px rgba(0,0,0,.12);
+}
+.emergency-banner strong{font-weight:800}
+
+.count-table input.passenger-over-limit{
+  color:#d40000 !important;
+  font-weight:800 !important;
+}
+
+.conditional-incident-field textarea{min-height:90px;resize:vertical}.conditional-incident-field{margin-top:8px}
+
+.useful-links-section{margin:18px 0}.useful-links-section h2{font-size:18px;margin:0 0 10px;color:var(--xc-burgundy)}.useful-link-button{display:flex;align-items:center;gap:12px;width:100%;box-sizing:border-box;margin:8px 0;padding:12px 14px;text-decoration:none;color:inherit;background:#fff;border:1px solid #ddd;border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,.08)}.link-logo{font-size:24px;line-height:1;min-width:30px;text-align:center}.link-copy{display:flex;flex-direction:column;flex:1;text-align:left}.link-copy strong{color:var(--xc-burgundy);font-size:16px}.link-copy small{font-size:12px;color:#555;margin-top:2px}.link-arrow{font-size:20px;color:var(--xc-crimson)}
