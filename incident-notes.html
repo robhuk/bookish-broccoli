@@ -1,106 +1,28 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#b5121b">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="XC Staff App"><link rel="manifest" href="manifest.json"><link rel="icon" href="crosscountry-logo-white.png"><title>📝 Incident Report Notes</title><style>
-:root{--red:#b5121b;--gold:#f5c242;--bg:#f4f4f4;--text:#222;--muted:#666;--border:#d8d8d8}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-header{background:var(--red);color:#fff;padding:14px 16px;border-bottom:5px solid var(--gold)}
-.top{display:flex;align-items:center;gap:12px}.logo{background:#fff;border-radius:8px;padding:4px 7px;width:145px;height:36px;object-fit:contain}
-.back{color:#fff;text-decoration:none;font-weight:800;font-size:14px}.heading{margin-top:10px;font-size:24px;font-weight:850}
-main{max-width:650px;margin:auto;padding:18px 16px 35px}.card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 6px #00000010}
-label{display:block;font-size:14px;font-weight:800;margin:0 0 7px}input,select,textarea{width:100%;border:1px solid #bbb;border-radius:10px;padding:12px;font:inherit;background:#fff}textarea{min-height:130px;resize:vertical}
-.field{margin-bottom:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hint{font-size:13px;color:var(--muted);line-height:1.45}
-button{width:100%;border:0;border-radius:11px;padding:14px;font:inherit;font-weight:800;cursor:pointer}.primary{background:var(--red);color:#fff}.secondary{background:#eee;color:#222}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.status{text-align:center;color:#666;font-size:13px;margin-top:10px;min-height:18px}
-table{width:100%;border-collapse:collapse}th,td{padding:7px 4px;border-bottom:1px solid #ddd;text-align:left}th{font-size:12px}
-@media(max-width:480px){.grid,.actions{grid-template-columns:1fr}}
-
-
-.tooltip{position:relative;display:inline-block;margin-left:5px;color:#b5121b;font-weight:900;cursor:help}
-.tooltiptext{visibility:hidden;opacity:0;position:absolute;z-index:20;left:22px;top:-6px;width:270px;background:#222;color:#fff;padding:10px 12px;border-radius:9px;font-size:12px;font-weight:500;line-height:1.45;box-shadow:0 3px 10px #0005;transition:opacity .15s}
-.tooltip:hover .tooltiptext,.tooltip:focus .tooltiptext{visibility:visible;opacity:1}
-@media(max-width:480px){.tooltiptext{left:-130px;top:24px;width:260px}}
-.main-menu-wrap{max-width:700px;margin:12px auto 0;padding:0 14px}.main-menu-btn{display:block;text-align:center;text-decoration:none;background:#fff;color:#b5121b;border:1px solid #b5121b;border-radius:10px;padding:11px 14px;font-weight:800;font-size:15px}<style>.pdf-action{margin:10px 0}.pdf-action button{width:100%;background:#222;color:#fff;border:0;border-radius:10px;padding:12px;font-weight:800}</style></style><style>.pdf-action{margin:10px 0}.pdf-action button{width:100%;border:0;border-radius:10px;padding:12px;font-weight:800;font-size:14px;background:#222;color:#fff}</style><style id="xc-safe-area">
-html{background:#b5121b}
-body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom)}
-</style><style id="xc-main-menu-style">
-.xc-main-menu{display:block;width:100%;box-sizing:border-box;text-align:center;text-decoration:none;background:#b5121b;color:#fff;border-radius:10px;padding:11px 14px;margin:0 0 12px;font-weight:800;border:0}
-.xc-main-menu:hover,.xc-main-menu:active{background:#8f0f16;color:#fff}
-</style><style id="xc-header-logo">
-.xc-page-header-logo{width:86px;height:24px;object-fit:contain;display:block;flex:0 0 auto}
-</style><style id="xc-v80-print-style">
-@media print{
-  .no-print,.actions,.buttons,.toolbar,button,a.menu{display:none!important}
-  body{background:#fff!important}
-  main,.container,.app{max-width:none!important;box-shadow:none!important}
-  @page{size:A4;margin:14mm}
-}
-</style></head><body><header class="xc-compact-header"><img class="xc-page-header-logo" src="crosscountry-logo-white.png" alt="XC"></header>
-<header><a class="back" href="index.html">‹ Back to Staff App</a><div class="heading">📝 Incident Report Notes</div></header><div class="main-menu-wrap"></div><main><a class="xc-main-menu" href="index.html">← Main menu</a><div class="card"><div class="grid"><div class="field"><label>Date</label><input id="date" type="date"></div><div class="field"><label>Time</label><input id="time" type="time"></div><div class="field"><label>Headcode</label><input id="head"></div><div class="field"><div class="question">
-<div id="eventDetails" class="conditional" style="display:none">
-<label for="eventDetailText">Event / fixture details</label>
-<textarea id="eventDetailText" placeholder="Football (name teams), Festival, Racing, other events, any impact factors such as alcohol or drugs, or due to delay / disruption?"></textarea>
-</div><label for="staffAssault">Was staff assaulted (verbal or physical)?</label>
-<select id="staffAssault"><option value="">Select</option><option value="No">No</option><option value="Yes">Yes</option></select>
-</div></div><div class="card">
-  <label>Police / BTP called?</label>
-  <select id="police" onchange="toggleBtpLog()">
-    <option>No</option>
-    <option>Yes</option>
-  </select>
-  <div class="field" id="btpLogWrap" style="display:none;margin-top:12px">
-    <label>Log / Incident Number</label>
-    <input id="btpLog" placeholder="Enter BTP / police log or incident number">
-  </div>
-</div><div class="card"><button class="primary" type="button" onclick="emailMsg()">Generate Message</button></div><div class="pdf-action"><button type="button" onclick="generatePDFReport()">📄 Generate PDF</button></div>
-</main>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#b5121b"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>📝 Incident Report</title><style>
+:root{--red:#b5121b;--gold:#f5c242;--bg:#f4f4f4;--text:#222;--muted:#666;--border:#d8d8d8}*{box-sizing:border-box}html{background:var(--red)}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}header{background:var(--red);color:#fff;padding:12px 16px;border-bottom:5px solid var(--gold)}.logo{width:86px;height:24px;object-fit:contain}.heading{margin-top:8px;font-size:24px;font-weight:850}.back{color:#fff;text-decoration:none;font-weight:800;font-size:14px}main{max-width:700px;margin:auto;padding:14px 16px 35px}.menu{display:block;text-align:center;text-decoration:none;background:var(--red);color:#fff;border-radius:10px;padding:11px;margin-bottom:12px;font-weight:800}.card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:16px;margin-bottom:14px;box-shadow:0 2px 6px #00000010}.card h2{font-size:18px;margin:0 0 14px;color:var(--red)}.field{margin-bottom:15px}.field:last-child{margin-bottom:0}label{display:block;font-size:14px;font-weight:800;margin:0 0 7px}input,select,textarea{width:100%;border:1px solid #aaa;border-radius:10px;padding:12px;font:inherit;background:#fff}textarea{min-height:110px;resize:vertical}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hint{font-size:12px;color:var(--muted);margin-top:5px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions button{width:100%;border:0;border-radius:11px;padding:14px;font:inherit;font-weight:800;cursor:pointer}.primary{background:var(--red);color:#fff}.secondary{background:#eee;color:#222}.pdf{background:#222;color:#fff}.status{text-align:center;color:#666;font-size:13px;min-height:18px;margin-top:10px}.conditional{display:none;margin-top:12px}.footer-note{font-size:12px;color:#666;text-align:center;margin-top:12px;line-height:1.4}@media(max-width:520px){.grid,.actions{grid-template-columns:1fr}}@media print{.no-print{display:none!important}body{background:#fff!important}header:first-of-type{display:none!important}main{max-width:none;padding:0}.card{box-shadow:none;break-inside:avoid;border:1px solid #bbb}.menu{display:none!important}@page{size:A4;margin:12mm}}
+</style></head><body><header><img class="logo" src="crosscountry-logo-white.png" alt="XC"><div><a class="back" href="index.html">‹ Back to Staff App</a></div><div class="heading">📝 Incident Report</div></header><main><a class="menu no-print" href="index.html">← Main menu</a>
+<form id="incidentForm">
+<div class="card"><h2>Incident details</h2><div class="grid"><div class="field"><label for="date">Date</label><input id="date" type="date"></div><div class="field"><label for="time">Time</label><input id="time" type="time"></div><div class="field"><label for="head">Headcode</label><input id="head" maxlength="4" placeholder="e.g. 1V50"></div><div class="field"><label for="unit">Unit</label><input id="unit" maxlength="6" placeholder="e.g. 220001"></div><div class="field"><label for="location">Location of incident</label><input id="location"></div><div class="field"><label for="controlTime">Time Control informed</label><input id="controlTime" type="time"></div></div><div class="field"><label for="what">What happened?</label><textarea id="what" placeholder="Provide a full account of the incident, including relevant sequence of events, actions taken and outcome."></textarea></div></div>
+<div class="card"><h2>Event / fixture</h2><div class="field"><label for="eventFixture">Event / fixture related incident?</label><select id="eventFixture"><option value="">Select</option><option>No</option><option>Yes</option></select><div id="eventDetails" class="conditional"><label for="eventDetailText">Event / fixture details</label><textarea id="eventDetailText" placeholder="Football (name teams), Festival, Racing, other events, any impact factors such as alcohol or drugs, or due to delay / disruption?"></textarea></div></div></div>
+<div class="card"><h2>Assaults</h2><div class="field"><label for="staffAssault">Were staff assaulted (verbal or physical)?</label><select id="staffAssault"><option value="">Select</option><option>No</option><option>Yes</option></select><div id="staffAssaultDetails" class="conditional"><label for="staffAssaultText">Staff assault details</label><textarea id="staffAssaultText" placeholder="Describe what happened, who was involved and any action taken."></textarea></div></div><div class="field"><label for="passengerAssault">Were passengers / others assaulted (verbal or physical)?</label><select id="passengerAssault"><option value="">Select</option><option>No</option><option>Yes</option></select><div id="passengerAssaultDetails" class="conditional"><label for="passengerAssaultText">Passenger / other assault details</label><textarea id="passengerAssaultText" placeholder="Describe what happened, who was involved and any action taken."></textarea></div></div></div>
+<div class="card"><h2>Police / BTP</h2><div class="field"><label for="police">Police / BTP called?</label><select id="police"><option>No</option><option>Yes</option></select><div id="btpLogWrap" class="conditional"><label for="btpLog">Log / Incident / Crime Number</label><input id="btpLog" placeholder="Enter reference number"></div></div></div>
+<div class="card"><h2>Damage</h2><div class="field"><label for="damage">Damage to train?</label><select id="damage"><option>No</option><option>Yes</option></select><div id="damageDetails" class="conditional"><label for="damageText">Damage details</label><textarea id="damageText" placeholder="Describe the damage, location and extent. Include coach / vehicle details where known."></textarea></div></div><div class="field"><label for="damageOther">Nature of damage / other relevant information</label><textarea id="damageOther"></textarea></div></div>
+<div class="card"><h2>Witnesses & additional information</h2><div class="field"><label for="witnesses">Witnesses</label><textarea id="witnesses" placeholder="Names / descriptions / contact details where appropriate, or state none known."></textarea></div><div class="field"><label for="additional">Any additional notes or information</label><textarea id="additional"></textarea></div></div>
+<div class="card no-print"><div class="actions"><button type="button" class="primary" id="copyBtn">Copy</button><button type="button" class="primary" id="emailBtn">Email</button><button type="button" class="pdf" id="pdfBtn">📄 Generate PDF</button><button type="button" class="secondary" id="clearBtn">Clear</button></div><div class="status" id="status"></div><div class="footer-note">These are contemporaneous notes taken at the time of an incident so it is recorded.</div></div>
+</form></main>
 <script>
-(function(){
-  const select=document.getElementById("eventFixture");
-  const box=document.getElementById("eventDetails");
-  if(!select||!box)return;
-  function update(){
-    const yes=/^yes$/i.test(select.value);
-    box.style.display=yes?"block":"none";
-    if(!yes){
-      const field=document.getElementById("eventDetailText");
-      if(field)field.value="";
-    }
-  }
-  select.addEventListener("change",update);
-  update();
-})();
-</script>
-<script id="xc-v80-rewrite-repair">
-(function(){
-  function nativePDF(){ window.print(); }
-  window.xcNativePDF = nativePDF;
-
-  document.querySelectorAll('button').forEach(function(btn){
-    var text=(btn.textContent||'').trim().toLowerCase();
-    if(!text) return;
-
-    if(/(generate|export|save)\s*pdf/.test(text)){
-      var original = btn.getAttribute('onclick') || '';
-      // Only repair empty/missing PDF actions. Do not overwrite working
-      // page-specific builders such as TIR's generated-report export.
-      if(!original && !btn.dataset.xcPdfBound){
-        btn.dataset.xcPdfBound='1';
-        btn.addEventListener('click', nativePDF);
-      }
-    }
-  });
-
-  // Defensive support for action buttons that use data-action.
-  document.addEventListener('click', function(e){
-    var btn=e.target.closest('button[data-action]');
-    if(!btn) return;
-    var action=btn.dataset.action;
-    if(action && typeof window[action]==='function'){
-      e.preventDefault();
-      window[action](e);
-    }
-  });
-})();
-</script>
-</body></html>
+const ids=['date','time','head','unit','location','controlTime','what','eventFixture','eventDetailText','staffAssault','staffAssaultText','passengerAssault','passengerAssaultText','police','btpLog','damage','damageText','damageOther','witnesses','additional'];
+function $(id){return document.getElementById(id)}
+function toggle(sel,wrap,yes){$(wrap).style.display=$(sel).value==='Yes'?'block':'none'}
+function setup(){
+ const now=new Date(), pad=n=>String(n).padStart(2,'0'); $('date').value=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`; $('time').value=`${pad(now.getHours())}:${pad(now.getMinutes())}`;
+ $('eventFixture').addEventListener('change',()=>toggle('eventFixture','eventDetails')); $('staffAssault').addEventListener('change',()=>toggle('staffAssault','staffAssaultDetails')); $('passengerAssault').addEventListener('change',()=>toggle('passengerAssault','passengerAssaultDetails')); $('police').addEventListener('change',()=>toggle('police','btpLogWrap')); $('damage').addEventListener('change',()=>toggle('damage','damageDetails'));
+}
+function val(id){return ($(id).value||'').trim()}
+function reportText(){const labels={date:'Date',time:'Time',head:'Headcode',unit:'Unit',location:'Location of incident',controlTime:'Time Control informed',what:'What happened?',eventFixture:'Event / fixture related incident?',eventDetailText:'Event / fixture details',staffAssault:'Were staff assaulted (verbal or physical)?',staffAssaultText:'Staff assault details',passengerAssault:'Were passengers / others assaulted (verbal or physical)?',passengerAssaultText:'Passenger / other assault details',police:'Police / BTP called?',btpLog:'Log / Incident / Crime Number',damage:'Damage to train?',damageText:'Damage details',damageOther:'Nature of damage / other relevant information',witnesses:'Witnesses',additional:'Any additional notes or information'}; let s='INCIDENT REPORT\n\n'; for(const id of ids){const v=val(id); if(v) s+=labels[id]+':\n'+v+'\n\n';} return s.trim()}
+$('copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText(reportText());$('status').textContent='Report copied to clipboard.'}catch(e){$('status').textContent='Unable to copy report.'}};
+$('emailBtn').onclick=()=>{const subject=`Incident Report ${val('head')||''} ${val('date')||''}`.trim(); location.href=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(reportText())}`};
+$('pdfBtn').onclick=()=>window.print();
+$('clearBtn').onclick=()=>{if(confirm('Clear the incident report?')){$('incidentForm').reset(); setup(); ['eventDetails','staffAssaultDetails','passengerAssaultDetails','btpLogWrap','damageDetails'].forEach(x=>$(x).style.display='none');$('status').textContent=''}};
+setup();
+</script></body></html>
